@@ -1,0 +1,1 @@
+console.log("Mrymify website loaded successfully!");
