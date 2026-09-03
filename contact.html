@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Mrymify - Connect with Mariyam (Marketer & Manager) for custom crochet commissions, plushies, floral orders, support, and inquiries.">
+    <title>Contact & Custom Orders | Mrymify Handcrafted Boutique</title>
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+
+    <!-- Shared Navigation Bar (Mounted via js/components/navbar.js) -->
+    <div id="navbar-container"></div>
+
+    <!-- Main Content -->
+    <main class="site-main">
+
+        <!-- =================================================================
+             1. Hero Introduction
+             ================================================================= -->
+        <section class="contact-hero">
+            <div class="container">
+                <span class="contact-hero-tag">✨ We're Always Here For You</span>
+                <h1 class="contact-hero-title font-heading">
+                    Let’s Create Something Beautiful Together
+                </h1>
+                <p class="contact-hero-desc">
+                    Whether you have a question about our handmade pieces, wish to request a bespoke custom crochet order, or need dedicated support, reach out to <strong>Mariyam</strong> directly or connect across our boutique channels.
+                </p>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             2. Contact Grid (Direct Cards Left, Smart Form Right)
+             ================================================================= -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-grid-wrap">
+
+                    <!-- Left Column: Direct Info Cards -->
+                    <div class="contact-cards-col">
+
+                        <!-- Card 1: WhatsApp Priority Channel -->
+                        <div class="contact-card">
+                            <div class="contact-card-header">
+                                <div class="contact-card-icon contact-icon-wa">💬</div>
+                                <div>
+                                    <h2 class="contact-card-title">Direct WhatsApp Care</h2>
+                                    <span class="contact-card-badge">⚡ Fastest Response • Typically in 1-2 hrs</span>
+                                </div>
+                            </div>
+                            <div class="contact-card-body">
+                                <p style="margin-bottom: 0.5rem;">
+                                    Chat directly with <strong>Mariyam</strong> on WhatsApp for real-time consultation, custom color matching, and order assistance.
+                                </p>
+                                <p style="font-family: var(--font-brand); font-weight: 700; font-size: 1.15rem; color: var(--color-text-main); margin-bottom: 0.75rem;">
+                                    +92 300 0896885
+                                </p>
+
+                                <!-- Context-Specific WhatsApp Action Buttons -->
+                                <div class="wa-actions-group">
+                                    <!-- Context 1: Custom Orders -->
+                                    <a href="https://wa.me/923000896885?text=Hello%20Mariyam!%20I%20want%20to%20order%20a%20custom%20handcrafted%20crochet%20item%20and%20would%20love%20to%20discuss%20the%20details." 
+                                       target="_blank" 
+                                       rel="noopener noreferrer" 
+                                       class="wa-btn wa-btn-custom" 
+                                       id="btn-wa-custom-order"
+                                       aria-label="Order a custom piece on WhatsApp">
+                                        <span class="wa-btn-icon">🧶</span>
+                                        <span class="wa-btn-text">
+                                            <span class="wa-btn-label">Order a Custom Piece</span>
+                                            <span class="wa-btn-sub">Auto message: "Hey, I want to order a..."</span>
+                                        </span>
+                                    </a>
+
+                                    <!-- Context 2: Customer Help & Inquiries -->
+                                    <a href="https://wa.me/923000896885?text=Hello%20Mariyam!%20I%20need%20help%20about%20a%20product%20or%20an%20inquiry." 
+                                       target="_blank" 
+                                       rel="noopener noreferrer" 
+                                       class="wa-btn wa-btn-support" 
+                                       id="btn-wa-support"
+                                       aria-label="Ask a question or get support on WhatsApp">
+                                        <span class="wa-btn-icon">💡</span>
+                                        <span class="wa-btn-text">
+                                            <span class="wa-btn-label">Need Help & Support?</span>
+                                            <span class="wa-btn-sub">Auto message: "Hey, I need help about..."</span>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Email & Manager Info -->
+                        <div class="contact-card">
+                            <div class="contact-card-header">
+                                <div class="contact-card-icon contact-icon-email">✉️</div>
+                                <div>
+                                    <h2 class="contact-card-title">Management & Email</h2>
+                                    <div class="contact-manager-role">Marketer and Manager</div>
+                                </div>
+                            </div>
+                            <div class="contact-card-body">
+                                <div class="contact-manager-name">Mariyam</div>
+                                <p style="margin: 0.35rem 0 0.75rem; color: var(--color-text-muted); font-size: 0.9rem;">
+                                    For brand partnerships, collaborations, corporate gifting, or detailed custom inquiries, drop an email directly.
+                                </p>
+                                <a href="mailto:mrymify9@gmail.com" class="contact-detail-link" aria-label="Send email to Mariyam">
+                                    <span>📧 mrymify9@gmail.com</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Studio & Shipping Location -->
+                        <div class="contact-card">
+                            <div class="contact-card-header">
+                                <div class="contact-card-icon contact-icon-location">📍</div>
+                                <div>
+                                    <h2 class="contact-card-title">Artisan Studio & Shipping</h2>
+                                    <span class="contact-card-badge" style="background-color: var(--color-secondary-light); color: var(--color-secondary);">Pakistan Nationwide Shipping</span>
+                                </div>
+                            </div>
+                            <div class="contact-card-body">
+                                <p style="font-weight: 600; color: var(--color-text-main); margin-bottom: 0.25rem;">
+                                    Garden Town Phase 3, Gujranwala, Pakistan
+                                </p>
+                                <p style="font-size: 0.88rem; color: var(--color-text-muted);">
+                                    Every item is handcrafted with care in Gujranwala and securely packed in protective boutique packaging, delivered nationwide through trusted courier partners.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column: Interactive Smart Form with Dynamic Inquiry Fields -->
+                    <div class="contact-form-card">
+                        <span class="form-header-badge" id="form-badge">🧶 Custom Commission</span>
+                        <h2 class="form-title" id="form-heading">Send a Custom Request</h2>
+                        <p class="form-subtitle" id="form-subheading">
+                            Share your dream crochet ideas with <strong>Mariyam</strong>! We will craft it stitch-by-stitch with premium yarn.
+                        </p>
+
+                        <form id="contact-custom-form">
+                            <!-- Persistent Row: Name & Contact -->
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label for="contact-name" class="form-label">Your Name *</label>
+                                    <input type="text" id="contact-name" class="form-input" placeholder="e.g. Ayesha Khan" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-phone" class="form-label">WhatsApp / Phone Number</label>
+                                    <input type="tel" id="contact-phone" class="form-input" placeholder="e.g. 0300 1234567" />
+                                </div>
+                            </div>
+
+                            <!-- Purpose of Inquiry Selector -->
+                            <div class="form-group">
+                                <label for="contact-purpose" class="form-label">Purpose of Inquiry *</label>
+                                <select id="contact-purpose" class="form-select">
+                                    <option value="custom" selected>🧶 Custom Crochet Order</option>
+                                    <option value="tracking">📦 Order Status & Delivery Check</option>
+                                    <option value="support">💡 Customer Help & Product Inquiry</option>
+                                    <option value="bulk">🎉 Bulk Favors / Event Gifts</option>
+                                </select>
+                            </div>
+
+                            <!-- Dynamic Field: Item or Category (Shows for Custom & Bulk; Hidden for Tracking & Support) -->
+                            <div class="form-group dynamic-field" id="field-wrap-item">
+                                <label for="contact-item" class="form-label" id="label-contact-item">Item or Category *</label>
+                                <input type="text" id="contact-item" class="form-input" placeholder="e.g. Baby Panda Plushie, Tulip Bouquet, Cardigan" />
+                                <span class="field-hint" id="hint-contact-item">Specify what you'd like crafted or customized.</span>
+                            </div>
+
+                            <!-- Dynamic Field: Color Preferences (ONLY shows for Custom Order; Hidden for all others) -->
+                            <div class="form-group dynamic-field" id="field-wrap-colors">
+                                <label for="contact-colors" class="form-label">Color Preferences / Custom Notes (Optional)</label>
+                                <input type="text" id="contact-colors" class="form-input" placeholder="e.g. Pastel pink yarn, cream petals, initial 'M' on ribbon" />
+                                <span class="field-hint">Specify your preferred yarn shades, packaging tags, or personal touch.</span>
+                            </div>
+
+                            <!-- Dynamic Field: Order Reference & City (ONLY shows for Order Tracking; Hidden for all others) -->
+                            <div class="form-row-2 dynamic-field" id="field-wrap-tracking" style="display: none;">
+                                <div class="form-group">
+                                    <label for="contact-order-ref" class="form-label">Order Reference / ID *</label>
+                                    <input type="text" id="contact-order-ref" class="form-input" placeholder="e.g. MRY-10492 or Checkout Phone" />
+                                    <span class="field-hint">Found on your order confirmation screen.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-delivery-city" class="form-label">Delivery City / Destination</label>
+                                    <input type="text" id="contact-delivery-city" class="form-input" placeholder="e.g. Lahore, Karachi, Islamabad" />
+                                </div>
+                            </div>
+
+                            <!-- Dynamic Field: Support Topic (ONLY shows for Customer Help; Hidden for all others) -->
+                            <div class="form-group dynamic-field" id="field-wrap-support-topic" style="display: none;">
+                                <label for="contact-support-topic" class="form-label">Help / Inquiry Topic *</label>
+                                <select id="contact-support-topic" class="form-select">
+                                    <option value="Product Sizing & Materials">Product Sizing, Materials & Dimensions</option>
+                                    <option value="Crochet Care & Washing">Crochet Care & Washing Instructions</option>
+                                    <option value="Delivery Rates & Timelines">Nationwide Delivery Times & Courier Rates</option>
+                                    <option value="Payment Assistance">Payment Methods (Bank Transfer / EasyPaisa / COD)</option>
+                                    <option value="General Question">General Assistance / Other Question</option>
+                                </select>
+                            </div>
+
+                            <!-- Dynamic Field: Bulk Event Details (ONLY shows for Bulk Favors; Hidden for all others) -->
+                            <div class="form-row-2 dynamic-field" id="field-wrap-bulk-details" style="display: none;">
+                                <div class="form-group">
+                                    <label for="contact-bulk-qty" class="form-label">Estimated Quantity *</label>
+                                    <input type="text" id="contact-bulk-qty" class="form-input" placeholder="e.g. 30 pcs, 50 pcs, 100+ pcs" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-event-type" class="form-label">Event Type & Needed-By Date</label>
+                                    <input type="text" id="contact-event-type" class="form-input" placeholder="e.g. Wedding Favors (Nov 15)" />
+                                </div>
+                            </div>
+
+                            <!-- Message / Details (Dynamically adjusts label & placeholder) -->
+                            <div class="form-group" id="field-wrap-message">
+                                <label for="contact-message" class="form-label" id="label-contact-message">Design Details & Requirements *</label>
+                                <textarea id="contact-message" class="form-textarea" placeholder="Tell us about size requirements, reference ideas, or your specific requests..." required></textarea>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="form-actions-row">
+                                <button type="submit" class="btn btn-primary btn-lg" id="btn-submit-wa" style="width: 100%; box-shadow: 0 4px 16px rgba(184, 93, 67, 0.35);">
+                                    <span id="btn-submit-text">Send Custom Request via WhatsApp 💬</span>
+                                </button>
+                                <button type="button" class="btn btn-outline btn-md" id="btn-send-email" style="width: 100%;">
+                                    <span>Send via Email ✉️</span>
+                                </button>
+                            </div>
+
+                            <!-- Status Feedback Alert -->
+                            <div id="form-status-alert" class="form-status-alert"></div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             3. Social Channels Showcase (With "@" on each ID)
+             ================================================================= -->
+        <section class="social-section" aria-label="Social Media Channels">
+            <div class="container">
+                <span class="section-tag">Connect With Us</span>
+                <h2 class="section-title font-heading" style="margin-top: 0.5rem;">Follow Mrymify Across the Web</h2>
+                <p class="section-description" style="max-width: 580px; margin: 0 auto;">
+                    Stay inspired by our latest handcrafted drops, behind-the-scenes stitch videos, and cozy artisan updates.
+                </p>
+
+                <div class="social-grid">
+                    <!-- Instagram -->
+                    <a href="https://instagram.com/mrymify" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="Visit Mrymify on Instagram">
+                        <div class="social-card-icon social-icon-instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </div>
+                        <div class="social-card-name">Instagram</div>
+                        <div class="social-card-handle">@mrymify</div>
+                    </a>
+
+                    <!-- TikTok -->
+                    <a href="https://tiktok.com/@mrymify" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="Visit Mrymify on TikTok">
+                        <div class="social-card-icon social-icon-tiktok">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.32a6.34 6.34 0 0 0-.85-.06A6.33 6.33 0 0 0 3.15 15.6a6.33 6.33 0 0 0 8.74 5.86c3.48-1.55 4.31-4.75 4.31-7.85v-5a8.27 8.27 0 0 0 4.89 1.63v-3.55z"/>
+                            </svg>
+                        </div>
+                        <div class="social-card-name">TikTok</div>
+                        <div class="social-card-handle">@mrymify</div>
+                    </a>
+
+                    <!-- Pinterest -->
+                    <a href="https://pinterest.com/mrymify" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="Visit Mrymify on Pinterest">
+                        <div class="social-card-icon social-icon-pinterest">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0a12 12 0 0 0-4.37 23.18c-.03-.94-.06-2.39.05-3.42l.78-3.32s-.2-.39-.2-.97c0-.91.53-1.59 1.18-1.59.56 0 .83.42.83.92 0 .56-.36 1.4-.54 2.18-.15.65.33 1.18.97 1.18 1.17 0 2.06-1.23 2.06-3.01 0-1.57-1.13-2.67-2.74-2.67-1.87 0-2.96 1.4-2.96 2.85 0 .56.22 1.17.49 1.5.05.07.06.13.04.2l-.19.78c-.03.12-.1.17-.23.11-1-.46-1.62-1.92-1.62-3.09 0-2.52 1.83-4.83 5.28-4.83 2.77 0 4.93 1.97 4.93 4.62 0 2.76-1.74 4.98-4.15 4.98-.81 0-1.57-.42-1.83-.92l-.5 1.9c-.18.7-.67 1.57-.99 2.1A12 12 0 1 0 12 0z"/>
+                            </svg>
+                        </div>
+                        <div class="social-card-name">Pinterest</div>
+                        <div class="social-card-handle">@mrymify</div>
+                    </a>
+
+                    <!-- Facebook -->
+                    <a href="https://facebook.com/mrymify" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="Visit Mrymify on Facebook">
+                        <div class="social-card-icon social-icon-facebook">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </div>
+                        <div class="social-card-name">Facebook</div>
+                        <div class="social-card-handle">@mrymify</div>
+                    </a>
+
+                    <!-- Etsy -->
+                    <a href="https://etsy.com/shop/mrymify" target="_blank" rel="noopener noreferrer" class="social-card" aria-label="Visit Mrymify on Etsy">
+                        <div class="social-card-icon social-icon-etsy">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8.27 2.25v2.54h2.51c1.33 0 1.63.4 1.63 1.48v11.46c0 1.08-.3 1.48-1.63 1.48H8.27v2.54h11.23v-5.26h-2.31c-.34 2.21-.99 2.72-2.88 2.72h-1.37v-4.83h1.8c1.37 0 1.77.34 1.93 1.65h2.17V8.97h-2.17c-.16 1.31-.56 1.65-1.93 1.65h-1.8V5.79h1.37c1.89 0 2.54.51 2.88 2.72h2.31V2.25H8.27z"/>
+                            </svg>
+                        </div>
+                        <div class="social-card-name">Etsy Boutique</div>
+                        <div class="social-card-handle">@mrymify</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             4. Quick FAQ Section
+             ================================================================= -->
+        <section class="contact-faq-section" aria-label="Frequently Asked Questions">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Helpful Answers</span>
+                    <h2 class="section-title font-heading">Frequently Asked Questions</h2>
+                    <p class="section-description">
+                        Everything you need to know about commissioning custom crochet creations.
+                    </p>
+                </div>
+
+                <div class="faq-accordion-wrap">
+                    <!-- FAQ 1 -->
+                    <div class="faq-item active">
+                        <button type="button" class="faq-question-btn">
+                            <span>How does ordering a custom crochet piece work?</span>
+                            <span class="faq-arrow">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            Simply message us on WhatsApp with the item you want, your preferred colors, or a reference picture. We’ll discuss sizing, provide a price and estimated timeline, and share progress photos while your item is being handcrafted!
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="faq-item">
+                        <button type="button" class="faq-question-btn">
+                            <span>How long does a custom order take to make?</span>
+                            <span class="faq-arrow">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            Because every stitch is handmade with precision, custom orders typically take <strong>3 to 7 business days</strong> depending on the size and complexity (e.g. plushies vs. grand floral bouquets). Courier delivery takes an additional 2 to 3 days.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="faq-item">
+                        <button type="button" class="faq-question-btn">
+                            <span>What payment methods do you accept?</span>
+                            <span class="faq-arrow">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            We accept direct Bank Transfers, JazzCash, EasyPaisa, and Cash on Delivery (COD) for selected eligible locations across Pakistan.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="faq-item">
+                        <button type="button" class="faq-question-btn">
+                            <span>Can I send a custom photo or design idea from Pinterest or Instagram?</span>
+                            <span class="faq-arrow">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            Yes, absolutely! We love bringing bespoke ideas to life. Send your reference screenshot directly to Mariyam on WhatsApp (+92 300 0896885) and we will craft it for you.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Shared Footer (Mounted via js/components/footer.js) -->
+    <div id="footer-container"></div>
+
+    <!-- Core Scripts -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js"></script>
+    <script src="js/contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mrymify Admin Portal | Management Dashboard</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- =====================================================================
+         1. Authentication Gate / Lockscreen Screen
+         ===================================================================== -->
+    <div id="admin-auth-screen" class="admin-auth-screen">
+        <div class="admin-auth-card">
+            <span class="admin-auth-badge">🔒 Restricted Management</span>
+            <h1 class="admin-auth-title">Mrymify Portal</h1>
+            <p class="admin-auth-subtitle">
+                Secure management dashboard for <strong>Mariyam & Studio Team</strong> to track customer orders, update crafting stages, and manage the catalog.
+            </p>
+
+            <form id="admin-login-form" class="admin-auth-form">
+                <div class="auth-field-group">
+                    <label for="admin-password-input" class="auth-label">Master Passcode</label>
+                    <div class="auth-input-wrap">
+                        <input type="password" id="admin-password-input" class="auth-input" placeholder="Enter admin passcode" autocomplete="current-password" required />
+                        <button type="button" id="btn-toggle-password" class="auth-toggle-pwd" title="Toggle password visibility">👁️</button>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-admin-submit" class="auth-submit-btn">
+                    <span>Unlock Dashboard ✨</span>
+                </button>
+            </form>
+
+            <div id="admin-auth-alert" class="auth-alert"></div>
+
+            <div class="auth-footer-notes">
+                <div><strong>Default Master Key:</strong> <code>mrymify@2026</code></div>
+                <div style="margin-top: 0.35rem;">Protected with Web Crypto SHA-256 salted hashing and brute-force rate limiting.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         2. Authenticated Dashboard Screen
+         ===================================================================== -->
+    <div id="admin-dashboard-screen" class="admin-dashboard-screen">
+
+        <!-- Top Header Navigation -->
+        <header class="admin-header">
+            <div class="admin-header-left">
+                <a href="index.html" class="admin-brand">
+                    <div class="admin-brand-icon">🧶</div>
+                    <div>
+                        <span class="admin-brand-name">MRYMIFY</span>
+                    </div>
+                </a>
+                <span class="admin-header-tag">Admin Console</span>
+            </div>
+
+            <!-- Center: Quick Order Reference Lookup -->
+            <div class="admin-header-search-wrap">
+                <form id="admin-quick-lookup-form" class="admin-quick-search-form" onsubmit="event.preventDefault(); MrymifyAdmin.quickSearchOrder(document.getElementById('admin-quick-order-ref').value);">
+                    <span style="font-size: 0.95rem; opacity: 0.7;">🔍</span>
+                    <input type="text" id="admin-quick-order-ref" class="admin-quick-search-input" placeholder="Quick Order Lookup (e.g. MRY-18920)..." autocomplete="off" />
+                    <button type="submit" class="admin-quick-search-btn">Find Order</button>
+                </form>
+            </div>
+
+            <div class="admin-header-right">
+                <div id="admin-live-clock" class="admin-clock">Live Clock</div>
+                <a href="index.html" target="_blank" class="btn-view-store" title="Open boutique in new tab">
+                    <span>View Store ↗</span>
+                </a>
+                <button type="button" id="btn-admin-logout" class="btn-logout" title="Sign out of admin session">
+                    <span>Log Out 🚪</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body (Sidebar + Content Panes) -->
+        <div class="admin-body-container">
+
+            <!-- Sidebar Navigation -->
+            <aside class="admin-sidebar" aria-label="Admin Navigation">
+                <button type="button" class="admin-nav-item active" data-tab="overview">
+                    <span class="admin-nav-label">
+                        <span>📊</span>
+                        <span>Overview</span>
+                    </span>
+                </button>
+
+                <button type="button" class="admin-nav-item" data-tab="orders">
+                    <span class="admin-nav-label">
+                        <span>📦</span>
+                        <span>Orders Pipeline</span>
+                    </span>
+                    <span class="admin-nav-badge" id="badge-orders-count">0</span>
+                </button>
+
+                <button type="button" class="admin-nav-item" data-tab="products">
+                    <span class="admin-nav-label">
+                        <span>🧶</span>
+                        <span>Products & Stock</span>
+                    </span>
+                    <span class="admin-nav-badge" id="badge-products-count">30</span>
+                </button>
+
+                <button type="button" class="admin-nav-item" data-tab="settings">
+                    <span class="admin-nav-label">
+                        <span>⚙️</span>
+                        <span>Store Settings</span>
+                    </span>
+                </button>
+
+                <div class="admin-sidebar-footer">
+                    <div><strong>Mrymify Boutique v2.0</strong></div>
+                    <div>Mariyam & Studio Team</div>
+                    <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.2rem;">Garden Town Phase 3, Gujranwala</div>
+                </div>
+            </aside>
+
+            <!-- Main Dynamic Workspace -->
+            <main class="admin-main-content">
+
+                <!-- -------------------------------------------------------------
+                     TAB 1: Overview
+                     ------------------------------------------------------------- -->
+                <div id="tab-overview" class="admin-tab-pane active">
+                    <div class="admin-page-header">
+                        <div>
+                            <h2 class="admin-page-title">Welcome Back, Mariyam ✨</h2>
+                            <p class="admin-page-subtitle">Here is what's happening today in your handcrafted crochet boutique.</p>
+                        </div>
+                        <div class="admin-page-actions">
+                            <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.exportOrdersCsv()">
+                                <span>📥 Export Orders CSV</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon-wrap icon-revenue">💰</div>
+                            <div class="metric-data">
+                                <span class="metric-label">Total Revenue</span>
+                                <span class="metric-value" id="metric-total-revenue">Rs. 0</span>
+                                <span class="metric-sub">From customer orders</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon-wrap icon-orders">📦</div>
+                            <div class="metric-data">
+                                <span class="metric-label">Total Orders</span>
+                                <span class="metric-value" id="metric-total-orders">0</span>
+                                <span class="metric-sub">All-time received</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon-wrap icon-crafting">🧶</div>
+                            <div class="metric-data">
+                                <span class="metric-label">Crafting Queue</span>
+                                <span class="metric-value" id="metric-crafting-queue">0</span>
+                                <span class="metric-sub">Active pieces in production</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon-wrap icon-delivered">✅</div>
+                            <div class="metric-data">
+                                <span class="metric-label">Delivered Orders</span>
+                                <span class="metric-value" id="metric-delivered-count">0</span>
+                                <span class="metric-sub">Completed nationwide</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders Panel -->
+                    <div class="admin-panel-card">
+                        <div class="admin-card-header">
+                            <h3 class="admin-card-title">Recent Customer Orders</h3>
+                            <button type="button" class="action-btn" onclick="document.querySelector('[data-tab=orders]').click()">View All Orders →</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Date</th>
+                                        <th>Customer</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-orders-tbody">
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- -------------------------------------------------------------
+                     TAB 2: Orders Pipeline
+                     ------------------------------------------------------------- -->
+                <div id="tab-orders" class="admin-tab-pane">
+                    <div class="admin-page-header">
+                        <div>
+                            <h2 class="admin-page-title">Orders Pipeline & Customer Dispatch</h2>
+                            <p class="admin-page-subtitle">Track crafting stages, confirm courier delivery, and send 1-click WhatsApp customer notifications.</p>
+                        </div>
+                        <div class="admin-page-actions">
+                            <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.seedSampleOrders()">
+                                <span>➕ Add Demo Orders</span>
+                            </button>
+                            <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.exportOrdersCsv()">
+                                <span>📥 Download CSV</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="admin-panel-card">
+                        <div class="admin-card-header">
+                            <h3 class="admin-card-title">All Customer Orders</h3>
+                            <div class="table-toolbar">
+                                <select id="order-filter-status" class="filter-select">
+                                    <option value="all">All Statuses</option>
+                                    <option value="pending">⏳ Pending Review</option>
+                                    <option value="crafting">🧶 In Progress (Crafting)</option>
+                                    <option value="ready">✨ Ready for Packaging</option>
+                                    <option value="dispatched">🚚 Dispatched</option>
+                                    <option value="delivered">✅ Delivered</option>
+                                    <option value="cancelled">❌ Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Date</th>
+                                        <th>Customer Details</th>
+                                        <th>Items</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orders-table-tbody">
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- -------------------------------------------------------------
+                     TAB 3: Products & Stock
+                     ------------------------------------------------------------- -->
+                <div id="tab-products" class="admin-tab-pane">
+                    <div class="admin-page-header">
+                        <div>
+                            <h2 class="admin-page-title">Handcrafted Product Catalog</h2>
+                            <p class="admin-page-subtitle">Update prices, change badges, and add new creations to your live online boutique.</p>
+                        </div>
+                        <div class="admin-page-actions">
+                            <button type="button" class="btn-admin btn-admin-primary" onclick="document.getElementById('product-add-modal').classList.add('open')">
+                                <span>➕ Add New Piece</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="admin-panel-card">
+                        <div class="admin-card-header">
+                            <h3 class="admin-card-title">Active Products</h3>
+                        </div>
+                        <div id="admin-products-container" class="admin-products-grid">
+                            <!-- Dynamic Product Cards -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- -------------------------------------------------------------
+                     TAB 4: Store Settings
+                     ------------------------------------------------------------- -->
+                <div id="tab-settings" class="admin-tab-pane">
+                    <div class="admin-page-header">
+                        <div>
+                            <h2 class="admin-page-title">Store & Security Settings</h2>
+                            <p class="admin-page-subtitle">Manage your master credentials, shipping policies, and boutique configurations.</p>
+                        </div>
+                    </div>
+
+                    <!-- Security: Change Master Passcode -->
+                    <div class="settings-section">
+                        <div class="settings-card">
+                            <h3 style="margin-top: 0; font-family: var(--font-heading, serif); font-size: 1.3rem;">🔐 Update Master Passcode</h3>
+                            <p style="color: var(--admin-text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                                Change the password used to access this admin panel. The password will be hashed with SHA-256 and stored securely in your browser.
+                            </p>
+
+                            <form id="settings-password-form">
+                                <div class="settings-row">
+                                    <label for="settings-old-pass" class="settings-label">Current Passcode *</label>
+                                    <input type="password" id="settings-old-pass" class="settings-input" placeholder="Enter current passcode" required />
+                                </div>
+                                <div class="settings-row">
+                                    <label for="settings-new-pass" class="settings-label">New Passcode (min 6 characters) *</label>
+                                    <input type="password" id="settings-new-pass" class="settings-input" placeholder="Enter new passcode" required />
+                                </div>
+                                <div class="settings-row">
+                                    <label for="settings-confirm-pass" class="settings-label">Confirm New Passcode *</label>
+                                    <input type="password" id="settings-confirm-pass" class="settings-input" placeholder="Repeat new passcode" required />
+                                </div>
+
+                                <div id="settings-password-feedback" style="display: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem;"></div>
+
+                                <button type="submit" class="btn-admin btn-admin-primary">Update Passcode 🔒</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Boutique Information -->
+                    <div class="settings-section">
+                        <div class="settings-card">
+                            <h3 style="margin-top: 0; font-family: var(--font-heading, serif); font-size: 1.3rem;">🌸 Boutique Contacts</h3>
+                            <div style="font-size: 0.92rem; line-height: 1.7; color: var(--admin-text-main);">
+                                <div><strong>Manager & Marketer:</strong> Mariyam</div>
+                                <div><strong>Artisan Studio:</strong> Handcrafted Boutique Team</div>
+                                <div><strong>WhatsApp Business:</strong> +92 300 0896885</div>
+                                <div><strong>Official Email:</strong> mrymify9@gmail.com</div>
+                                <div><strong>Artisan Studio:</strong> Garden Town Phase 3, Gujranwala, Pakistan</div>
+                                <div><strong>Free Shipping Policy:</strong> Automatically applied on cart orders above Rs. 3,500</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         3. Modals (Order Details, Product Edit, Product Add)
+         ===================================================================== -->
+
+    <!-- Order Details Modal -->
+    <div id="order-detail-modal" class="admin-modal-backdrop">
+        <div class="admin-modal-card">
+            <div class="admin-modal-header">
+                <h3 id="modal-order-title" class="admin-modal-title">Order Details</h3>
+                <button type="button" class="modal-close-btn">&times;</button>
+            </div>
+            <div id="modal-order-content" class="admin-modal-body">
+                <!-- Injected dynamically -->
+            </div>
+            <div class="admin-modal-footer">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-right: auto;">
+                    <label for="modal-order-status-select" style="font-size: 0.85rem; font-weight: 600;">Status:</label>
+                    <select id="modal-order-status-select" class="filter-select">
+                        <option value="pending">⏳ Pending Review</option>
+                        <option value="crafting">🧶 In Progress (Crafting)</option>
+                        <option value="ready">✨ Ready for Packaging</option>
+                        <option value="dispatched">🚚 Dispatched</option>
+                        <option value="delivered">✅ Delivered</option>
+                        <option value="cancelled">❌ Cancelled</option>
+                    </select>
+                    <button type="button" id="modal-btn-save-status" class="btn-admin btn-admin-primary">Save Status</button>
+                </div>
+                <button type="button" id="modal-btn-wa-customer" class="btn-admin btn-admin-wa">
+                    <span>Message on WhatsApp 💬</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Edit Modal -->
+    <div id="product-edit-modal" class="admin-modal-backdrop">
+        <div class="admin-modal-card" style="max-width: 480px;">
+            <div class="admin-modal-header">
+                <h3 id="edit-prod-title" class="admin-modal-title">Edit Product</h3>
+                <button type="button" class="modal-close-btn">&times;</button>
+            </div>
+            <div class="admin-modal-body">
+                <div class="settings-row">
+                    <label for="edit-prod-price" class="settings-label">Price in PKR (Rs.) *</label>
+                    <input type="number" id="edit-prod-price" class="settings-input" required />
+                </div>
+                <div class="settings-row">
+                    <label for="edit-prod-badge" class="settings-label">Badge (e.g. Best Seller, Popular, Set of 3)</label>
+                    <input type="text" id="edit-prod-badge" class="settings-input" placeholder="Leave empty for none" />
+                </div>
+            </div>
+            <div class="admin-modal-footer">
+                <button type="button" class="action-btn modal-close-btn">Cancel</button>
+                <button type="button" id="btn-save-product-edit" class="btn-admin btn-admin-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add New Product Modal -->
+    <div id="product-add-modal" class="admin-modal-backdrop">
+        <div class="admin-modal-card" style="max-width: 520px;">
+            <div class="admin-modal-header">
+                <h3 class="admin-modal-title">Add New Handcrafted Piece</h3>
+                <button type="button" class="modal-close-btn">&times;</button>
+            </div>
+            <div class="admin-modal-body">
+                <form id="form-add-product" onsubmit="event.preventDefault(); MrymifyAdmin.addNewProduct({
+                    title: document.getElementById('add-p-title').value,
+                    category: document.getElementById('add-p-cat').value,
+                    price: document.getElementById('add-p-price').value,
+                    badge: document.getElementById('add-p-badge').value,
+                    description: document.getElementById('add-p-desc').value,
+                    image: document.getElementById('add-p-image').value || 'images/products/01_Royal_Crown_Froggy.png'
+                })">
+                    <div class="settings-row">
+                        <label for="add-p-title" class="settings-label">Piece Title *</label>
+                        <input type="text" id="add-p-title" class="settings-input" placeholder="e.g. Lavender Blossom Keychain" required />
+                    </div>
+                    <div class="settings-row">
+                        <label for="add-p-cat" class="settings-label">Category *</label>
+                        <select id="add-p-cat" class="settings-input">
+                            <option value="amigurumi">Amigurumi & Plushies</option>
+                            <option value="keychains">Keychains & Charms</option>
+                            <option value="accessories">Accessories & Hair</option>
+                            <option value="flowers">Flowers & Bouquets</option>
+                            <option value="stationery">Stationery & Bookmarks</option>
+                            <option value="wearables">Wearables & Cardigans</option>
+                        </select>
+                    </div>
+                    <div class="settings-row">
+                        <label for="add-p-price" class="settings-label">Price in PKR (Rs.) *</label>
+                        <input type="number" id="add-p-price" class="settings-input" placeholder="e.g. 1250" required />
+                    </div>
+                    <div class="settings-row">
+                        <label for="add-p-badge" class="settings-label">Badge (Optional)</label>
+                        <input type="text" id="add-p-badge" class="settings-input" placeholder="e.g. New Drop, Limited Edition" />
+                    </div>
+                    <div class="settings-row">
+                        <label for="add-p-image" class="settings-label">Image Path / URL</label>
+                        <input type="text" id="add-p-image" class="settings-input" placeholder="images/products/..." />
+                    </div>
+                    <div class="settings-row">
+                        <label for="add-p-desc" class="settings-label">Description</label>
+                        <textarea id="add-p-desc" class="settings-input" rows="3" placeholder="Soft milk cotton yarn, handcrafted details..."></textarea>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+                        <button type="button" class="action-btn modal-close-btn">Cancel</button>
+                        <button type="submit" class="btn-admin btn-admin-primary">Add to Store 🧶</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shop Mrymify - Handcrafted crochet plushies, amigurumi, everlasting bouquets, stylish bags, and personalized gifts.">
+    <title>Shop All Products | Mrymify Handcrafted Boutique</title>
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+</head>
+<body>
+
+    <!-- Shared Navigation Bar (Mounted via js/components/navbar.js) -->
+    <div id="navbar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="site-main">
+
+        <!-- Shop Header & Search Controls -->
+        <section class="section section-soft" style="padding: 3.5rem 0 2rem;">
+            <div class="container">
+                <div class="section-header" style="margin-bottom: 2rem;">
+                    <span class="section-tag">Handcrafted Boutique Catalog</span>
+                    <h1 class="section-title">Explore All Creations</h1>
+                    <p class="section-description">
+                        Discover 30 unique handcrafted crochet pieces, floral bouquets, wearables, and novelty gifts.
+                    </p>
+                </div>
+
+                <!-- Search & Sort Controls Bar -->
+                <div style="display: flex; gap: 1rem; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <!-- Live Search Input -->
+                    <div style="flex: 1 1 320px; position: relative;">
+                        <input 
+                            type="text" 
+                            id="shop-search-input" 
+                            class="newsletter-input" 
+                            style="width: 100%; padding-left: 2.8rem; margin: 0;" 
+                            placeholder="Search by product name or keyword..."
+                            autocomplete="off"
+                        />
+                        <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 1.1rem; pointer-events: none; opacity: 0.6;">🔍</span>
+                    </div>
+
+                    <!-- Sort Dropdown -->
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <label for="shop-sort-select" style="font-family: var(--font-brand); font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted);">Sort by:</label>
+                        <select id="shop-sort-select" style="background: white; border: 1.5px solid var(--color-border); border-radius: var(--radius-full); padding: 0.65rem 1.2rem; font-family: var(--font-brand); font-size: 0.88rem; color: var(--color-text-main); cursor: pointer;">
+                            <option value="featured">Featured First</option>
+                            <option value="likes">Most Popular (Likes)</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Category Filter Pills -->
+                <div class="catalog-filters" style="margin-bottom: 0;">
+                    <button class="filter-pill shop-filter-pill active" data-filter="all">All Pieces (30)</button>
+                    <button class="filter-pill shop-filter-pill" data-filter="amigurumi">Amigurumi & Plushies</button>
+                    <button class="filter-pill shop-filter-pill" data-filter="floral">Floral Bouquets</button>
+                    <button class="filter-pill shop-filter-pill" data-filter="wearables">Bags & Wearables</button>
+                    <button class="filter-pill shop-filter-pill" data-filter="keychains">Keychains & Hairwear</button>
+                    <button class="filter-pill shop-filter-pill" data-filter="novelties">Novelty Gifts</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Grid Section -->
+        <section class="section">
+            <div class="container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.75rem;">
+                    <span id="shop-count-display" style="font-family: var(--font-brand); font-size: 0.9rem; font-weight: 600; color: var(--color-text-muted);">
+                        Loading products...
+                    </span>
+                    <span style="font-size: 0.85rem; color: var(--color-primary); font-family: var(--font-brand); font-weight: 600;">
+                        🧶 100% Handcrafted
+                    </span>
+                </div>
+
+                <!-- Grid Container -->
+                <div class="products-grid" id="shop-products-grid">
+                    <!-- Cards populated dynamically by js/shop.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Custom Order Banner -->
+        <section class="section section-soft" style="text-align: center; padding: 3rem 0;">
+            <div class="container">
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <h2 class="font-heading" style="font-size: 1.8rem; margin-bottom: 0.75rem;">Don't see exactly what you're looking for?</h2>
+                    <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+                        We accept custom requests! From bespoke character amigurumi to customized color palettes for weddings and graduation gifts.
+                    </p>
+                    <a href="https://wa.me/923000000000?text=Hello%20Mrymify!%20I%20would%20like%20to%20request%20a%20custom%20order" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        Request Custom Piece on WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Shared Footer (Mounted via js/components/footer.js) -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/shop.js"></script>
+</body>
+</html>

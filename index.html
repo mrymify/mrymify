@@ -3,15 +3,494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mrymify</title>
+    <meta name="description" content="Mrymify - Handcrafted boutique featuring crochet plushies, amigurumi, floral bouquets, wearable accessories, and charming handmade gifts.">
+    <title>Mrymify | Handcrafted Boutique & Crochet Art</title>
 
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
 </head>
-
 <body>
 
-    <h1>Welcome to Mrymify</h1>
+    <!-- Shared Navigation Bar (Mounted via js/components/navbar.js) -->
+    <div id="navbar-container"></div>
 
+    <!-- Main Content Area -->
+    <main id="main-content" class="site-main">
+
+        <!-- =================================================================
+             1. Hero Section (Details on Left, Showcase Product on Right)
+             ================================================================= -->
+        <section id="hero-section" class="section hero-skeleton" aria-label="Hero Introduction">
+            <div class="container">
+                <div class="hero-grid">
+                    <!-- Left: Details & Actions -->
+                    <div class="hero-text-content">
+                        <span class="section-tag">✨ Handcrafted with Heart</span>
+                        <h1 class="section-title font-heading" style="font-size: 2.8rem; line-height: 1.15; margin: 0.75rem 0 1.25rem;">
+                            Discover Handcrafted Wonders You'll Cherish Forever
+                        </h1>
+                        <p class="section-description" style="font-size: 1.15rem; margin-bottom: 2rem;">
+                            From adorable amigurumi plushies and everlasting crochet flower bouquets to elegant wearable crafts &mdash;  explore our boutique collection crafted with delicate care.
+                        </p>
+                        <div class="hero-actions" style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+                            <a href="shop.html" class="btn btn-primary btn-lg" style="box-shadow: none;">Explore Collection &rarr;</a>
+                            <a href="#categories-section" style="font-family: var(--font-brand); font-weight: 600; color: var(--color-text-main); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='var(--color-text-main)'">Browse Categories</a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Showcase Product Spotlight -->
+                    <div class="hero-showcase-container">
+                        <div class="hero-showcase-card" style="background-color: var(--color-surface-soft); border: none; box-shadow: none; padding: 2rem; border-radius: 28px;">
+                            
+                            <!-- Injected Product (Expanded to fill the container) -->
+                            <div style="background-color: var(--color-surface); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm); width: 100%;">
+                                <div class="showcase-image-frame" style="border-radius: var(--radius-md); margin-bottom: 1.25rem; height: 320px;">
+                                    <img 
+                                        src="images/products/09_Grand_Mixed_Rose_Tulip_Bouquet.png" 
+                                        alt="Grand Mixed Rose & Tulip Bouquet" 
+                                        class="showcase-image" 
+                                        width="378" 
+                                        height="332"
+                                    />
+                                    <div class="showcase-price-floating" style="bottom: 8px; right: 8px; font-size: 0.9rem;">Rs. 2,450</div>
+                                </div>
+                                <div class="showcase-content" style="padding: 0;">
+                                    <h3 class="showcase-title" style="font-size: 1.15rem; margin-bottom: 0.25rem;">Grand Mixed Rose & Tulip Bouquet</h3>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                                        <span class="showcase-category" style="margin: 0;">Floral Masterpiece</span>
+                                        <span class="showcase-rating" style="font-size: 0.75rem;">★ 5.0</span>
+                                    </div>
+                                    <div class="showcase-actions">
+                                        <button class="btn btn-primary btn-sm" onclick="MrymifyProducts.handleAddToCart('prod-09')">
+                                            Add to Cart
+                                        </button>
+                                        <button class="btn btn-outline btn-sm btn-like" data-like-btn="prod-09" onclick="MrymifyProducts.handleLike('prod-09', event)" title="Like product" style="border-color: var(--color-border-light);">
+                                            <span class="heart-icon">🤍</span>
+                                            <span class="like-count">86</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             2. Featured Products Section (Last 2 Centered in the Middle)
+             ================================================================= -->
+        <section id="featured-products-section" class="section section-soft" aria-label="Featured Products">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Artisan Highlights</span>
+                    <h2 class="section-title">Featured Products</h2>
+                    <p class="section-description">
+                        Handcrafted best-sellers and customer favorites from our workshop lookbook.
+                    </p>
+                </div>
+
+                <!-- Featured Products Grid (Centered Alignment for Last Two Products) -->
+                <div class="featured-products-grid">
+                    <!-- Product 1: Royal Crown Froggy -->
+                    <article class="product-card" data-category="amigurumi" data-id="prod-01">
+                        <div class="product-card-img-wrap">
+                            <img src="images/products/01_Royal_Crown_Froggy.png" alt="Royal Crown Froggy" class="product-card-img" width="378" height="331" loading="lazy" />
+                            <div class="product-card-badges">
+                                <span class="badge badge-primary">Best Seller</span>
+                                <span class="product-discount-badge">Save Rs. 250</span>
+                            </div>
+                        </div>
+                        <div class="product-card-content">
+                            <span class="product-card-category">Amigurumi & Plushies</span>
+                            <h3 class="product-card-title">Royal Crown Froggy</h3>
+                            <p class="product-card-desc">Handcrafted plush froggy prince with an intricate golden yarn crown and adorable rosy cheeks.</p>
+                            <div class="product-card-pricing">
+                                <span class="product-price-current">Rs. 1,450</span>
+                                <span class="product-price-original">Rs. 1,700</span>
+                            </div>
+                            <div class="product-card-actions">
+                                <button class="btn btn-primary btn-sm btn-add-cart" onclick="MrymifyProducts.handleAddToCart('prod-01')">
+                                    <span>Add to Cart</span>
+                                </button>
+                                <button class="btn btn-outline btn-sm btn-like" data-like-btn="prod-01" onclick="MrymifyProducts.handleLike('prod-01', event)" title="Like product">
+                                    <span class="heart-icon">🤍</span>
+                                    <span class="like-count">58</span>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Product 2: Pure White Tulip Bouquet -->
+                    <article class="product-card" data-category="floral" data-id="prod-07">
+                        <div class="product-card-img-wrap">
+                            <img src="images/products/07_Pure_White_Tulip_Bouquet.png" alt="Pure White Tulip Bouquet" class="product-card-img" width="378" height="331" loading="lazy" />
+                            <div class="product-card-badges">
+                                <span class="badge badge-primary">Best Seller</span>
+                                <span class="product-discount-badge">Save Rs. 400</span>
+                            </div>
+                        </div>
+                        <div class="product-card-content">
+                            <span class="product-card-category">Floral Bouquets</span>
+                            <h3 class="product-card-title">Pure White Tulip Bouquet</h3>
+                            <p class="product-card-desc">Evergreen open crochet tulips wrapped with lush green leaves and tied with elegant satin ribbon.</p>
+                            <div class="product-card-pricing">
+                                <span class="product-price-current">Rs. 1,800</span>
+                                <span class="product-price-original">Rs. 2,200</span>
+                            </div>
+                            <div class="product-card-actions">
+                                <button class="btn btn-primary btn-sm btn-add-cart" onclick="MrymifyProducts.handleAddToCart('prod-07')">
+                                    <span>Add to Cart</span>
+                                </button>
+                                <button class="btn btn-outline btn-sm btn-like" data-like-btn="prod-07" onclick="MrymifyProducts.handleLike('prod-07', event)" title="Like product">
+                                    <span class="heart-icon">🤍</span>
+                                    <span class="like-count">74</span>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Product 3: Bobble Stitch Shoulder Bag -->
+                    <article class="product-card" data-category="wearables" data-id="prod-15">
+                        <div class="product-card-img-wrap">
+                            <img src="images/products/15_Bobble_Stitch_Shoulder_Bag.png" alt="Bobble Stitch Shoulder Bag" class="product-card-img" width="378" height="332" loading="lazy" />
+                            <div class="product-card-badges">
+                                <span class="badge badge-primary">Artisan Bag</span>
+                                <span class="product-discount-badge">Save Rs. 550</span>
+                            </div>
+                        </div>
+                        <div class="product-card-content">
+                            <span class="product-card-category">Bags & Wearables</span>
+                            <h3 class="product-card-title">Bobble Stitch Shoulder Bag</h3>
+                            <p class="product-card-desc">Chic hand-crocheted shoulder bag with rich textured bobble stitches in warm terracotta brown.</p>
+                            <div class="product-card-pricing">
+                                <span class="product-price-current">Rs. 2,850</span>
+                                <span class="product-price-original">Rs. 3,400</span>
+                            </div>
+                            <div class="product-card-actions">
+                                <button class="btn btn-primary btn-sm btn-add-cart" onclick="MrymifyProducts.handleAddToCart('prod-15')">
+                                    <span>Add to Cart</span>
+                                </button>
+                                <button class="btn btn-outline btn-sm btn-like" data-like-btn="prod-15" onclick="MrymifyProducts.handleLike('prod-15', event)" title="Like product">
+                                    <span class="heart-icon">🤍</span>
+                                    <span class="like-count">63</span>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Product 4: Strawberry & Blossom Keyring -->
+                    <article class="product-card" data-category="keychains" data-id="prod-20">
+                        <div class="product-card-img-wrap">
+                            <img src="images/products/20_Strawberry_Blossom_Keyring.png" alt="Strawberry & Blossom Keyring" class="product-card-img" width="378" height="332" loading="lazy" />
+                            <div class="product-card-badges">
+                                <span class="badge badge-primary">Popular</span>
+                                <span class="product-discount-badge">Save Rs. 100</span>
+                            </div>
+                        </div>
+                        <div class="product-card-content">
+                            <span class="product-card-category">Keychains & Charms</span>
+                            <h3 class="product-card-title">Strawberry & Blossom Keyring</h3>
+                            <p class="product-card-desc">Sweet textured strawberry with green calyx and tiny white flower charm on a gold keyring.</p>
+                            <div class="product-card-pricing">
+                                <span class="product-price-current">Rs. 450</span>
+                                <span class="product-price-original">Rs. 550</span>
+                            </div>
+                            <div class="product-card-actions">
+                                <button class="btn btn-primary btn-sm btn-add-cart" onclick="MrymifyProducts.handleAddToCart('prod-20')">
+                                    <span>Add to Cart</span>
+                                </button>
+                                <button class="btn btn-outline btn-sm btn-like" data-like-btn="prod-20" onclick="MrymifyProducts.handleLike('prod-20', event)" title="Like product">
+                                    <span class="heart-icon">🤍</span>
+                                    <span class="like-count">47</span>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Product 5: Sweet Heart Panda Plush (Centered in Middle of Row 2) -->
+                    <article class="product-card" data-category="amigurumi" data-id="prod-02">
+                        <div class="product-card-img-wrap">
+                            <img src="images/products/02_Sweet_Heart_Panda_Plush.png" alt="Sweet Heart Panda Plush" class="product-card-img" width="378" height="331" loading="lazy" />
+                            <div class="product-card-badges">
+                                <span class="badge badge-primary">Handcrafted</span>
+                                <span class="product-discount-badge">Save Rs. 250</span>
+                            </div>
+                        </div>
+                        <div class="product-card-content">
+                            <span class="product-card-category">Amigurumi & Plushies</span>
+                            <h3 class="product-card-title">Sweet Heart Panda Plush</h3>
+                            <p class="product-card-desc">Lovable baby panda amigurumi holding a soft pink heart, crocheted using skin-friendly yarn.</p>
+                            <div class="product-card-pricing">
+                                <span class="product-price-current">Rs. 1,350</span>
+                                <span class="product-price-original">Rs. 1,600</span>
+                            </div>
+                            <div class="product-card-actions">
+                                <button class="btn btn-primary btn-sm btn-add-cart" onclick="MrymifyProducts.handleAddToCart('prod-02')">
+                                    <span>Add to Cart</span>
+                                </button>
+                                <button class="btn btn-outline btn-sm btn-like" data-like-btn="prod-02" onclick="MrymifyProducts.handleLike('prod-02', event)" title="Like product">
+                                    <span class="heart-icon">🤍</span>
+                                    <span class="like-count">52</span>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Product 6: Cozy Scarf Bunny Pair (Centered in Middle of Row 2) -->
+                    <article class="product-card" data-category="amigurumi" data-id="prod-06">
+                        <div class="product-card-img-wrap">
+                            <img src="images/products/06_Cozy_Scarf_Bunny_Pair.png" alt="Cozy Scarf Bunny Pair" class="product-card-img" width="252" height="498" loading="lazy" />
+                            <div class="product-card-badges">
+                                <span class="badge badge-primary">Couple Gift</span>
+                                <span class="product-discount-badge">Save Rs. 250</span>
+                            </div>
+                        </div>
+                        <div class="product-card-content">
+                            <span class="product-card-category">Amigurumi & Plushies</span>
+                            <h3 class="product-card-title">Cozy Scarf Bunny Pair</h3>
+                            <p class="product-card-desc">Two pure white cuddle bunnies bundled together in warm knitted winter scarves.</p>
+                            <div class="product-card-pricing">
+                                <span class="product-price-current">Rs. 1,650</span>
+                                <span class="product-price-original">Rs. 1,900</span>
+                            </div>
+                            <div class="product-card-actions">
+                                <button class="btn btn-primary btn-sm btn-add-cart" onclick="MrymifyProducts.handleAddToCart('prod-06')">
+                                    <span>Add to Cart</span>
+                                </button>
+                                <button class="btn btn-outline btn-sm btn-like" data-like-btn="prod-06" onclick="MrymifyProducts.handleLike('prod-06', event)" title="Like product">
+                                    <span class="heart-icon">🤍</span>
+                                    <span class="like-count">69</span>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- "View All Products &rarr;" Button Under Featured Section -->
+                <div style="text-align: center; margin-top: 3.5rem;">
+                    <a href="shop.html" class="btn btn-primary btn-lg" style="box-shadow: var(--shadow-md);">
+                        <span>View All Products (30) &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             3. Collections Theme (Tabbed Gallery)
+             ================================================================= -->
+        <section id="categories-section" class="section" aria-label="Shop by Category">
+            <div class="container">
+                <div class="section-header" style="margin-bottom: 1rem;">
+                    <span class="section-tag">Collections</span>
+                    <h2 class="section-title">Shop by Category</h2>
+                    <p class="section-description">
+                        Curated handcrafted selections designed to bring smiles and cozy warmth.
+                    </p>
+                </div>
+
+                <div class="collections-teaser-wrapper" style="position: relative; overflow: hidden; padding-bottom: 1rem;">
+                    <div class="category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px;">
+                        
+                        <!-- Col 1: Amigurumi -->
+                        <div class="category-teaser-col">
+                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">Amigurumi & Plushies</h3>
+                            <article class="product-card">
+                                <div class="product-card-img-wrap">
+                                    <img src="images/products/01_Royal_Crown_Froggy.png" class="product-card-img" alt="Amigurumi" />
+                                </div>
+                                <div class="product-card-content" style="padding: 1.25rem;">
+                                    <h4 class="product-card-title">Royal Crown Froggy</h4>
+                                    <div class="product-card-pricing">Rs. 1,450</div>
+                                </div>
+                            </article>
+                        </div>
+                        
+                        <!-- Col 2: Floral -->
+                        <div class="category-teaser-col">
+                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">Floral Stems & Bouquets</h3>
+                            <article class="product-card">
+                                <div class="product-card-img-wrap">
+                                    <img src="images/products/09_Grand_Mixed_Rose_Tulip_Bouquet.png" class="product-card-img" alt="Floral" />
+                                </div>
+                                <div class="product-card-content" style="padding: 1.25rem;">
+                                    <h4 class="product-card-title">Grand Mixed Bouquet</h4>
+                                    <div class="product-card-pricing">Rs. 2,450</div>
+                                </div>
+                            </article>
+                        </div>
+                        
+                        <!-- Col 3: Wearables -->
+                        <div class="category-teaser-col">
+                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">Bags & Wearables</h3>
+                            <article class="product-card">
+                                <div class="product-card-img-wrap">
+                                    <img src="images/products/15_Bobble_Stitch_Shoulder_Bag.png" class="product-card-img" alt="Wearables" />
+                                </div>
+                                <div class="product-card-content" style="padding: 1.25rem;">
+                                    <h4 class="product-card-title">Bobble Stitch Shoulder Bag</h4>
+                                    <div class="product-card-pricing">Rs. 2,850</div>
+                                </div>
+                            </article>
+                        </div>
+                        
+                        <!-- Col 4: Keychains -->
+                        <div class="category-teaser-col">
+                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">Keychains & Accessories</h3>
+                            <article class="product-card">
+                                <div class="product-card-img-wrap">
+                                    <img src="images/products/20_Strawberry_Blossom_Keyring.png" class="product-card-img" alt="Keychains" />
+                                </div>
+                                <div class="product-card-content" style="padding: 1.25rem;">
+                                    <h4 class="product-card-title">Strawberry Blossom Keyring</h4>
+                                    <div class="product-card-pricing">Rs. 450</div>
+                                </div>
+                            </article>
+                        </div>
+
+                    </div>
+
+                    <!-- Unified Global Blur Overlay -->
+                    <a href="categories.html" class="global-blur-overlay">
+                        <span class="btn btn-primary btn-lg explore-btn-wide">Explore Collection &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             4. Promotional Banner (Special Custom Orders)
+             ================================================================= -->
+        <section id="promotional-banner" class="section" style="padding: 2rem 0;" aria-label="Special Promotion">
+            <div class="container">
+                <div style="background: linear-gradient(135deg, var(--color-secondary) 0%, #1e332c 100%); color: #ffffff; border-radius: var(--radius-xl); padding: 3.5rem 2.5rem; text-align: center; box-shadow: var(--shadow-md);">
+                    <span class="badge" style="background: rgba(229, 153, 123, 0.2); color: var(--color-accent); margin-bottom: 1rem;">Special Custom Orders</span>
+                    <h2 class="font-heading" style="color: #ffffff; font-size: 2.2rem; margin-bottom: 1rem;">
+                        Find Your Next Favorite Handcrafted Gift
+                    </h2>
+                    <p style="color: #cbdad4; max-width: 580px; margin: 0 auto 2rem; font-size: 1.05rem;">
+                        Looking for custom colors, initials, or bespoke character amigurumi? Let us handcraft something truly unique for you or your loved ones.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="https://wa.me/923000896885?text=Hello%20Mariyam!%20I%20want%20to%20order%20a%20custom%20crochet%20item%20from%20Mrymify." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg" style="background-color: var(--color-accent); color: #27211e;">
+                            Request Custom Order on WhatsApp
+                        </a>
+                        <a href="shop.html" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.4); color: #ffffff;">
+                            Explore Boutique Shop
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             5. VIP Newsletter & Offers Signup Box (Email Collector)
+             ================================================================= -->
+        <section class="section newsletter-section" aria-label="Newsletter Subscription">
+            <div class="container">
+                <div class="newsletter-card">
+                    <span class="newsletter-badge">🎁  Special Offers & Drops</span>
+                    <h2 class="font-heading newsletter-title">Join the Mrymify VIP Circle</h2>
+                    <p class="newsletter-desc">
+                        Be the first to know about new handcrafted drops, seasonal gift sales, and exclusive personalized offers delivered straight to your inbox.
+                    </p>
+                    <form id="newsletter-form" class="newsletter-form">
+                        <input 
+                            type="email" 
+                            id="newsletter-email" 
+                            class="newsletter-input" 
+                            placeholder="Enter your email address..." 
+                            required 
+                        />
+                        <button type="submit" class="btn btn-primary newsletter-btn">
+                            <span>Subscribe</span>
+                        </button>
+                    </form>
+                    <div id="newsletter-msg" class="newsletter-success-msg">
+                        ✨ Thank you! You're on the VIP list. Welcome to Mrymify!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             6. Why Choose Mrymify (Trust Section)
+             ================================================================= -->
+        <section id="why-choose-us" class="section" aria-label="Why Choose Mrymify">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">The Mrymify Difference</span>
+                    <h2 class="section-title">Why Choose Mrymify?</h2>
+                    <p class="section-description">
+                        Every single item is thoughtfully designed and created with love.
+                    </p>
+                </div>
+
+                <div class="products-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                    <div class="product-card" style="padding: 2rem; text-align: center; align-items: center;">
+                        <span style="font-size: 2.5rem; margin-bottom: 1rem;">🧶</span>
+                        <h3 class="font-heading" style="font-size: 1.35rem; margin-bottom: 0.5rem;">100% Handcrafted</h3>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6;">
+                            Meticulously crocheted stitch by stitch using premium, skin-friendly cotton-acrylic yarn and durable materials.
+                        </p>
+                    </div>
+                    <div class="product-card" style="padding: 2rem; text-align: center; align-items: center;">
+                        <span style="font-size: 2.5rem; margin-bottom: 1rem;">🎨</span>
+                        <h3 class="font-heading" style="font-size: 1.35rem; margin-bottom: 0.5rem;">Custom Personalization</h3>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6;">
+                            Choose your preferred colors, flower patterns, initials, and themes to create a truly one-of-a-kind gift.
+                        </p>
+                    </div>
+                    <div class="product-card" style="padding: 2rem; text-align: center; align-items: center;">
+                        <span style="font-size: 2.5rem; margin-bottom: 1rem;">💬</span>
+                        <h3 class="font-heading" style="font-size: 1.35rem; margin-bottom: 0.5rem;">Direct WhatsApp Care</h3>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6;">
+                            Seamless 0-cost shopping. Order directly on WhatsApp, get progress photos, and enjoy direct personal service.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             7. Call to Action
+             ================================================================= -->
+        <section id="call-to-action" class="section section-soft" style="text-align: center;" aria-label="Call to Action">
+            <div class="container">
+                <div style="max-width: 620px; margin: 0 auto;">
+                    <h2 class="section-title font-heading" style="margin-bottom: 1rem;">Ready to Find Something Special?</h2>
+                    <p class="section-description" style="margin-bottom: 2rem;">
+                        Explore our complete collection of 30+ handcrafted pieces or message us directly with your dream design.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="shop.html" class="btn btn-primary btn-lg">Start Shopping Now</a>
+                        <a href="https://wa.me/923000896885?text=Hello%20Mariyam!%20I%20have%20an%20inquiry%20about%20your%20handcrafted%20pieces." target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
+                            💬 Message Us on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Shared Footer (Mounted via js/components/footer.js) -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js"></script>
+    <script src="js/products.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
+
+
+

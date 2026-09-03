@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shop by Collection at Mrymify - Handcrafted crochet plushies, amigurumi, everlasting bouquets, stylish bags, and personalized gifts.">
+    <title>Collection | Mrymify Handcrafted Boutique</title>
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+</head>
+<body>
+
+    <!-- Shared Navigation Bar (Mounted via js/components/navbar.js) -->
+    <div id="navbar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="site-main">
+
+        <!-- Categories Header -->
+        <section class="section section-soft" style="padding: 3.5rem 0 2rem;">
+            <div class="container">
+                <div class="section-header" style="margin-bottom: 2rem;">
+                    <span class="section-tag">Handcrafted Boutique Collections</span>
+                    <h1 class="section-title">Shop by Collection</h1>
+                    <p class="section-description">
+                        Browse our curated selections of artisanal creations, beautifully categorized for your convenience.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Categories Container -->
+        <!-- Populated via js/categories.js -->
+        <div id="categories-container" class="container" style="padding-bottom: 4rem;">
+            <!-- Category sections will be injected here by JS -->
+        </div>
+
+    </main>
+
+    <!-- Shared Footer (Mounted via js/components/footer.js) -->
+    <div id="footer-container"></div>
+
+    <!-- Core Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js"></script>
+    <script src="js/categories.js"></script>
+</body>
+</html>

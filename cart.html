@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your Shopping Bag at Mrymify - Review your handcrafted crochet pieces and checkout directly via WhatsApp with Mariyam.">
+    <title>Shopping Bag & Checkout | Mrymify Handcrafted Boutique</title>
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/cart.css">
+</head>
+<body>
+
+    <!-- Shared Navigation Bar (Mounted via js/components/navbar.js) -->
+    <div id="navbar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="site-main">
+
+        <!-- =================================================================
+             1. Hero Introduction
+             ================================================================= -->
+        <section class="cart-hero">
+            <div class="container">
+                <span class="cart-hero-tag">🛍️ Your Handcrafted Bag</span>
+                <h1 class="cart-hero-title font-heading">
+                    Review Your Chosen Treasures
+                </h1>
+                <p class="cart-hero-desc">
+                    Each piece is handmade with patience and love. Review your items and complete your order directly with Mariyam on WhatsApp.
+                </p>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             2. Cart & Checkout Section
+             ================================================================= -->
+        <section class="cart-section">
+            <div class="container">
+
+                <!-- Mode Switcher: Shopping Bag vs View Your Orders -->
+                <div class="cart-mode-tabs-wrap">
+                    <div class="cart-mode-tabs">
+                        <button type="button" class="cart-mode-tab active" id="tab-btn-cart" onclick="MrymifyCart.switchCartMode('cart')">
+                            <span>🛍️ Shopping Bag</span>
+                            <span class="cart-mode-badge" id="tab-cart-count">0</span>
+                        </button>
+                        <button type="button" class="cart-mode-tab" id="tab-btn-orders" onclick="MrymifyCart.switchCartMode('orders')">
+                            <span>📦 View Your Orders</span>
+                            <span class="cart-mode-badge" id="tab-orders-count">0</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Populated Cart Content (Hidden if cart is empty) -->
+                <div id="cart-content-layout" class="cart-layout-grid" style="display: none;">
+
+                    <!-- Left Column: Items List & Free Shipping Progress -->
+                    <div class="cart-items-card">
+                        <div class="cart-card-header">
+                            <div>
+                                <h2 class="cart-card-title">Shopping Items</h2>
+                                <span id="cart-item-count-badge" style="font-size: 0.85rem; color: var(--color-text-muted);">0 items</span>
+                            </div>
+                            <button type="button" class="btn-clear-cart" onclick="MrymifyCart.clearCart()">
+                                🗑️ Clear All
+                            </button>
+                        </div>
+
+                        <!-- Free Shipping Meter -->
+                        <div class="shipping-meter-wrap">
+                            <div id="shipping-meter-text" class="shipping-meter-text">
+                                🚚 Add <strong>Rs. 3,500</strong> for <strong>FREE Delivery</strong> across Pakistan!
+                            </div>
+                            <div class="shipping-progress-bar">
+                                <div id="shipping-progress-fill" class="shipping-progress-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Items Rows (Populated via js/cart.js) -->
+                        <div id="cart-items-list">
+                            <!-- Injected by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Order Summary & Customer Details -->
+                    <div class="cart-summary-card">
+                        <h2 class="summary-title">Order Summary</h2>
+
+                        <div class="summary-rows">
+                            <div class="summary-row">
+                                <span>Items Subtotal</span>
+                                <span id="summary-subtotal" style="font-weight: 600;">Rs. 0</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Estimated Courier Delivery</span>
+                                <span id="summary-shipping">Rs. 200</span>
+                            </div>
+                            <div class="summary-row total-row">
+                                <span>Total Amount</span>
+                                <span id="summary-grand-total" class="total-amount">Rs. 0</span>
+                            </div>
+                        </div>
+
+                        <!-- Customer Shipping & Delivery Details -->
+                        <div class="checkout-details-box">
+                            <h3 class="checkout-box-title">Shipping & Delivery Details</h3>
+
+                            <div class="checkout-input-group">
+                                <input type="text" id="checkout-name" class="checkout-input" placeholder="Your Full Name *" required />
+                            </div>
+
+                            <div class="checkout-input-group">
+                                <input type="tel" id="checkout-phone" class="checkout-input" placeholder="Phone Number (Active for courier delivery) *" required />
+                            </div>
+
+                            <div class="checkout-input-group">
+                                <input type="text" id="checkout-city" class="checkout-input" placeholder="City (e.g. Gujranwala, Lahore, Islamabad) *" required />
+                            </div>
+
+                            <div class="checkout-input-group">
+                                <input type="text" id="checkout-address" class="checkout-input" placeholder="Complete Delivery Address & House/Street Details *" required />
+                            </div>
+
+                            <div class="checkout-input-group">
+                                <input type="text" id="checkout-notes" class="checkout-input" placeholder="Gift Note / Special Packaging Instructions (Optional)" />
+                            </div>
+
+                            <!-- Payment Preference Selector -->
+                            <div style="margin-top: 1rem;">
+                                <label style="font-size: 0.8rem; font-weight: 700; color: var(--color-text-main); text-transform: uppercase; letter-spacing: 0.5px;">Payment Method</label>
+                                <div class="payment-methods-grid">
+                                    <label class="payment-pill-label">
+                                        <input type="radio" name="payment-method" value="Cash on Delivery (COD)" checked />
+                                        <span>Cash on Delivery</span>
+                                    </label>
+                                    <label class="payment-pill-label">
+                                        <input type="radio" name="payment-method" value="Bank Transfer / Wire" />
+                                        <span>Bank Transfer</span>
+                                    </label>
+                                    <label class="payment-pill-label">
+                                        <input type="radio" name="payment-method" value="JazzCash / EasyPaisa" />
+                                        <span>JazzCash / EasyPaisa</span>
+                                    </label>
+                                    <label class="payment-pill-label">
+                                        <input type="radio" name="payment-method" value="Online Payment" />
+                                        <span>Online Payment</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Place Order Button -->
+                        <button type="button" id="btn-place-order" class="btn-place-order">
+                            <span>🔒 Place Order Now</span>
+                        </button>
+
+                        <a href="categories.html" class="btn-continue-shop">
+                            ← Continue Shopping Collections
+                        </a>
+
+                        <!-- Trust Badges -->
+                        <div class="checkout-trust-badges">
+                            <div class="trust-badge-item">
+                                <span>🧶</span>
+                                <span>100% Handcrafted Artisan Quality</span>
+                            </div>
+                            <div class="trust-badge-item">
+                                <span>📦</span>
+                                <span>Secure protective packaging & nationwide delivery</span>
+                            </div>
+                            <div class="trust-badge-item">
+                                <span>✨</span>
+                                <span>Dedicated customer care & order confirmation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Order Placed Success Screen (Revealed when order is placed) -->
+                <div id="order-success-screen" class="order-success-screen">
+                    <div class="success-icon-badge">✓</div>
+                    <span class="order-id-badge" id="success-order-id">Order #MRY-00000</span>
+                    <h2 class="order-success-title">Order Placed Successfully! 🎉</h2>
+                    <p style="color: var(--color-text-muted); font-size: 1.05rem; max-width: 540px; margin: 0 auto 1.5rem; line-height: 1.6;">
+                        Thank you, <strong id="success-customer-name" style="color: var(--color-text-main);">valued customer</strong>! Your handcrafted pieces have been booked. Track your live crafting and dispatch progress below:
+                    </p>
+
+                    <!-- Live Progress Stepper on Success Screen -->
+                    <div id="success-order-stepper-box" style="margin-bottom: 2rem;">
+                        <!-- Injected dynamically by js/cart.js -->
+                    </div>
+
+                    <div class="order-receipt-box">
+                        <div class="receipt-header">
+                            <span>Order Receipt Summary</span>
+                            <span id="success-order-date">Today</span>
+                        </div>
+                        <div id="success-items-list" style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem;">
+                            <!-- Injected by JS -->
+                        </div>
+                        <div style="border-top: 1px dashed var(--color-border-light); padding-top: 0.75rem; display: flex; justify-content: space-between; font-weight: 700; color: var(--color-primary); font-size: 1.15rem;">
+                            <span>Total Payable:</span>
+                            <span id="success-total-amount">Rs. 0</span>
+                        </div>
+                        <div style="margin-top: 0.85rem; font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">
+                            <strong>Delivery Address:</strong> <span id="success-delivery-address">Standard Delivery</span><br>
+                            <strong>Payment Method:</strong> <span id="success-payment-method">Cash on Delivery</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="index.html" class="btn btn-primary btn-lg">
+                            <span>Back to Homepage</span>
+                        </a>
+                        <a href="categories.html" class="btn btn-outline btn-lg">
+                            <span>Explore More Collections &rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Empty Cart State (Shown when cart is empty) -->
+                <div id="cart-empty-state" class="cart-empty-state">
+                    <span class="empty-icon">🧺</span>
+                    <h2 class="empty-title font-heading">Your Shopping Bag is Empty</h2>
+                    <p class="empty-desc">
+                        Looks like you haven't added any handcrafted treasures yet. Discover our adorable amigurumi plushies, everlasting floral bouquets, and stylish wearables!
+                    </p>
+                    <a href="categories.html" class="btn btn-primary btn-lg" style="box-shadow: var(--shadow-md);">
+                        <span>Explore Our Collections &rarr;</span>
+                    </a>
+                </div>
+
+                <!-- Dedicated "View Your Orders" View -->
+                <div id="customer-orders-view" class="customer-orders-view">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <h2 class="font-heading" style="font-size: 1.85rem; color: var(--color-text-main); margin-bottom: 0.35rem;">Your Handcrafted Orders</h2>
+                        <p style="color: var(--color-text-muted); font-size: 0.95rem; margin: 0;">Live crafting and nationwide courier status synchronized with our studio.</p>
+                    </div>
+
+                    <div id="customer-orders-list-container" class="customer-orders-list">
+                        <!-- Injected dynamically by js/cart.js -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Shared Footer (Mounted via js/components/footer.js) -->
+    <div id="footer-container"></div>
+
+    <!-- Core Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>
