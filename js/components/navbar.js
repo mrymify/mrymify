@@ -10,6 +10,7 @@
         { name: 'Home', href: 'index.html', key: 'home' },
         { name: 'Shop', href: 'shop.html', key: 'shop' },
         { name: 'Collection', href: 'categories.html', key: 'categories' },
+        { name: 'Custom Orders', href: 'custom-orders.html', key: 'custom-orders' },
         { name: 'About', href: 'about.html', key: 'about' },
         { name: 'Contact', href: 'contact.html', key: 'contact' }
     ];
@@ -23,6 +24,7 @@
         const path = window.location.pathname.toLowerCase();
         if (path.endsWith('shop.html')) return 'shop';
         if (path.endsWith('categories.html')) return 'categories';
+        if (path.endsWith('custom-orders.html')) return 'custom-orders';
         if (path.endsWith('about.html')) return 'about';
         if (path.endsWith('contact.html')) return 'contact';
         if (path.endsWith('cart.html')) return 'cart';
@@ -121,12 +123,9 @@
                     <!-- Nav Actions (Cart & Hamburger) -->
                     <div class="nav-actions">
                         <!-- Cart Button -->
-                        <a href="cart.html" class="cart-btn" aria-label="Shopping Cart (${cartCount} items)" title="Cart">
-                            <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                                <line x1="3" y1="6" x2="21" y2="6"></line>
-                                <path d="M16 10a4 4 0 0 1-8 0"></path>
-                            </svg>
+                        <a href="cart.html" class="cart-btn ${currentActive === 'cart' ? 'active' : ''}" aria-label="Shopping Cart (${cartCount} items)" title="Cart">
+                            <span class="cart-btn-icon">🛒</span>
+                            <span class="cart-btn-label">Cart</span>
                             <span class="cart-badge" id="cart-badge" style="${cartCount > 0 ? '' : 'display:none;'}">${cartCount}</span>
                         </a>
 

@@ -66,7 +66,7 @@
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.35rem;
 }
 
 .nav-item {
@@ -76,13 +76,14 @@
 .nav-link {
     display: inline-flex;
     align-items: center;
-    padding: 0.55rem 1rem;
+    padding: 0.5rem 0.85rem;
     font-family: var(--font-brand);
-    font-size: 0.95rem;
+    font-size: 0.93rem;
     font-weight: 500;
     color: var(--color-text-main);
     border-radius: var(--radius-full);
     transition: all var(--transition-fast);
+    white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -232,14 +233,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    gap: 0.4rem;
+    padding: 0.48rem 1rem;
     border-radius: var(--radius-full);
     background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    border: 1.5px solid var(--color-border);
     color: var(--color-text-main);
     transition: all var(--transition-fast);
     text-decoration: none;
+    font-family: var(--font-brand);
+    font-size: 0.92rem;
+    font-weight: 600;
 }
 
 .cart-btn:hover {
@@ -249,24 +253,35 @@
     transform: translateY(-1px);
 }
 
-.cart-icon {
-    width: 20px;
-    height: 20px;
+.cart-btn.active {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.cart-btn-icon {
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+.cart-btn-label {
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
 }
 
 .cart-badge {
-    position: absolute;
-    top: -4px;
-    right: -4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-width: 20px;
     height: 20px;
     padding: 0 5px;
     background-color: var(--color-primary);
     color: #ffffff;
     font-family: var(--font-brand);
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    line-height: 20px;
+    line-height: 1;
     text-align: center;
     border-radius: var(--radius-full);
     box-shadow: 0 2px 5px rgba(184, 93, 67, 0.4);

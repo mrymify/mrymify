@@ -44,8 +44,8 @@
                             <h4>About & Help</h4>
                             <ul class="footer-links">
                                 <li><a href="about.html" class="footer-link">About Mrymify</a></li>
+                                <li><a href="custom-orders.html" class="footer-link">Custom Orders & Personalization</a></li>
                                 <li><a href="contact.html" class="footer-link">Contact & Support</a></li>
-                                <li><a href="about.html#custom-orders" class="footer-link">Custom Orders Guide</a></li>
                                 <li><a href="about.html#care-guide" class="footer-link">Crochet Care Instructions</a></li>
                             </ul>
                         </div>
