@@ -305,6 +305,8 @@
     }
 
     function switchTab(tabId) {
+        closeMobileSidebar();
+
         if (tabId === 'unlisted') {
             activeTab = 'products';
             document.querySelectorAll('.admin-nav-item').forEach(btn => {
@@ -340,6 +342,29 @@
         } else if (tabId === 'devtools') {
             renderDevToolsTab();
         }
+    }
+
+    /**
+     * Toggles mobile off-canvas sidebar drawer
+     */
+    function toggleMobileSidebar() {
+        const sidebar = document.querySelector('.admin-sidebar');
+        const backdrop = document.getElementById('admin-sidebar-backdrop');
+        if (!sidebar) return;
+        const isOpen = sidebar.classList.toggle('mobile-open');
+        if (backdrop) backdrop.classList.toggle('active', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    /**
+     * Closes mobile off-canvas sidebar drawer
+     */
+    function closeMobileSidebar() {
+        const sidebar = document.querySelector('.admin-sidebar');
+        const backdrop = document.getElementById('admin-sidebar-backdrop');
+        if (sidebar) sidebar.classList.remove('mobile-open');
+        if (backdrop) backdrop.classList.remove('active');
+        document.body.style.overflow = '';
     }
 
     function initClock() {
@@ -4247,7 +4272,9 @@
         devClearAllOrders: devClearAllOrders,
         loadDevStorageKey: loadDevStorageKey,
         saveDevStorageKey: saveDevStorageKey,
-        changeDevKey: changeDevKey
+        changeDevKey: changeDevKey,
+        toggleMobileSidebar: toggleMobileSidebar,
+        closeMobileSidebar: closeMobileSidebar,
     };
 
 })();
