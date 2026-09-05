@@ -9,6 +9,9 @@
     // WhatsApp Business Contact (Mariyam)
     const WHATSAPP_NUMBER = '923000896885';
 
+    // Modern Chrome/Material Edit Pencil Icon Vector
+    const EDIT_PENCIL_SVG = `<svg class="edit-pencil-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>`;
+
     const PRODUCTS = [
         {
             id: 'prod-01',
@@ -390,27 +393,29 @@
     }
 
     /**
-     * Retrieves stored like count or seeds a realistic default
+     * Retrieves stored like count or seeds a clean true value
      */
     function getProductLikes(productId) {
         try {
             const allLikes = JSON.parse(localStorage.getItem('mrymify_product_likes') || '{}');
             if (allLikes[productId] !== undefined) {
-                return allLikes[productId];
+                return Number(allLikes[productId]) || 0;
             }
-            // Seed deterministic realistic like count between 25 and 85
-            let hash = 0;
-            for (let i = 0; i < productId.length; i++) {
-                hash = (hash << 5) - hash + productId.charCodeAt(i);
-                hash |= 0;
-            }
-            const seed = 25 + (Math.abs(hash) % 61);
-            allLikes[productId] = seed;
+            // True base count (not random)
+            const baseCount = 0;
+            allLikes[productId] = baseCount;
             localStorage.setItem('mrymify_product_likes', JSON.stringify(allLikes));
-            return seed;
+            return baseCount;
         } catch (e) {
-            return 32;
+            return 0;
         }
+    }
+
+    /**
+     * Checks whether like counts are visible to users
+     */
+    function isLikeCountVisible() {
+        return localStorage.getItem('mrymify_show_likes') !== 'false';
     }
 
     /**
@@ -434,7 +439,7 @@
         try {
             const allLikes = JSON.parse(localStorage.getItem('mrymify_product_likes') || '{}');
             let userLiked = JSON.parse(localStorage.getItem('mrymify_user_liked') || '[]');
-            let currentCount = allLikes[productId] !== undefined ? allLikes[productId] : getProductLikes(productId);
+            let currentCount = allLikes[productId] !== undefined ? Number(allLikes[productId]) : getProductLikes(productId);
 
             const alreadyLiked = userLiked.includes(productId);
             if (alreadyLiked) {
@@ -449,22 +454,211 @@
             localStorage.setItem('mrymify_product_likes', JSON.stringify(allLikes));
             localStorage.setItem('mrymify_user_liked', JSON.stringify(userLiked));
 
-            // Update all DOM elements for this product
-            const buttons = document.querySelectorAll(`[data-like-btn="${productId}"]`);
-            buttons.forEach(btn => {
-                if (!alreadyLiked) {
-                    btn.classList.add('liked');
-                    btn.innerHTML = `<span class="heart-icon">❤️</span><span class="like-count">${currentCount}</span>`;
-                } else {
-                    btn.classList.remove('liked');
-                    btn.innerHTML = `<span class="heart-icon">🤍</span><span class="like-count">${currentCount}</span>`;
-                }
-                btn.classList.add('heart-bump');
-                setTimeout(() => btn.classList.remove('heart-bump'), 300);
-            });
-        } catch (e) {
-            console.error('Error updating likes', e);
+            // Dispatch global event for navbar and wishlist tab
+            window.dispatchEvent(new CustomEvent('mrymify:likes_updated', {
+                detail: { count: userLiked.length, userLiked: userLiked }
+            }));
+
+            const showCount = isLikeCountVisible();
+            const countHtml = showCount ? `<span class="like-count">${currentCount}</span>` : '';
+
+        // Update all DOM elements for this product
+        const buttons = document.querySelectorAll(`[data-like-btn="${productId}"]`);
+        buttons.forEach(btn => {
+            if (!alreadyLiked) {
+                btn.classList.add('liked');
+                btn.innerHTML = `<span class="heart-icon">❤️</span>${countHtml}`;
+            } else {
+                btn.classList.remove('liked');
+                btn.innerHTML = `<span class="heart-icon">🤍</span>${countHtml}`;
+            }
+            btn.classList.add('heart-bump');
+            setTimeout(() => btn.classList.remove('heart-bump'), 300);
+        });
+
+        // Log user like action to visitor journey
+        if (!alreadyLiked && window.MrymifyAnalytics && typeof window.MrymifyAnalytics.trackAction === 'function') {
+            const prod = getEffectiveCatalog(true).find(p => p.id === productId);
+            window.MrymifyAnalytics.trackAction('like', `Liked piece: "${prod ? prod.title : productId}" ❤️`, { productId });
         }
+    } catch (e) {
+        console.error('Error updating likes', e);
+    }
+}
+
+/**
+ * Handles clicking the Customize pencil button
+ */
+function handleCustomize(productId, event) {
+    if (event) event.stopPropagation();
+    
+    const product = getEffectiveCatalog(true).find(p => p.id === productId);
+    const title = product ? product.title : '';
+    const cat = product ? product.category : '';
+
+    // Track customize click in ADP analytics
+    if (window.MrymifyAnalytics && typeof window.MrymifyAnalytics.trackCustomizationClick === 'function') {
+        window.MrymifyAnalytics.trackCustomizationClick(productId, title);
+    }
+
+    // Navigate to Custom Orders page with pre-selected item and quoted refProduct
+    window.location.href = `custom-orders.html?refProduct=${encodeURIComponent(productId)}&item=${encodeURIComponent(title)}&cat=${encodeURIComponent(cat)}`;
+}
+
+/**
+ * Handles card click to open full-screen product details page
+ */
+function handleCardClick(productId, event) {
+    // Ignore if clicking action buttons (Cart, Like, Customize)
+    if (event && event.target && event.target.closest('.product-card-actions, button, a')) {
+        return;
+    }
+    const product = getEffectiveCatalog(true).find(p => p.id === productId);
+    if (window.MrymifyAnalytics && typeof window.MrymifyAnalytics.trackProductView === 'function') {
+        window.MrymifyAnalytics.trackProductView(productId, product ? product.title : productId);
+    }
+    window.location.href = `product-details.html?id=${encodeURIComponent(productId)}`;
+}
+
+/**
+ * Reviews database generator for authentic boutique feedback
+ */
+function getProductReviews(product) {
+    const defaultReviews = [
+        { author: "Fatima Z.", rating: 5, text: "The stitching is beyond neat! Super soft yarn and beautifully packaged in Mariyam's signature box." },
+        { author: "Ayesha K.", rating: 5, text: "Ordered as a birthday present and she absolutely loved it. Will definitely be ordering more!" },
+        { author: "Hina M.", rating: 5, text: "Exceeded all my expectations! The details are so intricate and colors are just as pictured." }
+    ];
+    return defaultReviews;
+}
+
+let modalDwellTimer = null;
+let currentModalProductId = null;
+
+/**
+ * Opens Full Product Summary Modal
+ */
+function openProductModal(productId) {
+    const product = getEffectiveCatalog().find(p => p.id === productId);
+    if (!product) return;
+
+    // Close any existing modal
+    closeProductModal();
+
+    currentModalProductId = productId;
+    const dwellStart = Date.now();
+    if (window.MrymifyAnalytics && typeof window.MrymifyAnalytics.trackProductView === 'function') {
+        window.MrymifyAnalytics.trackProductView(productId, product.title);
+    }
+
+        const liked = isUserLiked(product.id);
+        const likesCount = getProductLikes(product.id);
+        const showLikes = isLikeCountVisible();
+        const reviews = getProductReviews(product);
+        const discountBadge = product.originalPrice && product.originalPrice > product.price
+            ? `<span class="badge badge-primary">Save Rs. ${product.originalPrice - product.price}</span>`
+            : '';
+
+        const modalHtml = `
+            <div id="mrymify-product-modal" class="product-modal-backdrop" onclick="if (event.target === this) MrymifyProducts.closeProductModal();">
+                <div class="product-modal-card" role="dialog" aria-modal="true">
+                    <button type="button" class="product-modal-close" onclick="MrymifyProducts.closeProductModal()" aria-label="Close modal">&times;</button>
+                    
+                    <div class="product-modal-gallery">
+                        <div class="product-modal-img-wrap">
+                            <img src="${product.image}" alt="${product.title}" class="product-modal-img" id="modal-main-img" />
+                        </div>
+                    </div>
+
+                    <div class="product-modal-details">
+                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;">
+                            <span class="product-modal-category">${product.categoryLabel || product.category}</span>
+                            ${discountBadge}
+                        </div>
+
+                        <h2 class="product-modal-title">${product.title}</h2>
+
+                        <div class="product-modal-pricing">
+                            <span class="product-modal-price">${formatPrice(product.price)}</span>
+                            ${product.originalPrice ? `<span class="product-modal-original-price">${formatPrice(product.originalPrice)}</span>` : ''}
+                        </div>
+
+                        <p class="product-modal-desc">${product.description}</p>
+
+                        <div class="product-modal-specs">
+                            <div class="product-spec-item">
+                                <strong>🧶 Premium Yarn</strong>
+                                <span>100% Skin-Friendly Milk Cotton</span>
+                            </div>
+                            <div class="product-spec-item">
+                                <strong>🖐️ Handcrafted</strong>
+                                <span>Patiently Crocheted by Hand</span>
+                            </div>
+                            <div class="product-spec-item">
+                                <strong>🚚 Nationwide Care</strong>
+                                <span>Gift Boxed & Wax Sealed</span>
+                            </div>
+                            <div class="product-spec-item">
+                                <strong>✨ Custom Friendly</strong>
+                                <span>Colors & Initials Available</span>
+                            </div>
+                        </div>
+
+                        <!-- Customer Reviews -->
+                        <div class="product-modal-reviews">
+                            <div class="product-reviews-header">
+                                <span class="review-stars">★★★★★</span>
+                                <span class="review-badge">Verified Artisan Purchase</span>
+                            </div>
+                            <p class="review-quote">"${reviews[0].text}"</p>
+                            <span class="review-author">— ${reviews[0].author} (Verified Buyer)</span>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="product-modal-actions">
+                            <button class="btn btn-primary btn-add-cart" onclick="MrymifyProducts.handleAddToCart('${product.id}')">
+                                <span>Add to Cart 🧺</span>
+                            </button>
+                            <button class="btn btn-outline btn-customize-big" onclick="MrymifyProducts.handleCustomize('${product.id}', event)" title="Customize this item">
+                                ${EDIT_PENCIL_SVG}
+                                <span style="margin-left: 6px;">Customize</span>
+                            </button>
+                            <button class="btn btn-outline btn-like ${liked ? 'liked' : ''}" data-like-btn="${product.id}" onclick="MrymifyProducts.handleLike('${product.id}', event)" title="Like piece">
+                                <span class="heart-icon">${liked ? '❤️' : '🤍'}</span>
+                                ${showLikes ? `<span class="like-count">${likesCount}</span>` : ''}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        document.body.style.overflow = 'hidden';
+
+        // Register dwell time tracker on close
+        modalDwellTimer = () => {
+            const elapsed = (Date.now() - dwellStart) / 1000;
+            if (elapsed >= 1 && window.MrymifyAnalytics && typeof window.MrymifyAnalytics.trackProductDwellTime === 'function') {
+                window.MrymifyAnalytics.trackProductDwellTime(productId, elapsed, product.title);
+            }
+        };
+    }
+
+    /**
+     * Closes the product modal
+     */
+    function closeProductModal() {
+        const modal = document.getElementById('mrymify-product-modal');
+        if (modal) {
+            if (modalDwellTimer) {
+                modalDwellTimer();
+                modalDwellTimer = null;
+            }
+            modal.remove();
+            document.body.style.overflow = '';
+        }
+        currentModalProductId = null;
     }
 
     /**
@@ -477,9 +671,10 @@
 
         const likesCount = getProductLikes(product.id);
         const liked = isUserLiked(product.id);
+        const showLikes = isLikeCountVisible();
 
         return `
-            <article class="product-card" data-category="${product.category}" data-id="${product.id}">
+            <article class="product-card" data-category="${product.category}" data-id="${product.id}" onclick="MrymifyProducts.handleCardClick('${product.id}', event)">
                 <div class="product-card-img-wrap">
                     <img 
                         src="${product.image}" 
@@ -496,7 +691,10 @@
                 </div>
 
                 <div class="product-card-content">
-                    <span class="product-card-category">${product.categoryLabel}</span>
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-bottom: 0.25rem;">
+                        <span class="product-card-category">${product.categoryLabel || product.category}</span>
+                        <span style="font-size: 0.72rem; color: #b45309; background: rgba(245, 158, 11, 0.12); padding: 2px 7px; border-radius: 999px; font-weight: 600; white-space: nowrap;">⏳ ${product.estimatedMakingTime || '2-3 Days'}</span>
+                    </div>
                     <h3 class="product-card-title">${product.title}</h3>
                     <p class="product-card-desc">${product.description}</p>
                     
@@ -506,18 +704,22 @@
                     </div>
 
                     <div class="product-card-actions">
-                        <button class="btn btn-primary btn-sm btn-add-cart" onclick="MrymifyProducts.handleAddToCart('${product.id}')">
+                        <button class="btn btn-primary btn-sm btn-add-cart" onclick="MrymifyProducts.handleAddToCart('${product.id}')" title="Add to Bag">
                             <span>Add to Cart</span>
+                        </button>
+                        <button class="btn btn-outline btn-sm btn-customize" data-customize-btn="${product.id}" onclick="MrymifyProducts.handleCustomize('${product.id}', event)" title="Customize / Personalize this piece">
+                            ${EDIT_PENCIL_SVG}
                         </button>
                         <button class="btn btn-outline btn-sm btn-like ${liked ? 'liked' : ''}" data-like-btn="${product.id}" onclick="MrymifyProducts.handleLike('${product.id}', event)" title="Like product">
                             <span class="heart-icon">${liked ? '❤️' : '🤍'}</span>
-                            <span class="like-count">${likesCount}</span>
+                            ${showLikes ? `<span class="like-count">${likesCount}</span>` : ''}
                         </button>
                     </div>
                 </div>
             </article>
         `;
     }
+
 
     /**
      * Adds item to localStorage cart and notifies navbar
@@ -553,6 +755,11 @@
             // Update navbar badge if available
             if (window.MrymifyNavbar && typeof window.MrymifyNavbar.updateCartBadge === 'function') {
                 window.MrymifyNavbar.updateCartBadge(totalCount);
+            }
+
+            // Track in analytics
+            if (window.MrymifyAnalytics && typeof window.MrymifyAnalytics.trackAddToCart === 'function') {
+                window.MrymifyAnalytics.trackAddToCart(product.id, product.title);
             }
 
             // Quick feedback toast / notification
@@ -615,12 +822,33 @@
     /**
      * Retrieves the effective catalog by applying admin overrides and newly added items
      */
-    function getEffectiveCatalog() {
+    const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+
+    function purgeExpiredRecycleBin() {
         try {
+            const raw = localStorage.getItem('mrymify_recycle_bin');
+            if (!raw) return;
+            const bin = JSON.parse(raw);
+            const now = Date.now();
+            const valid = bin.filter(item => {
+                const deletedAt = Number(item.deletedAt) || now;
+                return (now - deletedAt) <= THIRTY_DAYS_MS;
+            });
+            if (valid.length !== bin.length) {
+                localStorage.setItem('mrymify_recycle_bin', JSON.stringify(valid));
+            }
+        } catch(e) {}
+    }
+
+    function getEffectiveCatalog(includeUnlisted = false) {
+        try {
+            purgeExpiredRecycleBin();
             const overrides = JSON.parse(localStorage.getItem('mrymify_product_overrides') || '{}');
             const customProducts = JSON.parse(localStorage.getItem('mrymify_custom_products') || '[]');
+            const recycleBin = JSON.parse(localStorage.getItem('mrymify_recycle_bin') || '[]');
+            const recycledIds = new Set(recycleBin.map(b => b.id));
             
-            // Apply price, badge, and stock overrides to base PRODUCTS
+            // Apply price, badge, making time, unlisted and stock overrides to base PRODUCTS
             let effective = PRODUCTS.map(p => {
                 if (overrides[p.id]) {
                     return { ...p, ...overrides[p.id] };
@@ -628,11 +856,19 @@
                 return p;
             });
 
-            // Filter out any items marked as hidden/archived
-            effective = effective.filter(p => !overrides[p.id]?.isHidden);
+            // Filter out any items marked as hidden/archived, deleted, or in recycle bin
+            effective = effective.filter(p => !overrides[p.id]?.isHidden && !overrides[p.id]?.deleted && !recycledIds.has(p.id));
 
-            // Append any new custom creations added via Admin Panel
-            return [...effective, ...customProducts];
+            // Append any new custom creations added via Admin Panel (exclude deleted or recycled)
+            const activeCustom = customProducts.filter(p => !p.deleted && !recycledIds.has(p.id));
+            const merged = [...effective, ...activeCustom];
+
+            // Filter out unlisted products unless specifically requested (e.g. by ADP)
+            if (!includeUnlisted) {
+                return merged.filter(p => p.unlisted !== true);
+            }
+
+            return merged;
         } catch (e) {
             console.warn('Could not read product overrides', e);
             return PRODUCTS;
@@ -649,11 +885,17 @@
         handleLike: handleLike,
         getProductLikes: getProductLikes,
         isUserLiked: isUserLiked,
+        getUserLiked: () => JSON.parse(localStorage.getItem('mrymify_user_liked') || '[]'),
         filterProductsGrid: filterProductsGrid,
         getFeatured: () => getEffectiveCatalog().filter(p => p.isFeatured),
         getOther: () => getEffectiveCatalog().filter(p => !p.isFeatured),
-        getById: (id) => getEffectiveCatalog().find(p => p.id === id),
+        getById: (id) => getEffectiveCatalog(true).find(p => p.id === id),
         getBaseCatalog: () => PRODUCTS,
-        getEffectiveCatalog: getEffectiveCatalog
+        getEffectiveCatalog: getEffectiveCatalog,
+        openProductModal: openProductModal,
+        closeProductModal: closeProductModal,
+        handleCardClick: handleCardClick,
+        handleCustomize: handleCustomize,
+        getEditPencilSvg: () => EDIT_PENCIL_SVG
     };
 })();

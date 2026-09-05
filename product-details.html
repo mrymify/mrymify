@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handcrafted Creation | Mrymify Crochet Studio</title>
+    <meta name="description" content="Explore handcrafted crochet pieces by Mariyam. 100% skin-friendly milk cotton, custom color options, and wax-sealed gift packaging.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+
+    <!-- Theme Initialization to avoid flash -->
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('mrymify_theme');
+                var theme = saved || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch(e) {}
+        })();
+    </script>
+</head>
+<body>
+
+    <!-- Shared Navigation Bar -->
+    <div id="mrymify-navbar-root"></div>
+
+    <!-- Main Content Container -->
+    <main class="product-page-main" id="product-page-root">
+
+        <!-- Breadcrumbs Navigation -->
+        <nav class="container product-breadcrumb-nav" aria-label="Breadcrumb">
+            <ol class="product-breadcrumbs">
+                <li><a href="index.html">Home</a></li>
+                <li><span>/</span></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><span>/</span></li>
+                <li><a href="shop.html" id="breadcrumb-category">Collection</a></li>
+                <li><span>/</span></li>
+                <li aria-current="page" id="breadcrumb-title">Handcrafted Piece</li>
+            </ol>
+        </nav>
+
+        <!-- Product Hero Showcase Section -->
+        <section class="section product-hero-section">
+            <div class="container">
+                <div class="product-hero-grid">
+                    
+                    <!-- Left Column: Interactive Auto-Shuffling Gallery -->
+                    <div class="product-gallery-column">
+                        <div class="product-gallery-frame" id="product-gallery-frame">
+                            <!-- Main Image Stage -->
+                            <div class="gallery-main-viewport" id="gallery-viewport">
+                                <img src="images/logo.jpg" alt="Product Image" id="gallery-main-img" class="gallery-main-img" />
+                                <div class="gallery-badge-overlay" id="gallery-badge-overlay"></div>
+                                <div class="gallery-floating-timer" id="gallery-floating-timer" title="Auto-shuffling active">
+                                    <span class="timer-dot"></span> Auto-shuffling
+                                </div>
+                            </div>
+
+                            <!-- Carousel Navigation Controls -->
+                            <button type="button" class="gallery-nav-btn gallery-prev-btn" id="gallery-prev-btn" aria-label="Previous photo">‹</button>
+                            <button type="button" class="gallery-nav-btn gallery-next-btn" id="gallery-next-btn" aria-label="Next photo">›</button>
+                        </div>
+
+                        <!-- Thumbnails Selector Strip -->
+                        <div class="gallery-thumbnails-strip" id="gallery-thumbnails-strip">
+                            <!-- Injected dynamically by js/product-details.js -->
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Product Details & Purchase Deck -->
+                    <div class="product-info-column">
+                        <div class="product-meta-header">
+                            <span class="product-tag-pill" id="detail-category-badge">Amigurumi & Plushies</span>
+                            <span class="product-discount-pill" id="detail-discount-badge" style="display: none;">Save Rs. 200</span>
+                            <span class="product-stock-pill in-stock" id="detail-stock-badge">✓ In Stock & Ready</span>
+                            <span class="product-making-time-pill" id="detail-making-time-badge" style="background: rgba(245, 158, 11, 0.12); color: #b45309; font-weight: 700; font-size: 0.8rem; padding: 4px 10px; border-radius: 999px; display: inline-flex; align-items: center; gap: 4px;">⏳ Ready in 2-3 Business Days</span>
+                        </div>
+
+                        <h1 class="product-main-title" id="detail-product-title">Handcrafted Crochet Piece</h1>
+
+                        <!-- Verified Rating & Sales Counter -->
+                        <div class="product-rating-row">
+                            <span class="product-stars">★★★★★</span>
+                            <span class="product-rating-num" id="detail-rating-score">5.0</span>
+                            <span class="product-rating-count" id="detail-reviews-count">(Artisan Verified Customer Favorite)</span>
+                        </div>
+
+                        <!-- Pricing Deck -->
+                        <div class="product-pricing-box">
+                            <span class="product-current-price" id="detail-current-price">Rs. 0</span>
+                            <span class="product-original-price" id="detail-original-price" style="display: none;">Rs. 0</span>
+                        </div>
+
+                        <!-- Short Description -->
+                        <p class="product-story-desc" id="detail-description">
+                            Patiently handcrafted stitch by stitch with premium skin-friendly milk cotton yarn.
+                        </p>
+
+                        <!-- Key Artisan Highlights Grid -->
+                        <div class="product-craft-highlights">
+                            <div class="craft-highlight-item">
+                                <span class="highlight-icon">🧶</span>
+                                <div>
+                                    <strong>Milk Cotton Yarn</strong>
+                                    <span>Soft, anti-pilling & durable</span>
+                                </div>
+                            </div>
+                            <div class="craft-highlight-item">
+                                <span class="highlight-icon">🖐️</span>
+                                <div>
+                                    <strong>100% Handcrafted</strong>
+                                    <span>Artisan woven by Mariyam</span>
+                                </div>
+                            </div>
+                            <div class="craft-highlight-item">
+                                <span class="highlight-icon">📦</span>
+                                <div>
+                                    <strong>Wax-Sealed Box</strong>
+                                    <span>Luxury unboxing experience</span>
+                                </div>
+                            </div>
+                            <div class="craft-highlight-item">
+                                <span class="highlight-icon">🚚</span>
+                                <div>
+                                    <strong>Nationwide Delivery</strong>
+                                    <span>Tracked safe packaging</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Primary Action Buttons -->
+                        <div class="product-action-deck">
+                            <div class="action-row-main">
+                                <div class="quantity-picker">
+                                    <button type="button" class="qty-btn" id="btn-qty-minus" aria-label="Decrease quantity">−</button>
+                                    <span class="qty-display" id="detail-qty-display">1</span>
+                                    <button type="button" class="qty-btn" id="btn-qty-plus" aria-label="Increase quantity">+</button>
+                                </div>
+
+                                <button type="button" class="btn btn-primary btn-add-cart-detail" id="btn-add-to-cart-detail">
+                                    <span>Add to Cart 🧺</span>
+                                </button>
+                            </div>
+
+                            <div class="action-row-secondary">
+                                <button type="button" class="btn btn-outline btn-customize-detail" id="btn-customize-detail" title="Customize this item">
+                                    <svg class="edit-pencil-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="margin-right: 6px;"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                    <span>Customize Colors or Initials</span>
+                                </button>
+                                <button type="button" class="btn btn-outline btn-like-detail" id="btn-like-detail" title="Like this piece">
+                                    <span class="heart-icon" id="detail-like-icon">🤍</span>
+                                    <span class="like-label">Like</span>
+                                    <span class="like-count" id="detail-like-count">0</span>
+                                </button>
+                            </div>
+
+                            <a href="#" target="_blank" class="btn-wa-direct-order" id="btn-wa-direct-order">
+                                <span>Order Directly on WhatsApp 💬</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Craft Specifications & Care Guidelines Section -->
+        <section class="section section-soft product-details-deep-dive">
+            <div class="container">
+                <div class="section-header text-center" style="max-width: 680px; margin: 0 auto 2.5rem;">
+                    <span class="section-tag">Artisan Blueprint</span>
+                    <h2 class="section-title">Specifications & Care Guide</h2>
+                    <p class="section-description">Every stitch is crafted with precision, patience, and attention to detail.</p>
+                </div>
+
+                <div class="details-specs-grid">
+                    <div class="spec-card">
+                        <div class="spec-card-icon">🧵</div>
+                        <h3 class="spec-card-title">Artisan Materials</h3>
+                        <p class="spec-card-text">Premium Grade 5-ply milk cotton yarn with high tensile durability. Hypoallergenic polyester fiberfill stuffing that retains shape.</p>
+                    </div>
+
+                    <div class="spec-card">
+                        <div class="spec-card-icon">🧼</div>
+                        <h3 class="spec-card-title">Washing & Care</h3>
+                        <p class="spec-card-text">Spot clean with mild soapy water or gentle hand wash in cold water. Do not wring or bleach. Lay flat to dry naturally in shade.</p>
+                    </div>
+
+                    <div class="spec-card">
+                        <div class="spec-card-icon">🎁</div>
+                        <h3 class="spec-card-title">Packaging & Unboxing</h3>
+                        <p class="spec-card-text">Arrives nestled in a rigid kraft gift box, wrapped in delicate parchment paper, and secured with Mariyam's bespoke wax seal.</p>
+                    </div>
+
+                    <div class="spec-card">
+                        <div class="spec-card-icon">⏱️</div>
+                        <h3 class="spec-card-title">Handcrafting Window</h3>
+                        <p class="spec-card-text">In-stock pieces dispatch within 24-48 hours. Personalized or made-to-order requests require 3-5 days of patient weaving.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Reviews & Testimonials Section -->
+        <section class="section product-reviews-section" id="reviews-section">
+            <div class="container">
+                <div class="reviews-section-header">
+                    <div>
+                        <span class="section-tag">Customer Love</span>
+                        <h2 class="section-title">Artisan Reviews & Feedback</h2>
+                        <p class="section-description">Real testimonials from verified buyers across Pakistan.</p>
+                    </div>
+                    <button type="button" class="btn btn-outline btn-sm" id="btn-toggle-review-form">
+                        <span>✍️ Write a Review</span>
+                    </button>
+                </div>
+
+                <!-- Interactive Write-a-Review Form (Hidden by default, toggles on click) -->
+                <div class="write-review-card" id="write-review-container" style="display: none;">
+                    <h3 style="font-family: var(--font-heading); margin-top: 0; margin-bottom: 0.75rem;">Share Your Experience ✨</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">How did you like your handcrafted crochet piece? Your review helps our small artisan studio grow!</p>
+
+                    <form id="product-review-form">
+                        <div class="review-form-row">
+                            <div>
+                                <label for="review-author" class="review-form-label">Your Name *</label>
+                                <input type="text" id="review-author" class="review-form-input" placeholder="e.g. Ayesha Khan" required />
+                            </div>
+                            <div>
+                                <label for="review-rating" class="review-form-label">Rating *</label>
+                                <select id="review-rating" class="review-form-input" required>
+                                    <option value="5">★★★★★ (5 / 5 - Perfection)</option>
+                                    <option value="4">★★★★☆ (4 / 5 - Loved it)</option>
+                                    <option value="3">★★★☆☆ (3 / 5 - Good)</option>
+                                    <option value="2">★★☆☆☆ (2 / 5 - Fair)</option>
+                                    <option value="1">★☆☆☆☆ (1 / 5 - Poor)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 1.25rem;">
+                            <label for="review-text" class="review-form-label">Your Review & Experience *</label>
+                            <textarea id="review-text" rows="3" class="review-form-input" placeholder="Describe the quality, texture, packaging, or how much you loved it..." required></textarea>
+                        </div>
+
+                        <div style="display: flex; gap: 0.75rem; align-items: center;">
+                            <button type="submit" class="btn btn-primary btn-sm">Submit Review ✨</button>
+                            <button type="button" class="btn btn-outline btn-sm" id="btn-cancel-review">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Reviews Grid List -->
+                <div class="product-reviews-grid" id="product-reviews-list">
+                    <!-- Injected dynamically by js/product-details.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Related / Recommended Products Section -->
+        <section class="section section-soft related-products-section">
+            <div class="container">
+                <div class="section-header text-center" style="max-width: 600px; margin: 0 auto 2.5rem;">
+                    <span class="section-tag">More Treasures</span>
+                    <h2 class="section-title">You May Also Adore</h2>
+                    <p class="section-description">Discover complementary handmade crochet designs from our lookbook.</p>
+                </div>
+
+                <div class="related-products-grid" id="related-products-grid">
+                    <!-- Injected dynamically by js/product-details.js -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Full-Size Image Lightbox Modal -->
+    <div id="product-lightbox-modal" class="product-lightbox-modal" style="display: none;">
+        <div class="lightbox-overlay" id="lightbox-backdrop"></div>
+        <div class="lightbox-dialog">
+            <button type="button" class="lightbox-close-btn" id="lightbox-close-btn" aria-label="Close full size preview">✕</button>
+            <div class="lightbox-content" style="display: flex; flex-direction: column; align-items: center;">
+                <img src="" alt="Full size preview" id="lightbox-img" class="lightbox-image" />
+                <div class="lightbox-caption" id="lightbox-caption"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shared Footer Component -->
+    <div id="mrymify-footer-root"></div>
+
+    <!-- Core Storefront Scripts -->
+    <script src="js/analytics.js"></script>
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/product-details.js"></script>
+</body>
+</html>

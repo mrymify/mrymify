@@ -14,6 +14,17 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
+
+    <!-- Immediate Theme Initialization to avoid flash -->
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('mrymify_theme');
+                var theme = saved || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch(e) {}
+        })();
+    </script>
 </head>
 <body class="admin-body">
 
@@ -22,6 +33,10 @@
          ===================================================================== -->
     <div id="admin-auth-screen" class="admin-auth-screen">
         <div class="admin-auth-card">
+            <button type="button" class="theme-toggle-btn" id="admin-auth-theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode" style="position: absolute; top: 1.25rem; right: 1.25rem; width: 36px; height: 36px; font-size: 1.1rem;">
+                <span class="theme-toggle-icon">☀️</span>
+            </button>
+            <img src="images/logo.jpg" alt="Mrymify Boutique Logo" style="width: 76px; height: 76px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.25rem; display: block; border: 2.5px solid var(--admin-primary); box-shadow: var(--admin-shadow-md);" />
             <span class="admin-auth-badge">🔒 Restricted Management</span>
             <h1 class="admin-auth-title">Mrymify Portal</h1>
             <p class="admin-auth-subtitle">
@@ -59,8 +74,8 @@
         <!-- Top Header Navigation -->
         <header class="admin-header">
             <div class="admin-header-left">
-                <a href="index.html" class="admin-brand">
-                    <div class="admin-brand-icon">🧶</div>
+                <a href="index.html" class="admin-brand" style="display: flex; align-items: center; gap: 0.65rem;">
+                    <img src="images/logo.jpg" alt="Mrymify Logo" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--admin-border);" />
                     <div>
                         <span class="admin-brand-name">MRYMIFY</span>
                     </div>
@@ -78,6 +93,9 @@
             </div>
 
             <div class="admin-header-right">
+                <button type="button" class="theme-toggle-btn" id="admin-theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode" style="width: 36px; height: 36px; font-size: 1.1rem;">
+                    <span class="theme-toggle-icon">☀️</span>
+                </button>
                 <div id="admin-live-clock" class="admin-clock">Live Clock</div>
                 <a href="index.html" target="_blank" class="btn-view-store" title="Open boutique in new tab">
                     <span>View Store ↗</span>
@@ -96,14 +114,14 @@
                 <button type="button" class="admin-nav-item active" data-tab="overview">
                     <span class="admin-nav-label">
                         <span>📊</span>
-                        <span>Overview</span>
+                        <span>Analytics & Overview</span>
                     </span>
                 </button>
 
                 <button type="button" class="admin-nav-item" data-tab="orders">
                     <span class="admin-nav-label">
                         <span>📦</span>
-                        <span>Orders Pipeline</span>
+                        <span>Orders</span>
                     </span>
                     <span class="admin-nav-badge" id="badge-orders-count">0</span>
                 </button>
@@ -111,9 +129,31 @@
                 <button type="button" class="admin-nav-item" data-tab="products">
                     <span class="admin-nav-label">
                         <span>🧶</span>
-                        <span>Products & Stock</span>
+                        <span>Product Studio & Catalog</span>
                     </span>
                     <span class="admin-nav-badge" id="badge-products-count">30</span>
+                </button>
+
+                <button type="button" class="admin-nav-item" data-tab="unlisted">
+                    <span class="admin-nav-label">
+                        <span>👁️</span>
+                        <span>Unlisted Creations</span>
+                    </span>
+                    <span class="admin-nav-badge" id="badge-sidebar-unlisted-count">0</span>
+                </button>
+
+                <button type="button" class="admin-nav-item" data-tab="promotions">
+                    <span class="admin-nav-label">
+                        <span>🎟️</span>
+                        <span>Discounts & Referrals</span>
+                    </span>
+                </button>
+
+                <button type="button" class="admin-nav-item" data-tab="showcase">
+                    <span class="admin-nav-label">
+                        <span>🎡</span>
+                        <span>Showcase Carousel</span>
+                    </span>
                 </button>
 
                 <button type="button" class="admin-nav-item" data-tab="settings">
@@ -123,9 +163,17 @@
                     </span>
                 </button>
 
+                <button type="button" class="admin-nav-item" data-tab="devtools" id="nav-item-devtools" style="display: none !important;">
+                    <span class="admin-nav-label">
+                        <span>🛠️</span>
+                        <span>Developer Tools</span>
+                    </span>
+                    <span class="admin-nav-badge" style="background: rgba(99, 102, 241, 0.18); color: #6366f1; font-weight: 700;">Dev</span>
+                </button>
+
                 <div class="admin-sidebar-footer">
-                    <div><strong>Mrymify Boutique v2.0</strong></div>
-                    <div>Mariyam & Studio Team</div>
+                    <div><strong>Mrymify Studio v2.5</strong></div>
+                    <div>Executive E-Commerce <span id="easter-egg-suite" title="Mrymify Suite" style="cursor: pointer; user-select: none; transition: color 0.2s ease;">Suite</span></div>
                     <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.2rem;">Garden Town Phase 3, Gujranwala</div>
                 </div>
             </aside>
@@ -134,82 +182,145 @@
             <main class="admin-main-content">
 
                 <!-- -------------------------------------------------------------
-                     TAB 1: Overview
+                     TAB 1: Overview & Analytics
                      ------------------------------------------------------------- -->
                 <div id="tab-overview" class="admin-tab-pane active">
-                    <div class="admin-page-header">
+                    <div class="admin-page-header" style="margin-bottom: 1.25rem;">
                         <div>
-                            <h2 class="admin-page-title">Welcome Back, Mariyam ✨</h2>
-                            <p class="admin-page-subtitle">Here is what's happening today in your handcrafted crochet boutique.</p>
+                            <h2 class="admin-page-title" style="margin-bottom: 0.2rem;">Executive Dashboard ✨</h2>
+                            <p class="admin-page-subtitle">Real-time boutique metrics & intelligence.</p>
                         </div>
                         <div class="admin-page-actions">
+                            <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.refreshAnalytics()">
+                                <span>🔄 Refresh</span>
+                            </button>
                             <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.exportOrdersCsv()">
-                                <span>📥 Export Orders CSV</span>
+                                <span>📥 Export CSV</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Metrics Grid -->
-                    <div class="metrics-grid">
-                        <div class="metric-card">
+                    <!-- Top 4 KPI Metrics -->
+                    <div class="metrics-grid" style="margin-bottom: 1.25rem;">
+                        <div class="metric-card metric-card-interactive" onclick="MrymifyAdmin.openRevenueBreakdownModal()" style="cursor: pointer;" title="View Revenue Breakdown">
                             <div class="metric-icon-wrap icon-revenue">💰</div>
                             <div class="metric-data">
                                 <span class="metric-label">Total Revenue</span>
                                 <span class="metric-value" id="metric-total-revenue">Rs. 0</span>
-                                <span class="metric-sub">From customer orders</span>
+                                <span class="metric-sub" id="metric-revenue-sub">From customer orders</span>
                             </div>
                         </div>
 
-                        <div class="metric-card">
+                        <div class="metric-card metric-card-interactive" onclick="MrymifyAdmin.openOrdersBreakdownModal()" style="cursor: pointer;" title="View Orders Breakdown">
                             <div class="metric-icon-wrap icon-orders">📦</div>
                             <div class="metric-data">
                                 <span class="metric-label">Total Orders</span>
                                 <span class="metric-value" id="metric-total-orders">0</span>
-                                <span class="metric-sub">All-time received</span>
+                                <span class="metric-sub" id="metric-orders-sub">All-time received</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card metric-card-interactive" onclick="MrymifyAdmin.openVisitorIntelligenceModal()" style="cursor: pointer;" title="View Visitor Sessions">
+                            <div class="metric-icon-wrap icon-crafting">👥</div>
+                            <div class="metric-data">
+                                <span class="metric-label">Unique Visitors</span>
+                                <span class="metric-value" id="metric-total-visitors">0</span>
+                                <span class="metric-sub">Audience sessions</span>
                             </div>
                         </div>
 
                         <div class="metric-card">
-                            <div class="metric-icon-wrap icon-crafting">🧶</div>
+                            <div class="metric-icon-wrap icon-delivered">📈</div>
                             <div class="metric-data">
-                                <span class="metric-label">Crafting Queue</span>
-                                <span class="metric-value" id="metric-crafting-queue">0</span>
-                                <span class="metric-sub">Active pieces in production</span>
-                            </div>
-                        </div>
-
-                        <div class="metric-card">
-                            <div class="metric-icon-wrap icon-delivered">✅</div>
-                            <div class="metric-data">
-                                <span class="metric-label">Delivered Orders</span>
-                                <span class="metric-value" id="metric-delivered-count">0</span>
-                                <span class="metric-sub">Completed nationwide</span>
+                                <span class="metric-label">Conversion Rate</span>
+                                <span class="metric-value" id="metric-conversion-rate">0.0%</span>
+                                <span class="metric-sub">Visitors to completed orders</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Recent Orders Panel -->
-                    <div class="admin-panel-card">
-                        <div class="admin-card-header">
-                            <h3 class="admin-card-title">Recent Customer Orders</h3>
-                            <button type="button" class="action-btn" onclick="document.querySelector('[data-tab=orders]').click()">View All Orders →</button>
+                    <!-- Visual Circle Graphs (Devices, Active Theme, Discovery) -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 1.25rem;">
+                        <!-- Device Breakdown -->
+                        <div class="admin-panel-card" style="margin-bottom: 0;">
+                            <div class="admin-card-header" style="padding: 0.75rem 1rem;">
+                                <h3 class="admin-card-title" style="font-size: 0.95rem;">📱 Devices</h3>
+                            </div>
+                            <div style="padding: 1rem;" id="analytics-devices-container">
+                                <!-- Circle Donut Graph injected dynamically -->
+                            </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="admin-table">
-                                <thead>
-                                    <tr>
-                                        <th>Order ID</th>
-                                        <th>Date</th>
-                                        <th>Customer</th>
-                                        <th>Total</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="recent-orders-tbody">
-                                    <!-- Dynamic Rows -->
-                                </tbody>
-                            </table>
+
+                        <!-- Active Theme Preference -->
+                        <div class="admin-panel-card" style="margin-bottom: 0;">
+                            <div class="admin-card-header" style="padding: 0.75rem 1rem;">
+                                <h3 class="admin-card-title" style="font-size: 0.95rem;">🌓 Active Theme</h3>
+                            </div>
+                            <div style="padding: 1rem;" id="analytics-theme-container">
+                                <!-- Active Light vs Dark Circle Donut Graph injected dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Acquisition / Discovery Channels -->
+                        <div class="admin-panel-card" style="margin-bottom: 0;">
+                            <div class="admin-card-header" style="padding: 0.75rem 1rem;">
+                                <h3 class="admin-card-title" style="font-size: 0.95rem;">🌸 Discovery Channels</h3>
+                            </div>
+                            <div style="padding: 1rem;" id="analytics-acquisition-container">
+                                <!-- Circle Donut Graph injected dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conversion Funnel & Quick Clicks -->
+                    <div class="admin-panel-card" style="margin-bottom: 1.25rem;">
+                        <div class="admin-card-header" style="padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                            <h3 class="admin-card-title" style="font-size: 0.95rem;">🎯 Conversion Funnel</h3>
+                            <div id="analytics-quick-clicks-bar" style="display: flex; gap: 0.5rem; font-size: 0.75rem; flex-wrap: wrap;">
+                                <!-- Injected dynamically -->
+                            </div>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div class="funnel-steps-grid" id="analytics-funnel-grid" style="gap: 0.5rem;">
+                                <!-- Injected dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Circle Graphs: Dynamic Visitor Cities & Checkout Cities -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; margin-bottom: 1.25rem;">
+                        <!-- Visitor / Audience Cities (Dynamic as cities add up) -->
+                        <div class="admin-panel-card" style="margin-bottom: 0;">
+                            <div class="admin-card-header" style="padding: 0.75rem 1rem;">
+                                <h3 class="admin-card-title" style="font-size: 0.95rem;">📍 Visitor Cities (Audience)</h3>
+                            </div>
+                            <div style="padding: 1rem;" id="analytics-visitor-cities-container">
+                                <!-- Dynamic Circle Donut Graph injected as cities add up -->
+                            </div>
+                        </div>
+
+                        <!-- Checkout / Orders Delivery Cities -->
+                        <div class="admin-panel-card" style="margin-bottom: 0;">
+                            <div class="admin-card-header" style="padding: 0.75rem 1rem;">
+                                <h3 class="admin-card-title" style="font-size: 0.95rem;">🛍️ Checkout Cities (Orders)</h3>
+                            </div>
+                            <div style="padding: 1rem;" id="analytics-checkout-cities-container">
+                                <!-- Dynamic Circle Donut Graph injected for checkout orders -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Products Performance Champions Card (Click opens Individual Count Graph Modal) -->
+                    <div class="admin-panel-card metric-card-interactive" onclick="MrymifyAdmin.openProductAnalyticsModal()" style="cursor: pointer; margin-bottom: 0;" title="Click to view individual count graphs for all products">
+                        <div class="admin-card-header" style="padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <h3 class="admin-card-title" style="font-size: 0.95rem;">🏆 Top Product Champions</h3>
+                                <span style="font-size: 0.75rem; color: var(--admin-primary); font-weight: 600;">• Click for Individual Graphs 📊</span>
+                            </div>
+                            <span style="font-size: 0.76rem; color: var(--admin-text-muted);">Leaderboard: Likes, Dwell Time, Bagged & Checkouts</span>
+                        </div>
+                        <div style="padding: 1rem;" id="analytics-top-products-summary">
+                            <!-- Injected dynamically -->
                         </div>
                     </div>
                 </div>
@@ -220,13 +331,10 @@
                 <div id="tab-orders" class="admin-tab-pane">
                     <div class="admin-page-header">
                         <div>
-                            <h2 class="admin-page-title">Orders Pipeline & Customer Dispatch</h2>
-                            <p class="admin-page-subtitle">Track crafting stages, confirm courier delivery, and send 1-click WhatsApp customer notifications.</p>
+                            <h2 class="admin-page-title">Orders</h2>
+                            <p class="admin-page-subtitle">Inspect customer orders, verify incoming payments, advance crafting stages, and contact customers.</p>
                         </div>
                         <div class="admin-page-actions">
-                            <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.seedSampleOrders()">
-                                <span>➕ Add Demo Orders</span>
-                            </button>
                             <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.exportOrdersCsv()">
                                 <span>📥 Download CSV</span>
                             </button>
@@ -234,8 +342,23 @@
                     </div>
 
                     <div class="admin-panel-card">
-                        <div class="admin-card-header">
-                            <h3 class="admin-card-title">All Customer Orders</h3>
+                        <div class="admin-card-header" style="flex-wrap: wrap; gap: 1rem;">
+                            <!-- Dedicated Orders Search Bar -->
+                            <div style="flex: 1; min-width: 260px; display: flex; align-items: center; background: var(--admin-bg); border: 1.5px solid var(--admin-border); border-radius: 10px; padding: 0.4rem 0.85rem; gap: 0.5rem;">
+                                <span>🔍</span>
+                                <input type="text" id="order-search-input" placeholder="Search orders by Ref ID, Customer Name, Phone, City..." style="width: 100%; border: none; background: none; outline: none; color: var(--admin-text-main); font-size: 0.9rem;" />
+                            </div>
+
+                            <!-- Bulk Delete Selection Controls -->
+                            <div id="orders-bulk-actions" style="display: none; align-items: center; gap: 0.75rem;">
+                                <span style="font-size: 0.85rem; font-weight: 600; color: var(--admin-text-main);">
+                                    Selected: <strong id="orders-selected-count">0</strong>
+                                </span>
+                                <button type="button" class="btn-admin btn-admin-secondary" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.4); padding: 0.4rem 0.75rem; font-size: 0.82rem;" onclick="MrymifyAdmin.deleteSelectedOrders()">
+                                    <span>🗑️ Delete Selected Orders</span>
+                                </button>
+                            </div>
+
                             <div class="table-toolbar">
                                 <select id="order-filter-status" class="filter-select">
                                     <option value="all">All Statuses</option>
@@ -253,11 +376,14 @@
                             <table class="admin-table">
                                 <thead>
                                     <tr>
+                                        <th style="width: 40px; text-align: center;">
+                                            <input type="checkbox" id="orders-select-all" onchange="MrymifyAdmin.toggleSelectAllOrders(this)" title="Select all orders" />
+                                        </th>
                                         <th>Order ID</th>
                                         <th>Date</th>
                                         <th>Customer Details</th>
                                         <th>Items</th>
-                                        <th>Total</th>
+                                        <th>Total & Referral</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
@@ -271,39 +397,295 @@
                 </div>
 
                 <!-- -------------------------------------------------------------
-                     TAB 3: Products & Stock
+                     TAB 3: Products & Stock Studio
                      ------------------------------------------------------------- -->
                 <div id="tab-products" class="admin-tab-pane">
                     <div class="admin-page-header">
                         <div>
-                            <h2 class="admin-page-title">Handcrafted Product Catalog</h2>
-                            <p class="admin-page-subtitle">Update prices, change badges, and add new creations to your live online boutique.</p>
+                            <h2 class="admin-page-title">Handcrafted Product Studio & Catalog</h2>
+                            <p class="admin-page-subtitle">Upload creations with WhatsApp PFP-style crop tool, organize into PC-style folders, and manage inventory.</p>
                         </div>
-                        <div class="admin-page-actions">
-                            <button type="button" class="btn-admin btn-admin-primary" onclick="document.getElementById('product-add-modal').classList.add('open')">
+                        <div class="admin-page-actions" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                            <button type="button" class="btn-admin btn-admin-secondary" id="btn-open-featured-mgr" onclick="MrymifyAdmin.openFeaturedManagerModal()" style="border-color: rgba(234, 179, 8, 0.6); background: rgba(234, 179, 8, 0.12); color: #b45309; font-weight: 700;">
+                                <span>⭐ Edit Home Featured Pieces</span>
+                            </button>
+                            <button type="button" class="btn-admin btn-admin-secondary" id="btn-studio-yarn-palette" onclick="MrymifyAdmin.openYarnPaletteSettings()" style="border-color: rgba(99, 102, 241, 0.4); color: #6366f1; font-weight: 700;" title="Manage Available Yarn Colors for Custom Orders">
+                                <span>🧶 Yarn Palette</span>
+                            </button>
+                            <button type="button" class="btn-admin btn-admin-secondary" id="btn-header-recycle" onclick="MrymifyAdmin.setProductViewMode('recycle')" style="border-color: rgba(239, 68, 68, 0.4); color: #ef4444; font-weight: 700;" title="Open 30-day Recycle Bin">
+                                <span>🗑️ Recycle Bin</span>
+                                <span class="admin-nav-badge" id="badge-header-recycle-count" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; font-weight: 700;">0</span>
+                            </button>
+                            <button type="button" class="btn-admin btn-admin-primary" onclick="MrymifyAdmin.openProductCreatorModal()">
                                 <span>➕ Add New Piece</span>
                             </button>
                         </div>
                     </div>
 
                     <div class="admin-panel-card">
-                        <div class="admin-card-header">
-                            <h3 class="admin-card-title">Active Products</h3>
+                        <div class="admin-card-header" style="flex-wrap: wrap; gap: 1rem;">
+                            <!-- Dedicated Product Search Bar -->
+                            <div style="flex: 1; min-width: 260px; display: flex; align-items: center; background: var(--admin-bg); border: 1.5px solid var(--admin-border); border-radius: 10px; padding: 0.4rem 0.85rem; gap: 0.5rem;">
+                                <span>🔍</span>
+                                <input type="text" id="admin-product-search-input" placeholder="Search catalog by title, category, ID, price..." style="width: 100%; border: none; background: none; outline: none; color: var(--admin-text-main); font-size: 0.9rem;" />
+                            </div>
+
+                            <!-- PC-Style View Mode Switcher -->
+                            <div class="view-mode-selector" style="display: flex; gap: 0.35rem; background: var(--admin-bg); padding: 0.25rem; border-radius: 8px; border: 1px solid var(--admin-border); align-items: center; flex-wrap: wrap;">
+                                <button type="button" class="view-mode-btn active" id="btn-view-folders" title="Folder View (PC Style)" onclick="MrymifyAdmin.setProductViewMode('folders')">
+                                    <span>🗂️ Folders</span>
+                                </button>
+                                <button type="button" class="view-mode-btn" id="btn-view-grid" title="Grid View" onclick="MrymifyAdmin.setProductViewMode('grid')">
+                                    <span>⊞ Grid</span>
+                                </button>
+                                <button type="button" class="view-mode-btn" id="btn-view-list" title="Compact List View" onclick="MrymifyAdmin.setProductViewMode('list')">
+                                    <span>☰ List</span>
+                                </button>
+                                <button type="button" class="view-mode-btn" id="btn-view-featured" title="View & Manage Homepage Featured Pieces" onclick="MrymifyAdmin.setProductViewMode('featured')">
+                                    <span>⭐ Featured Pieces</span>
+                                </button>
+                                <button type="button" class="view-mode-btn" id="btn-view-unlisted" title="View Hidden & Unlisted Pieces" onclick="MrymifyAdmin.setProductViewMode('unlisted')">
+                                    <span>👁️ Unlisted Pieces</span>
+                                    <span class="admin-nav-badge" id="badge-unlisted-count" style="margin-left: 0.35rem; font-size: 0.72rem; padding: 0.1rem 0.45rem;">0</span>
+                                </button>
+                                <button type="button" class="view-mode-btn" id="btn-view-recycle" title="Recycle Bin (30-Day Auto Purge)" onclick="MrymifyAdmin.setProductViewMode('recycle')" style="color: #ef4444;">
+                                    <span>🗑️ Recycle Bin</span>
+                                    <span class="admin-nav-badge" id="badge-recycle-count" style="margin-left: 0.35rem; font-size: 0.72rem; padding: 0.1rem 0.45rem; background: rgba(239, 68, 68, 0.15); color: #ef4444;">0</span>
+                                </button>
+                            </div>
                         </div>
-                        <div id="admin-products-container" class="admin-products-grid">
-                            <!-- Dynamic Product Cards -->
+
+                        <div style="padding: 1.5rem; overflow-x: auto;">
+                            <!-- View Mode 1: Folder View (Default) -->
+                            <div id="product-view-folders" class="product-view-container" style="overflow-x: auto;"></div>
+
+                            <!-- View Mode 2: Grid View -->
+                            <div id="product-view-grid" class="product-view-container admin-products-grid" style="display: none; overflow-x: auto;"></div>
+
+                            <!-- View Mode 3: Compact List View -->
+                            <div id="product-view-list" class="product-view-container table-responsive" style="display: none; overflow-x: auto;">
+                                <table class="admin-table" style="min-width: 820px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Thumb</th>
+                                            <th>Title & Category</th>
+                                            <th>Price (PKR)</th>
+                                            <th>Featured</th>
+                                            <th>Stock Status</th>
+                                            <th>Badge</th>
+                                            <th style="min-width: 230px; white-space: nowrap;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="product-list-tbody"></tbody>
+                                </table>
+                            </div>
+
+                            <!-- View Mode 4: Dedicated Featured View -->
+                            <div id="product-view-featured" class="product-view-container" style="display: none; overflow-x: auto;"></div>
+
+                            <!-- View Mode 5: Dedicated Unlisted View -->
+                            <div id="product-view-unlisted" class="product-view-container" style="display: none; overflow-x: auto;"></div>
+
+                            <!-- View Mode 6: Dedicated Recycle Bin View -->
+                            <div id="product-view-recycle" class="product-view-container" style="display: none; overflow-x: auto;"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- -------------------------------------------------------------
-                     TAB 4: Store Settings
+                     TAB 4: Discounts & Referrals Hub
+                     ------------------------------------------------------------- -->
+                <div id="tab-promotions" class="admin-tab-pane">
+                    <div class="admin-page-header">
+                        <div>
+                            <h2 class="admin-page-title">Discounts & Referral Code System</h2>
+                            <p class="admin-page-subtitle">Configure storewide promotions, create influencer/friend referral codes, and track referral sales.</p>
+                        </div>
+                    </div>
+
+                    <!-- Storewide Discount Config Card -->
+                    <div class="admin-panel-card" style="margin-bottom: 1.75rem;">
+                        <div class="admin-card-header">
+                            <h3 class="admin-card-title">🏷️ Storewide Automatic Discount</h3>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <form id="form-storewide-discount" onsubmit="event.preventDefault(); MrymifyAdmin.saveStorewideDiscount();">
+                                <div style="display: grid; grid-template-columns: auto 1fr 1fr auto; gap: 1rem; align-items: center;">
+                                    <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                                        <input type="checkbox" id="store-discount-active" style="width: 18px; height: 18px;" />
+                                        <span>Active</span>
+                                    </label>
+                                    <div>
+                                        <label style="font-size: 0.82rem; color: var(--admin-text-muted); display: block;">Discount Type</label>
+                                        <select id="store-discount-type" class="settings-input">
+                                            <option value="percent">Percentage (% OFF)</option>
+                                            <option value="fixed">Fixed PKR (Rs. OFF)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style="font-size: 0.82rem; color: var(--admin-text-muted); display: block;">Discount Value</label>
+                                        <input type="number" id="store-discount-value" class="settings-input" placeholder="e.g. 10 or 250" />
+                                    </div>
+                                    <div style="align-self: flex-end;">
+                                        <button type="submit" class="btn-admin btn-admin-primary">Save Promotion</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Referral Codes Manager -->
+                    <div class="admin-panel-card">
+                        <div class="admin-card-header" style="flex-wrap: wrap; gap: 1rem;">
+                            <h3 class="admin-card-title">🎟️ Active Referral & Promo Codes</h3>
+                            <button type="button" class="btn-admin btn-admin-primary" onclick="MrymifyAdmin.openReferralCreatorModal()">
+                                <span>➕ Create Referral Code</span>
+                            </button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Discount</th>
+                                        <th>Users / Orders Referred</th>
+                                        <th>Total Revenue Generated</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="referrals-table-tbody">
+                                    <!-- Injected dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- -------------------------------------------------------------
+                     TAB 5: Showcase Carousel Manager
+                     ------------------------------------------------------------- -->
+                <div id="tab-showcase" class="admin-tab-pane">
+                    <div class="admin-page-header">
+                        <div>
+                            <h2 class="admin-page-title">Homepage Showcase Carousel Manager</h2>
+                            <p class="admin-page-subtitle">Select which handcrafted pieces appear in the hero showcase and control their auto-shuffling speed.</p>
+                        </div>
+                        <div class="admin-page-actions">
+                            <button type="button" class="btn-admin btn-admin-primary" onclick="MrymifyAdmin.saveShowcaseConfig()">
+                                <span>💾 Save Showcase Settings</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="admin-panel-card" style="margin-bottom: 1.75rem;">
+                        <div class="admin-card-header">
+                            <h3 class="admin-card-title">⚙️ Carousel Shuffling Speed</h3>
+                        </div>
+                        <div style="padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+                            <label style="font-weight: 600;">Shuffle Interval:</label>
+                            <input type="range" id="showcase-interval-slider" min="2000" max="8000" step="500" value="4200" style="flex: 1; max-width: 300px;" oninput="document.getElementById('showcase-interval-val').textContent = (this.value / 1000) + ' seconds'" />
+                            <span id="showcase-interval-val" style="font-weight: 700; color: var(--admin-primary);">4.2 seconds</span>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; margin-left: auto;">
+                                <input type="checkbox" id="showcase-auto-shuffle" checked style="width: 18px; height: 18px;" />
+                                <span>Enable Auto-Shuffling</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="admin-panel-card">
+                        <div class="admin-card-header">
+                            <h3 class="admin-card-title">Select Showcase Pieces</h3>
+                            <span style="font-size: 0.85rem; color: var(--admin-text-muted);">Check all items you want in rotation</span>
+                        </div>
+                        <div style="padding: 1.5rem;" id="showcase-checkboxes-grid" class="admin-products-grid">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- -------------------------------------------------------------
+                     TAB 6: Store Settings
                      ------------------------------------------------------------- -->
                 <div id="tab-settings" class="admin-tab-pane">
                     <div class="admin-page-header">
                         <div>
-                            <h2 class="admin-page-title">Store & Security Settings</h2>
-                            <p class="admin-page-subtitle">Manage your master credentials, shipping policies, and boutique configurations.</p>
+                            <h2 class="admin-page-title">Storefront Controls & Boutique Settings</h2>
+                            <p class="admin-page-subtitle">Manage available yarn colors for custom orders, storefront like counts, master passcodes, and database backups.</p>
+                        </div>
+                    </div>
+
+                    <!-- Custom Order Yarn Palette Manager -->
+                    <div class="settings-section" id="settings-section-yarn">
+                        <div class="settings-card" style="border: 1.5px solid rgba(99, 102, 241, 0.35);">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem;">
+                                <div>
+                                    <h3 style="margin: 0; font-family: var(--font-heading, serif); font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; color: var(--admin-text-main);">
+                                        <span>🧶</span> Custom Order Available Yarn Palette
+                                    </h3>
+                                    <p style="color: var(--admin-text-muted); font-size: 0.88rem; margin: 0.35rem 0 0;">
+                                        Specify the yarn colors currently in stock for custom orders. Clients can choose from these swatches on the Custom Orders page, or enter a custom color shade.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div id="yarn-palette-list" style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem; min-height: 48px; align-items: center; padding: 0.85rem; background: var(--admin-bg); border-radius: 12px; border: 1.5px solid var(--admin-border);">
+                                <!-- Injected dynamically by js/admin.js -->
+                            </div>
+
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap;">
+                                <div>
+                                    <label class="settings-label" style="font-size: 0.8rem;">Yarn Color Name</label>
+                                    <input type="text" id="new-yarn-color-input" class="settings-input" placeholder="e.g. Sage Green, Lavender..." style="width: 220px;" onkeydown="if(event.key==='Enter'){event.preventDefault(); MrymifyAdmin.addYarnColor();}" />
+                                </div>
+                                <button type="button" class="btn-admin btn-admin-primary" id="btn-add-yarn-color" onclick="MrymifyAdmin.addYarnColor()">
+                                    <span>➕ Add Yarn Color</span>
+                                </button>
+                                <button type="button" class="btn-admin btn-admin-secondary" id="btn-reset-yarn-palette" onclick="MrymifyAdmin.resetYarnPaletteToDefault()">
+                                    <span>↺ Reset Palette</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Storefront Display Controls (Likes Visibility & Reset) -->
+                    <div class="settings-section">
+                        <div class="settings-card">
+                            <h3 style="margin-top: 0; font-family: var(--font-heading, serif); font-size: 1.3rem;">❤️ Likes System & Public Display</h3>
+                            <p style="color: var(--admin-text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+                                Control whether like count numbers are shown to visitors on product cards or kept subtle.
+                            </p>
+
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: var(--admin-bg); border: 1px solid var(--admin-border); border-radius: 12px; margin-bottom: 1.25rem;">
+                                <div>
+                                    <strong>Show Like Counts to Storefront Users</strong>
+                                    <p style="font-size: 0.82rem; color: var(--admin-text-muted); margin: 0.2rem 0 0;">When disabled, users can still click like ❤️, but raw numbers remain hidden.</p>
+                                </div>
+                                <input type="checkbox" id="setting-show-likes" style="width: 22px; height: 22px; cursor: pointer;" onchange="MrymifyAdmin.toggleLikeVisibility(this.checked)" />
+                            </div>
+
+                            <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.resetAllLikesToTrue()">
+                                <span>🧹 Reset All Likes to Clean True Values</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Database Backup & Restore -->
+                    <div class="settings-section">
+                        <div class="settings-card">
+                            <h3 style="margin-top: 0; font-family: var(--font-heading, serif); font-size: 1.3rem;">💾 Database Backup & Export</h3>
+                            <p style="color: var(--admin-text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+                                Download a full JSON snapshot of all customer orders, analytics, catalog items, and referral codes.
+                            </p>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.exportFullDatabaseBackup()">
+                                    <span>📥 Download Full JSON Backup</span>
+                                </button>
+                                <label class="btn-admin btn-admin-secondary" style="cursor: pointer;">
+                                    <span>📤 Restore Backup JSON</span>
+                                    <input type="file" id="import-backup-file" accept=".json" style="display: none;" onchange="MrymifyAdmin.importDatabaseBackup(event)" />
+                                </label>
+                            </div>
                         </div>
                     </div>
 
@@ -335,20 +717,286 @@
                             </form>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Boutique Information -->
-                    <div class="settings-section">
-                        <div class="settings-card">
-                            <h3 style="margin-top: 0; font-family: var(--font-heading, serif); font-size: 1.3rem;">🌸 Boutique Contacts</h3>
-                            <div style="font-size: 0.92rem; line-height: 1.7; color: var(--admin-text-main);">
-                                <div><strong>Manager & Marketer:</strong> Mariyam</div>
-                                <div><strong>Artisan Studio:</strong> Handcrafted Boutique Team</div>
-                                <div><strong>WhatsApp Business:</strong> +92 300 0896885</div>
-                                <div><strong>Official Email:</strong> mrymify9@gmail.com</div>
-                                <div><strong>Artisan Studio:</strong> Garden Town Phase 3, Gujranwala, Pakistan</div>
-                                <div><strong>Free Shipping Policy:</strong> Automatically applied on cart orders above Rs. 3,500</div>
+                <!-- -------------------------------------------------------------
+                     TAB 7: Developer Tools & System Engineering Console
+                     ------------------------------------------------------------- -->
+                <div id="tab-devtools" class="admin-tab-pane">
+
+                    <!-- State A: Developer Password Gate (Shown when not unlocked in session) -->
+                    <div id="devtools-locked-view" style="display: flex; justify-content: center; align-items: center; padding: 3rem 1rem;">
+                        <div class="admin-panel-card" style="max-width: 480px; width: 100%; text-align: center; padding: 2.5rem 2rem; border-radius: 20px; box-shadow: var(--admin-shadow-lg);">
+                            <div style="font-size: 3rem; margin-bottom: 0.75rem;">🛠️</div>
+                            <span class="admin-auth-badge" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">Engineering & Diagnostics</span>
+                            <h2 style="font-family: var(--font-heading); font-size: 1.6rem; margin: 0.5rem 0 0.4rem; color: var(--admin-text-main);">Developer Console</h2>
+                            <p style="font-size: 0.88rem; color: var(--admin-text-muted); line-height: 1.5; margin-bottom: 1.75rem;">
+                                Enter your developer authorization key to access website branding, granular analytics resets, traffic simulation, and direct database tools.
+                            </p>
+
+                            <form id="form-devtools-auth" onsubmit="event.preventDefault(); MrymifyAdmin.unlockDevTools();">
+                                <div style="margin-bottom: 1.25rem; text-align: left;">
+                                    <label for="devtools-key-input" class="settings-label">Developer Access Key</label>
+                                    <input type="password" id="devtools-key-input" class="settings-input" placeholder="Enter developer key (Default: mrymify@dev2026)" required autocomplete="current-password" />
+                                </div>
+                                <button type="submit" class="btn-admin btn-admin-primary" style="width: 100%; padding: 0.75rem; justify-content: center; font-size: 0.95rem;">
+                                    <span>Unlock Developer Tools 🔓</span>
+                                </button>
+                            </form>
+
+                            <div id="devtools-auth-alert" style="display: none; margin-top: 1rem; padding: 0.65rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;"></div>
+
+                            <p style="font-size: 0.76rem; color: var(--admin-text-muted); margin-top: 1.5rem; line-height: 1.4;">
+                                💡 <em>Session Persistence:</em> Once unlocked, you can freely switch between all admin tabs without re-entering the key. The console automatically locks when you leave or close the admin panel.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- State B: Unlocked Developer Console -->
+                    <div id="devtools-unlocked-view" style="display: none;">
+                        <div class="admin-page-header">
+                            <div>
+                                <h2 class="admin-page-title">Developer Tools & Engineering Console 🛠️</h2>
+                                <p class="admin-page-subtitle">Configure website branding, execute granular count resets, simulate live traffic, and manage database keys.</p>
+                            </div>
+                            <div class="admin-page-actions">
+                                <span style="font-size: 0.82rem; font-weight: 700; color: #10b981; background: rgba(16, 185, 129, 0.12); padding: 0.35rem 0.85rem; border-radius: 9999px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                                    <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></span> Session Active
+                                </span>
+                                <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.lockDevTools()">
+                                    <span>🔒 Lock Console</span>
+                                </button>
                             </div>
                         </div>
+
+                        <!-- Section 1: Website Meta, Branding & Thresholds -->
+                        <div class="admin-panel-card" style="margin-bottom: 1.75rem;">
+                            <div class="admin-card-header">
+                                <h3 class="admin-card-title">🌐 Website Meta & Global Branding Configuration</h3>
+                                <span style="font-size: 0.82rem; color: var(--admin-text-muted);">Real-time storefront sync</span>
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <form id="form-dev-branding" onsubmit="event.preventDefault(); MrymifyAdmin.saveDevBranding();">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
+                                        <div>
+                                            <label for="dev-site-title" class="settings-label">Website Name / Brand Title</label>
+                                            <input type="text" id="dev-site-title" class="settings-input" placeholder="MRYMIFY | Handcrafted Crochet Boutique" />
+                                        </div>
+                                        <div>
+                                            <label for="dev-contact-phone" class="settings-label">Official WhatsApp Contact (Digits only)</label>
+                                            <input type="text" id="dev-contact-phone" class="settings-input" placeholder="923000896885" />
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-bottom: 1.25rem;">
+                                        <label for="dev-site-desc" class="settings-label">Website Meta Description (SEO & Social Sharing)</label>
+                                        <textarea id="dev-site-desc" rows="2" class="settings-input" placeholder="Handcrafted crochet plushies, evergreen bouquets, and bespoke accessories by Mariyam in Gujranwala, Pakistan."></textarea>
+                                    </div>
+
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
+                                        <div>
+                                            <label for="dev-shipping-threshold" class="settings-label">Free Delivery Threshold (PKR)</label>
+                                            <input type="number" id="dev-shipping-threshold" class="settings-input" placeholder="3500" />
+                                        </div>
+                                        <div>
+                                            <label for="dev-shipping-fee" class="settings-label">Standard Courier Shipping Fee (PKR)</label>
+                                            <input type="number" id="dev-shipping-fee" class="settings-input" placeholder="200" />
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn-admin btn-admin-primary">
+                                        <span>Save Global Branding & Config ✨</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Granular Counts & Metrics Reset Manager -->
+                        <div class="admin-panel-card" style="margin-bottom: 1.75rem;">
+                            <div class="admin-card-header">
+                                <h3 class="admin-card-title">🧹 Granular Counts & Metrics Reset Manager</h3>
+                                <span style="font-size: 0.82rem; color: var(--admin-text-muted);">Reset specific counters without wiping everything</span>
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+                                    
+                                    <div style="background: var(--admin-bg); padding: 1.15rem; border-radius: 12px; border: 1px solid var(--admin-border); display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <strong style="color: var(--admin-text-main);">❤️ Product Likes Reset</strong>
+                                            <p style="font-size: 0.82rem; color: var(--admin-text-muted); margin: 0.25rem 0 0.85rem;">Sets true like counters on all 30+ catalog products to clean 0.</p>
+                                        </div>
+                                        <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.devResetLikes()">Reset All Likes</button>
+                                    </div>
+
+                                    <div style="background: var(--admin-bg); padding: 1.15rem; border-radius: 12px; border: 1px solid var(--admin-border); display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <strong style="color: var(--admin-text-main);">⏱️ Product Views & Dwell Time</strong>
+                                            <p style="font-size: 0.82rem; color: var(--admin-text-muted); margin: 0.25rem 0 0.85rem;">Clears dwell seconds and impression logs across catalog.</p>
+                                        </div>
+                                        <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.devResetDwell()">Reset Dwell & Views</button>
+                                    </div>
+
+                                    <div style="background: var(--admin-bg); padding: 1.15rem; border-radius: 12px; border: 1px solid var(--admin-border); display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <strong style="color: var(--admin-text-main);">👥 Visitors & Sessions Log</strong>
+                                            <p style="font-size: 0.82rem; color: var(--admin-text-muted); margin: 0.25rem 0 0.85rem;">Resets total visitor count and session tracking to 0.</p>
+                                        </div>
+                                        <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.devResetVisitors()">Reset Visitors & Sessions</button>
+                                    </div>
+
+                                    <div style="background: var(--admin-bg); padding: 1.15rem; border-radius: 12px; border: 1px solid var(--admin-border); display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <strong style="color: var(--admin-text-main);">🎯 Conversion Funnel Metrics</strong>
+                                            <p style="font-size: 0.82rem; color: var(--admin-text-muted); margin: 0.25rem 0 0.85rem;">Resets landing-to-order pipeline steps to 0.</p>
+                                        </div>
+                                        <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.devResetFunnel()">Reset Funnel Metrics</button>
+                                    </div>
+
+                                    <div style="background: var(--admin-bg); padding: 1.15rem; border-radius: 12px; border: 1px solid var(--admin-border); display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <strong style="color: var(--admin-text-main);">🔍 Search Query Logs</strong>
+                                            <p style="font-size: 0.82rem; color: var(--admin-text-muted); margin: 0.25rem 0 0.85rem;">Clears user search queries recorded in shop catalog.</p>
+                                        </div>
+                                        <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.devResetSearches()">Reset Search Queries</button>
+                                    </div>
+
+                                    <div style="background: var(--admin-bg); padding: 1.15rem; border-radius: 12px; border: 1px solid var(--admin-border); display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <strong style="color: var(--admin-text-main);">🌸 First-Time Visitor Survey</strong>
+                                            <p style="font-size: 0.82rem; color: var(--admin-text-muted); margin: 0.25rem 0 0.85rem;">Clears survey stats and re-arms popup for visitors.</p>
+                                        </div>
+                                        <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.devResetSurvey()">Reset Survey & Re-arm</button>
+                                    </div>
+
+                                    <div style="background: var(--admin-bg); padding: 1.15rem; border-radius: 12px; border: 1px solid var(--admin-border); display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <strong style="color: var(--admin-text-main);">🔥 Section Click Heat</strong>
+                                            <p style="font-size: 0.82rem; color: var(--admin-text-muted); margin: 0.25rem 0 0.85rem;">Clears button and navigation click counters.</p>
+                                        </div>
+                                        <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.devResetClicks()">Reset Click Heat</button>
+                                    </div>
+
+                                    <div style="background: rgba(239, 68, 68, 0.08); padding: 1.15rem; border-radius: 12px; border: 1.5px solid #ef4444; display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <strong style="color: #dc2626;">🚨 Master Analytics Wipe</strong>
+                                            <p style="font-size: 0.82rem; color: var(--admin-text-muted); margin: 0.25rem 0 0.85rem;">Resets all analytics, dwell, funnel, and clicks cleanly.</p>
+                                        </div>
+                                        <button type="button" class="btn-admin" style="background: #dc2626; color: #fff;" onclick="MrymifyAdmin.devWipeAllAnalytics()">Wipe All Analytics</button>
+                                    </div>
+
+                                    <!-- Factory Clear / Factory Reset -->
+                                    <div style="background: rgba(185, 28, 28, 0.12); padding: 1.15rem; border-radius: 12px; border: 2px solid #b91c1c; display: flex; flex-direction: column; justify-content: space-between;">
+                                        <div>
+                                            <strong style="color: #991b1b; font-size: 0.95rem;">🏭 FACTORY MASTER CLEAR</strong>
+                                            <p style="font-size: 0.82rem; color: var(--admin-text-muted); margin: 0.25rem 0 0.85rem;">Completely restores all counts, product likes, visitors, dwell time, searches, survey responses, and overrides back to a clean 0 factory state.</p>
+                                        </div>
+                                        <button type="button" class="btn-admin" id="dev-factory-clear-btn" style="background: #b91c1c; color: #fff; font-weight: 700;" onclick="MrymifyAdmin.devFactoryClear()">🏭 Factory Clear (Clean Each Count)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Traffic Simulator & Synthetic Demo Orders -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.75rem;">
+                            <!-- Traffic Surge Simulator -->
+                            <div class="admin-panel-card">
+                                <div class="admin-card-header">
+                                    <h3 class="admin-card-title">🚀 Traffic Surge Simulator</h3>
+                                </div>
+                                <div style="padding: 1.5rem;">
+                                    <p style="font-size: 0.85rem; color: var(--admin-text-muted); margin-bottom: 1rem;">
+                                        Inject realistic mock traffic into the Analytics engine to populate graphs and device breakdown immediately for testing or demonstration.
+                                    </p>
+                                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                                        <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.devSimulateTraffic(50)">
+                                            <span>+50 Visitors Surge</span>
+                                        </button>
+                                        <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.devSimulateTraffic(250)">
+                                            <span>+250 Mega Surge</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Synthetic Orders Generator -->
+                            <div class="admin-panel-card">
+                                <div class="admin-card-header">
+                                    <h3 class="admin-card-title">📦 Synthetic Orders Generator</h3>
+                                </div>
+                                <div style="padding: 1.5rem;">
+                                    <p style="font-size: 0.85rem; color: var(--admin-text-muted); margin-bottom: 1rem;">
+                                        Generate realistic customer orders with customer names, delivery cities, items, and progress stages to test order pipeline filtering and search.
+                                    </p>
+                                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                                        <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.devGenerateMockOrders(5)">
+                                            <span>+5 Realistic Orders</span>
+                                        </button>
+                                        <button type="button" class="btn-admin" style="background: rgba(239, 68, 68, 0.12); color: #dc2626; border: 1px solid #ef4444;" onclick="MrymifyAdmin.devClearAllOrders()">
+                                            <span>Clear All Orders</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 4: Live LocalStorage Raw Key Inspector & JSON Editor -->
+                        <div class="admin-panel-card" style="margin-bottom: 1.75rem;">
+                            <div class="admin-card-header">
+                                <h3 class="admin-card-title">🔍 Live LocalStorage Key Inspector & JSON Editor</h3>
+                                <span style="font-size: 0.82rem; color: var(--admin-text-muted);">Direct database surgery</span>
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap;">
+                                    <label for="dev-storage-key-select" style="font-weight: 700; font-size: 0.85rem;">Select Key:</label>
+                                    <select id="dev-storage-key-select" class="settings-input" style="flex: 1; max-width: 320px;" onchange="MrymifyAdmin.loadDevStorageKey(this.value)">
+                                        <option value="mrymify_analytics">mrymify_analytics (Traffic & Dwell Time)</option>
+                                        <option value="mrymify_customer_orders">mrymify_customer_orders (Customer Orders)</option>
+                                        <option value="mrymify_custom_products">mrymify_custom_products (New Custom Pieces)</option>
+                                        <option value="mrymify_product_overrides">mrymify_product_overrides (Price & Stock Edits)</option>
+                                        <option value="mrymify_referral_codes">mrymify_referral_codes (Active Promo Codes)</option>
+                                        <option value="mrymify_store_discounts">mrymify_store_discounts (Storewide Promos)</option>
+                                        <option value="mrymify_likes">mrymify_likes (Product Likes Registry)</option>
+                                        <option value="mrymify_branding_config">mrymify_branding_config (Site Meta Config)</option>
+                                    </select>
+                                    <button type="button" class="btn-admin btn-admin-secondary" onclick="MrymifyAdmin.loadDevStorageKey(document.getElementById('dev-storage-key-select').value)">🔄 Reload</button>
+                                </div>
+
+                                <textarea id="dev-storage-json-editor" rows="9" class="settings-input" style="font-family: monospace; font-size: 0.82rem; white-space: pre; line-height: 1.4;"></textarea>
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                                    <span id="dev-json-status" style="font-size: 0.82rem; color: var(--admin-text-muted);">Loaded cleanly</span>
+                                    <button type="button" class="btn-admin btn-admin-primary" onclick="MrymifyAdmin.saveDevStorageKey()">
+                                        <span>Save JSON to Database 💾</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 5: Developer Key Passcode Settings -->
+                        <div class="admin-panel-card">
+                            <div class="admin-card-header">
+                                <h3 class="admin-card-title">🔐 Update Developer Access Key</h3>
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <form id="form-dev-change-key" onsubmit="event.preventDefault(); MrymifyAdmin.changeDevKey();">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: flex-end;">
+                                        <div>
+                                            <label for="dev-new-key" class="settings-label">New Developer Key (min 6 chars)</label>
+                                            <input type="password" id="dev-new-key" class="settings-input" placeholder="Enter new developer key" required />
+                                        </div>
+                                        <div>
+                                            <label for="dev-confirm-key" class="settings-label">Confirm New Key</label>
+                                            <input type="password" id="dev-confirm-key" class="settings-input" placeholder="Confirm new key" required />
+                                        </div>
+                                        <div>
+                                            <button type="submit" class="btn-admin btn-admin-primary">Update Key</button>
+                                        </div>
+                                    </div>
+                                    <div id="dev-key-feedback" style="display: none; font-size: 0.85rem; font-weight: 600; margin-top: 0.75rem;"></div>
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -357,7 +1005,7 @@
     </div>
 
     <!-- =====================================================================
-         3. Modals (Order Details, Product Edit, Product Add)
+         3. Modals (Order Details, Product Creator / Cropper, Referral Creator)
          ===================================================================== -->
 
     <!-- Order Details Modal -->
@@ -371,7 +1019,7 @@
                 <!-- Injected dynamically -->
             </div>
             <div class="admin-modal-footer">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-right: auto;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-right: auto; flex-wrap: wrap;">
                     <label for="modal-order-status-select" style="font-size: 0.85rem; font-weight: 600;">Status:</label>
                     <select id="modal-order-status-select" class="filter-select">
                         <option value="pending">⏳ Pending Review</option>
@@ -383,95 +1031,398 @@
                     </select>
                     <button type="button" id="modal-btn-save-status" class="btn-admin btn-admin-primary">Save Status</button>
                 </div>
-                <button type="button" id="modal-btn-wa-customer" class="btn-admin btn-admin-wa">
-                    <span>Message on WhatsApp 💬</span>
-                </button>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button type="button" id="modal-btn-delete-order" class="btn-admin btn-admin-secondary" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.4);" title="Permanently delete false or spam order">
+                        <span>🗑️ Delete</span>
+                    </button>
+                    <button type="button" id="modal-btn-wa-customer" class="btn-admin btn-admin-wa">
+                        <span>Message on WhatsApp 💬</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Product Edit Modal -->
-    <div id="product-edit-modal" class="admin-modal-backdrop">
-        <div class="admin-modal-card" style="max-width: 480px;">
-            <div class="admin-modal-header">
-                <h3 id="edit-prod-title" class="admin-modal-title">Edit Product</h3>
-                <button type="button" class="modal-close-btn">&times;</button>
-            </div>
-            <div class="admin-modal-body">
-                <div class="settings-row">
-                    <label for="edit-prod-price" class="settings-label">Price in PKR (Rs.) *</label>
-                    <input type="number" id="edit-prod-price" class="settings-input" required />
-                </div>
-                <div class="settings-row">
-                    <label for="edit-prod-badge" class="settings-label">Badge (e.g. Best Seller, Popular, Set of 3)</label>
-                    <input type="text" id="edit-prod-badge" class="settings-input" placeholder="Leave empty for none" />
-                </div>
-            </div>
-            <div class="admin-modal-footer">
-                <button type="button" class="action-btn modal-close-btn">Cancel</button>
-                <button type="button" id="btn-save-product-edit" class="btn-admin btn-admin-primary">Save Changes</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add New Product Modal -->
+    <!-- Product Studio Modal with WhatsApp PFP-Style Image Cropper & Orientation Studio -->
     <div id="product-add-modal" class="admin-modal-backdrop">
-        <div class="admin-modal-card" style="max-width: 520px;">
+        <div class="admin-modal-card" style="max-width: 820px;">
             <div class="admin-modal-header">
-                <h3 class="admin-modal-title">Add New Handcrafted Piece</h3>
+                <h3 id="modal-studio-title" class="admin-modal-title">🧶 Handcrafted Product Studio & Image Cropper</h3>
+                <button type="button" class="modal-close-btn">&times;</button>
+            </div>
+            <div class="admin-modal-body" style="padding: 1.5rem;">
+                <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 1.75rem;">
+                    
+                    <!-- Left: WhatsApp PFP-Style Interactive Canvas Cropper -->
+                    <div style="background: var(--admin-bg); padding: 1.25rem; border-radius: 14px; border: 1px solid var(--admin-border);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                            <label class="settings-label" style="margin: 0; font-weight: 700;">📸 Card Thumbnail (Fixed Ratio)</label>
+                            <span style="font-size: 0.75rem; color: var(--admin-primary); font-weight: 600;">WhatsApp Style</span>
+                        </div>
+
+                        <div style="margin-bottom: 0.85rem;">
+                            <input type="file" id="studio-image-file" accept="image/*" class="settings-input" style="padding: 0.4rem;" />
+                        </div>
+
+                        <!-- Canvas Workspace -->
+                        <div id="cropper-workspace" style="position: relative; width: 100%; aspect-ratio: 1/1; background: #111; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: grab;">
+                            <canvas id="cropper-canvas" width="360" height="360" style="width: 100%; height: 100%; object-fit: contain;"></canvas>
+                            <!-- Crop Guide Overlay -->
+                            <div class="crop-overlay-guide" id="crop-overlay-guide"></div>
+                        </div>
+
+                        <!-- Zoom & Rotate Controls -->
+                        <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.65rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="font-size: 0.85rem;">🔍 Zoom:</span>
+                                <input type="range" id="cropper-zoom-slider" min="1" max="3" step="0.05" value="1" style="flex: 1;" />
+                                <span id="cropper-zoom-val" style="font-size: 0.82rem; font-weight: 600; min-width: 32px;">1.0x</span>
+                            </div>
+
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button type="button" class="action-btn" id="btn-cropper-rotate" style="flex: 1;">↻ Rotate 90°</button>
+                                <button type="button" class="btn-admin btn-admin-primary" id="btn-cropper-apply" style="flex: 1.5;">✓ Apply Crop</button>
+                            </div>
+                        </div>
+
+                        <!-- Gallery Multiple Photos Upload Section -->
+                        <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--admin-border);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                <label class="settings-label" style="margin: 0; font-weight: 700; font-size: 0.85rem;">🖼️ Additional Gallery Photos</label>
+                                <span style="font-size: 0.75rem; color: var(--admin-primary); font-weight: 600;">Multiple Photos</span>
+                            </div>
+                            <p style="font-size: 0.78rem; color: var(--admin-text-muted); margin: 0 0 0.5rem;">Upload close-ups, back views, and packaging photos for the auto-shuffling gallery:</p>
+                            <input type="file" id="studio-gallery-files" accept="image/*" multiple class="settings-input" style="padding: 0.35rem; margin-bottom: 0.5rem;" />
+
+                            <!-- Preview Strip of Attached Gallery Photos -->
+                            <div id="studio-gallery-preview-strip" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; min-height: 48px; padding: 0.4rem; background: var(--admin-bg); border: 1px dashed var(--admin-border); border-radius: 8px; align-items: center;">
+                                <span id="gallery-empty-msg" style="font-size: 0.78rem; color: var(--admin-text-muted); margin: auto;">No secondary gallery photos added yet</span>
+                            </div>
+
+                            <!-- Gallery Orientation Selector -->
+                            <label class="settings-label" style="font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">🖼️ Gallery Image Orientation Fit:</label>
+                            <select id="studio-gallery-fit" class="settings-input" style="font-size: 0.85rem;">
+                                <option value="cover">Cover / Fill (Recommended for Lookbook)</option>
+                                <option value="contain">Contain / Full View (No Cropping)</option>
+                                <option value="scale-down">Scale Down to Fit Frame</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Right: Product Details Form -->
+                    <div>
+                        <form id="form-product-studio" onsubmit="event.preventDefault(); MrymifyAdmin.saveProductFromStudio();">
+                            <input type="hidden" id="studio-prod-id" />
+                            <input type="hidden" id="studio-cropped-data" />
+
+                            <div class="settings-row">
+                                <label for="studio-title" class="settings-label">Piece Title *</label>
+                                <input type="text" id="studio-title" class="settings-input" placeholder="e.g. Royal Crown Froggy" required />
+                            </div>
+
+                            <div class="settings-row">
+                                <label for="studio-category" class="settings-label">Category *</label>
+                                <select id="studio-category" class="settings-input" required>
+                                    <option value="amigurumi">Amigurumi & Plushies</option>
+                                    <option value="floral">Floral Bouquets</option>
+                                    <option value="wearables">Bags & Wearables</option>
+                                    <option value="keychains">Keychains & Charms</option>
+                                    <option value="accessories">Accessories & Hair</option>
+                                </select>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                <div class="settings-row">
+                                    <label for="studio-price" class="settings-label">Price (PKR) *</label>
+                                    <input type="number" id="studio-price" class="settings-input" placeholder="1450" required />
+                                </div>
+                                <div class="settings-row">
+                                    <label for="studio-orig-price" class="settings-label">Original Price (PKR)</label>
+                                    <input type="number" id="studio-orig-price" class="settings-input" placeholder="1700" />
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 0.75rem;">
+                                <div class="settings-row">
+                                    <label for="studio-making-time" class="settings-label">⏳ Estimated Making Time *</label>
+                                    <input type="text" id="studio-making-time" class="settings-input" placeholder="e.g. 2-3 Business Days, 4-5 Days, Same Day Ready" value="2-3 Business Days" required />
+                                </div>
+                                <div class="settings-row">
+                                    <label for="studio-badge" class="settings-label">Spotlight Badge</label>
+                                    <input type="text" id="studio-badge" class="settings-input" placeholder="e.g. Best Seller, New Drop" />
+                                </div>
+                            </div>
+
+                            <div class="settings-row">
+                                <label for="studio-desc" class="settings-label">Description & Materials</label>
+                                <textarea id="studio-desc" class="settings-input" rows="3" placeholder="Handcrafted with 100% skin-friendly milk cotton yarn..."></textarea>
+                            </div>
+
+                            <!-- Unlist / Storefront Visibility Toggle -->
+                            <div class="settings-row" style="display: flex; align-items: center; justify-content: space-between; background: var(--admin-bg); padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--admin-border);">
+                                <label for="studio-unlisted-chk" class="settings-label" style="margin: 0; cursor: pointer;">
+                                    <strong>👁️ Unlist / Hide Product</strong>
+                                    <div style="font-size: 0.78rem; color: var(--admin-text-muted);">Hide from storefront while keeping in ADP catalog</div>
+                                </label>
+                                <input type="checkbox" id="studio-unlisted-chk" style="width: 18px; height: 18px; cursor: pointer;" />
+                            </div>
+
+                            <!-- Featured on Homepage Showcase Toggle -->
+                            <div class="settings-row" style="display: flex; align-items: center; justify-content: space-between; background: var(--admin-bg); padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--admin-border); margin-top: 0.5rem;">
+                                <label for="studio-featured-chk" class="settings-label" style="margin: 0; cursor: pointer;">
+                                    <strong>⭐ Feature on Homepage</strong>
+                                    <div style="font-size: 0.78rem; color: var(--admin-text-muted);">Pin to the curated "Featured Handcrafted Pieces" section on homepage</div>
+                                </label>
+                                <input type="checkbox" id="studio-featured-chk" style="width: 18px; height: 18px; cursor: pointer;" />
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+                                <button type="button" class="action-btn modal-close-btn">Cancel</button>
+                                <button type="submit" class="btn-admin btn-admin-primary" id="btn-save-studio">Save to Catalog 🧶</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Referral Code Creator Modal -->
+    <div id="referral-add-modal" class="admin-modal-backdrop">
+        <div class="admin-modal-card" style="max-width: 460px;">
+            <div class="admin-modal-header">
+                <h3 class="admin-modal-title">Create Referral / Promo Code</h3>
                 <button type="button" class="modal-close-btn">&times;</button>
             </div>
             <div class="admin-modal-body">
-                <form id="form-add-product" onsubmit="event.preventDefault(); MrymifyAdmin.addNewProduct({
-                    title: document.getElementById('add-p-title').value,
-                    category: document.getElementById('add-p-cat').value,
-                    price: document.getElementById('add-p-price').value,
-                    badge: document.getElementById('add-p-badge').value,
-                    description: document.getElementById('add-p-desc').value,
-                    image: document.getElementById('add-p-image').value || 'images/products/01_Royal_Crown_Froggy.png'
-                })">
+                <form id="form-create-referral" onsubmit="event.preventDefault(); MrymifyAdmin.saveNewReferral();">
                     <div class="settings-row">
-                        <label for="add-p-title" class="settings-label">Piece Title *</label>
-                        <input type="text" id="add-p-title" class="settings-input" placeholder="e.g. Lavender Blossom Keychain" required />
+                        <label for="ref-code-input" class="settings-label">Referral Code *</label>
+                        <input type="text" id="ref-code-input" class="settings-input" placeholder="e.g. FATIMA15" style="text-transform: uppercase;" required />
                     </div>
                     <div class="settings-row">
-                        <label for="add-p-cat" class="settings-label">Category *</label>
-                        <select id="add-p-cat" class="settings-input">
-                            <option value="amigurumi">Amigurumi & Plushies</option>
-                            <option value="keychains">Keychains & Charms</option>
-                            <option value="accessories">Accessories & Hair</option>
-                            <option value="flowers">Flowers & Bouquets</option>
-                            <option value="stationery">Stationery & Bookmarks</option>
-                            <option value="wearables">Wearables & Cardigans</option>
+                        <label for="ref-type-select" class="settings-label">Discount Type *</label>
+                        <select id="ref-type-select" class="settings-input">
+                            <option value="percent">Percentage (% OFF)</option>
+                            <option value="fixed">Fixed Amount (Rs. OFF)</option>
                         </select>
                     </div>
                     <div class="settings-row">
-                        <label for="add-p-price" class="settings-label">Price in PKR (Rs.) *</label>
-                        <input type="number" id="add-p-price" class="settings-input" placeholder="e.g. 1250" required />
-                    </div>
-                    <div class="settings-row">
-                        <label for="add-p-badge" class="settings-label">Badge (Optional)</label>
-                        <input type="text" id="add-p-badge" class="settings-input" placeholder="e.g. New Drop, Limited Edition" />
-                    </div>
-                    <div class="settings-row">
-                        <label for="add-p-image" class="settings-label">Image Path / URL</label>
-                        <input type="text" id="add-p-image" class="settings-input" placeholder="images/products/..." />
-                    </div>
-                    <div class="settings-row">
-                        <label for="add-p-desc" class="settings-label">Description</label>
-                        <textarea id="add-p-desc" class="settings-input" rows="3" placeholder="Soft milk cotton yarn, handcrafted details..."></textarea>
+                        <label for="ref-value-input" class="settings-label">Discount Value *</label>
+                        <input type="number" id="ref-value-input" class="settings-input" placeholder="e.g. 15 for 15% or 200 for Rs. 200" required />
                     </div>
                     <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
                         <button type="button" class="action-btn modal-close-btn">Cancel</button>
-                        <button type="submit" class="btn-admin btn-admin-primary">Add to Store 🧶</button>
+                        <button type="submit" class="btn-admin btn-admin-primary">Activate Code 🎟️</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- Homepage Featured Products Curation & Order Editor Modal -->
+    <div id="featured-manager-modal" class="admin-modal-backdrop">
+        <div class="admin-modal-card" style="max-width: 680px; width: 100%;">
+            <div class="admin-modal-header">
+                <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <span style="font-size: 1.6rem;">⭐</span>
+                    <div>
+                        <h3 class="admin-modal-title" style="margin: 0;">Edit Homepage Featured Creations</h3>
+                        <p style="font-size: 0.8rem; color: var(--admin-text-muted); margin: 0.2rem 0 0;">Check or uncheck pieces to spotlight them on the homepage Featured Showcase.</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn">&times;</button>
+            </div>
+            <div class="admin-modal-body" style="padding: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; background: var(--admin-bg); padding: 0.75rem 1rem; border-radius: 10px; border: 1.5px solid var(--admin-border); flex-wrap: wrap; gap: 0.5rem;">
+                    <span id="featured-manager-count-badge" style="font-size: 0.88rem; font-weight: 700; color: #b45309;">
+                        ⭐ Currently Featured: 0 pieces
+                    </span>
+                    <span style="font-size: 0.78rem; color: var(--admin-text-muted);">Recommended: 4 to 8 pieces for ideal homepage aesthetics</span>
+                </div>
+                <div id="featured-manager-list" style="max-height: 420px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.65rem; padding-right: 0.35rem;">
+                    <!-- Injected dynamically by JavaScript -->
+                </div>
+            </div>
+            <div class="admin-modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                <button type="button" class="btn-admin btn-admin-secondary modal-close-btn">Close</button>
+                <button type="button" class="btn-admin btn-admin-primary" onclick="MrymifyAdmin.saveFeaturedManagerSelections()">
+                    <span>Save & Apply to Homepage ⭐</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Revenue Calculation & Contribution Breakdown Modal -->
+    <div id="revenue-breakdown-modal" class="admin-modal-backdrop">
+        <div class="admin-modal-card" style="max-width: 680px; width: 100%;">
+            <div class="admin-modal-header">
+                <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <span style="font-size: 1.6rem;">💰</span>
+                    <div>
+                        <h3 class="admin-modal-title" style="margin: 0;">Total Revenue & Growth Calculation Breakdown</h3>
+                        <p style="font-size: 0.8rem; color: var(--admin-text-muted); margin: 0.2rem 0 0;">Complete mathematical formula, milestone target, and category contributions.</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" title="Close">&times;</button>
+            </div>
+            <div class="admin-modal-body" id="revenue-breakdown-content" style="padding: 1.25rem;">
+                <!-- Populated dynamically by MrymifyAdmin.openRevenueBreakdownModal() -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Orders Growth & Status Breakdown Modal -->
+    <div id="orders-breakdown-modal" class="admin-modal-backdrop">
+        <div class="admin-modal-card" style="max-width: 680px; width: 100%;">
+            <div class="admin-modal-header">
+                <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <span style="font-size: 1.6rem;">📦</span>
+                    <div>
+                        <h3 class="admin-modal-title" style="margin: 0;">Total Orders Volume & Status Breakdown</h3>
+                        <p style="font-size: 0.8rem; color: var(--admin-text-muted); margin: 0.2rem 0 0;">Order volume growth formula, fulfillment stage distribution, and average order value.</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" title="Close">&times;</button>
+            </div>
+            <div class="admin-modal-body" id="orders-breakdown-content" style="padding: 1.25rem;">
+                <!-- Populated dynamically by MrymifyAdmin.openOrdersBreakdownModal() -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Unique Visitors Deep-Dive & Journey Intelligence Modal -->
+    <div id="visitor-intelligence-modal" class="admin-modal-backdrop">
+        <div class="admin-modal-card" style="max-width: 860px; width: 100%; max-height: 90vh; display: flex; flex-direction: column;">
+            <div class="admin-modal-header">
+                <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <span style="font-size: 1.6rem;">👥</span>
+                    <div>
+                        <h3 class="admin-modal-title" style="margin: 0;">Visitor Intelligence & Audience Deep-Dive</h3>
+                        <p style="font-size: 0.8rem; color: var(--admin-text-muted); margin: 0.2rem 0 0;">Per-user tracking IDs, city geolocation, screen dimensions, likes & dwell history.</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" title="Close">&times;</button>
+            </div>
+            <div class="admin-modal-body" style="padding: 1.25rem; flex: 1; overflow-y: auto;">
+                <!-- Combined Average Meters Bar -->
+                <div id="visitor-avg-meters-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.25rem;">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Search & Filters -->
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 240px; position: relative;">
+                        <input type="text" id="visitor-search-input" class="settings-input" placeholder="Filter by User ID (e.g. USR-), city, or device..." oninput="MrymifyAdmin.filterVisitorJourneys(this.value)" style="padding-left: 2rem;" />
+                        <span style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); opacity: 0.6;">🔍</span>
+                    </div>
+                    <span id="visitor-sessions-count-badge" style="font-size: 0.82rem; font-weight: 700; color: var(--admin-text-muted);">
+                        0 Sessions Tracked
+                    </span>
+                </div>
+
+                <!-- Chronological Visitor Journeys List -->
+                <div id="visitor-journeys-list" style="display: flex; flex-direction: column; gap: 0.85rem;">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <div style="text-align: center; font-size: 0.75rem; color: var(--admin-text-muted); padding: 0.85rem 0 0.25rem; opacity: 0.75;">
+                    Anonymous visitor telemetry stored locally on client browser
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Intelligence & Individual Count Graphs Modal -->
+    <div id="product-analytics-modal" class="admin-modal-backdrop">
+        <div class="admin-modal-card" style="max-width: 920px; width: 100%; max-height: 90vh; display: flex; flex-direction: column;">
+            <div class="admin-modal-header">
+                <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <span style="font-size: 1.6rem;">📊</span>
+                    <div>
+                        <h3 class="admin-modal-title" style="margin: 0;">Product Intelligence & Individual Count Graphs</h3>
+                        <p style="font-size: 0.8rem; color: var(--admin-text-muted); margin: 0.2rem 0 0;">Visual circle graphs & individual product counts for Likes, Dwell Time, Bagged & Checkouts.</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" title="Close">&times;</button>
+            </div>
+            <div class="admin-modal-body" style="padding: 1.25rem; flex: 1; overflow-y: auto;">
+                
+                <!-- Metric Selector Filter Tabs & Search -->
+                <div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;" id="product-analytics-tab-buttons">
+                        <button type="button" class="filter-tab active" data-metric="all" onclick="MrymifyAdmin.switchProductMetricTab('all')">🌟 All Top Slices</button>
+                        <button type="button" class="filter-tab" data-metric="likes" onclick="MrymifyAdmin.switchProductMetricTab('likes')">❤️ Likes</button>
+                        <button type="button" class="filter-tab" data-metric="dwell" onclick="MrymifyAdmin.switchProductMetricTab('dwell')">⏱️ Time Spent</button>
+                        <button type="button" class="filter-tab" data-metric="carts" onclick="MrymifyAdmin.switchProductMetricTab('carts')">🧺 Added to Bag</button>
+                        <button type="button" class="filter-tab" data-metric="checkouts" onclick="MrymifyAdmin.switchProductMetricTab('checkouts')">🛍️ Checkouts</button>
+                    </div>
+                    <div style="min-width: 200px; position: relative;">
+                        <input type="text" id="product-analytics-search-input" class="settings-input" placeholder="Search piece title..." oninput="MrymifyAdmin.filterProductAnalytics(this.value)" style="padding: 0.4rem 0.6rem 0.4rem 1.8rem; font-size: 0.82rem;" />
+                        <span style="position: absolute; left: 0.55rem; top: 50%; transform: translateY(-50%); opacity: 0.6; font-size: 0.8rem;">🔍</span>
+                    </div>
+                </div>
+
+                <!-- Dynamic Visual Donut Graph(s) & Metrics Breakdown -->
+                <div id="product-analytics-graphs-content">
+                    <!-- Populated dynamically by MrymifyAdmin.renderProductAnalyticsModal() -->
+                </div>
+
+                <!-- Product Catalog Individual Count Breakdown Table -->
+                <div style="margin-top: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                        <h4 style="font-size: 0.88rem; margin: 0; font-weight: 700; color: var(--admin-text-main);">Full Catalog Individual Metrics</h4>
+                        <span id="product-analytics-table-count" style="font-size: 0.75rem; color: var(--admin-text-muted);">0 pieces listed</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Piece Title</th>
+                                    <th>Category</th>
+                                    <th>❤️ Likes</th>
+                                    <th>⏱️ Dwell Time</th>
+                                    <th>🧺 Bagged</th>
+                                    <th>🛍️ Checkouts</th>
+                                </tr>
+                            </thead>
+                            <tbody id="product-analytics-table-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details Inspection Modal -->
+    <div id="product-details-inspector-modal" class="admin-modal-backdrop">
+        <div class="admin-modal-card" style="max-width: 760px; width: 100%; max-height: 90vh; display: flex; flex-direction: column;">
+            <div class="admin-modal-header">
+                <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <span style="font-size: 1.6rem;">🧶</span>
+                    <div>
+                        <h3 class="admin-modal-title" id="inspector-modal-title" style="margin: 0;">Product Specification & Performance</h3>
+                        <p style="font-size: 0.8rem; color: var(--admin-text-muted); margin: 0.2rem 0 0;">Complete piece details, images, and live audience telemetry.</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" title="Close">&times;</button>
+            </div>
+            <div class="admin-modal-body" id="product-details-inspector-body" style="padding: 1.25rem; flex: 1; overflow-y: auto;">
+                <!-- Populated dynamically by MrymifyAdmin.showProductDetailsModal() -->
+            </div>
+            <div class="admin-modal-footer" id="product-details-inspector-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem; border-top: 1px solid var(--admin-border); flex-wrap: wrap; gap: 0.5rem;">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="js/products.js"></script>
+    <script src="js/analytics.js"></script>
     <script src="js/admin.js"></script>
 </body>
 </html>

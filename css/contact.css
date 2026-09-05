@@ -312,7 +312,7 @@
 .form-select:focus,
 .form-textarea:focus {
     border-color: var(--color-primary);
-    background-color: #ffffff;
+    background-color: var(--color-surface);
     box-shadow: 0 0 0 4px var(--color-primary-faint);
 }
 

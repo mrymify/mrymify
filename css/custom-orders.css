@@ -30,7 +30,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: #ffffff;
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     color: var(--color-primary);
     padding: 0.4rem 1.15rem;
@@ -65,157 +65,6 @@
     flex-wrap: wrap;
 }
 
-/* Personalization Possibilities Grid */
-.personalize-section {
-    padding: 4.5rem 0;
-    background-color: var(--color-bg);
-}
-
-.section-header-center {
-    text-align: center;
-    max-width: 640px;
-    margin: 0 auto 3rem;
-}
-
-.section-header-center .section-title {
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-    margin-bottom: 0.6rem;
-}
-
-.section-header-center .section-sub {
-    color: var(--color-text-muted);
-    font-size: 1.05rem;
-    line-height: 1.5;
-}
-
-.personalize-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-}
-
-.personalize-card {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: 2rem;
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
-    display: flex;
-    flex-direction: column;
-}
-
-.personalize-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--color-primary-light);
-}
-
-.personalize-icon-wrap {
-    width: 58px;
-    height: 58px;
-    border-radius: var(--radius-md);
-    background-color: var(--color-primary-faint);
-    color: var(--color-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.85rem;
-    margin-bottom: 1.25rem;
-}
-
-.personalize-card-title {
-    font-family: var(--font-heading);
-    font-size: 1.35rem;
-    color: var(--color-text-main);
-    margin-bottom: 0.6rem;
-}
-
-.personalize-card-desc {
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    line-height: 1.6;
-    margin-bottom: 1.25rem;
-    flex: 1;
-}
-
-.personalize-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-}
-
-.personalize-tag {
-    font-size: 0.78rem;
-    background-color: var(--color-bg);
-    color: var(--color-text-main);
-    padding: 0.25rem 0.65rem;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--color-border-light);
-    font-weight: 500;
-}
-
-/* 4-Step Process Section */
-.process-section {
-    padding: 4rem 0;
-    background-color: var(--color-surface);
-    border-top: 1px solid var(--color-border-light);
-    border-bottom: 1px solid var(--color-border-light);
-}
-
-.process-steps-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-    position: relative;
-}
-
-.process-step-card {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 1.75rem 1.5rem;
-    position: relative;
-    text-align: center;
-}
-
-.process-step-num {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--color-primary);
-    color: #ffffff;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.82rem;
-    font-weight: 700;
-    box-shadow: 0 2px 8px rgba(184, 93, 67, 0.3);
-}
-
-.process-step-icon {
-    font-size: 2.2rem;
-    margin-bottom: 0.75rem;
-    margin-top: 0.5rem;
-}
-
-.process-step-title {
-    font-family: var(--font-heading);
-    font-size: 1.15rem;
-    margin-bottom: 0.4rem;
-    color: var(--color-text-main);
-}
-
-.process-step-desc {
-    font-size: 0.88rem;
-    color: var(--color-text-muted);
-    line-height: 1.5;
-}
-
 /* Custom Commission Form Section */
 .custom-form-section {
     padding: 4.5rem 0;
@@ -232,21 +81,38 @@
 @media (max-width: 991px) {
     .custom-form-layout {
         grid-template-columns: 1fr;
+        gap: 2.25rem;
     }
 }
 
 /* Form Left Side Info */
 .custom-info-card {
     background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    border: 1.5px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: 2.25rem;
     box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 100px;
+}
+
+.custom-info-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: var(--color-primary-faint);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .custom-info-title {
     font-family: var(--font-heading);
-    font-size: 1.6rem;
+    font-size: 1.65rem;
     margin-bottom: 0.85rem;
     color: var(--color-text-main);
 }
@@ -254,7 +120,7 @@
 .custom-info-desc {
     font-size: 0.95rem;
     color: var(--color-text-muted);
-    line-height: 1.6;
+    line-height: 1.65;
     margin-bottom: 1.5rem;
 }
 
@@ -272,16 +138,17 @@
 }
 
 .custom-perk-icon {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     background: var(--color-primary-faint);
     color: var(--color-primary);
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    margin-top: 2px;
 }
 
 .custom-perk-text strong {
@@ -299,22 +166,25 @@
 
 .custom-direct-wa-box {
     background: linear-gradient(135deg, #e8f9ef 0%, #dcfce7 100%);
-    border: 1px solid #bbf7d0;
+    border: 1.5px solid #86efac;
     border-radius: var(--radius-md);
-    padding: 1.25rem;
+    padding: 1.35rem;
     text-align: center;
+    box-shadow: var(--shadow-sm);
 }
 
 .custom-direct-wa-box h4 {
     font-size: 1.05rem;
     color: #15803d;
     margin-bottom: 0.35rem;
+    font-weight: 700;
 }
 
 .custom-direct-wa-box p {
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     color: #166534;
-    margin-bottom: 0.85rem;
+    margin-bottom: 1rem;
+    line-height: 1.45;
 }
 
 /* Form Right Side Card */
@@ -322,50 +192,198 @@
     background-color: var(--color-surface);
     border: 1.5px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: 2.5rem;
+    padding: 2.25rem 2.25rem 2.5rem;
     box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 640px) {
+    .custom-form-card {
+        padding: 1.5rem 1.25rem 1.75rem;
+    }
 }
 
 .custom-form-header {
     margin-bottom: 1.75rem;
     padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--color-border-light);
+    border-bottom: 1.5px solid var(--color-border-light);
+}
+
+.custom-badge-pill {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: var(--color-primary-faint);
+    padding: 0.2rem 0.75rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.4px;
 }
 
 .custom-form-title {
     font-family: var(--font-heading);
-    font-size: 1.65rem;
+    font-size: 1.8rem;
     color: var(--color-text-main);
     margin-bottom: 0.4rem;
 }
 
 .custom-form-sub {
-    font-size: 0.92rem;
+    font-size: 0.94rem;
     color: var(--color-text-muted);
+    line-height: 1.5;
+}
+
+/* Form Blocks Structure with Clear Borders */
+.custom-form-block {
+    background-color: var(--color-bg);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.4rem 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.custom-form-block:hover {
+    border-color: rgba(184, 93, 67, 0.4);
+}
+
+.block-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.block-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.block-title {
+    font-family: var(--font-brand);
+    font-size: 1.12rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin: 0 0 0.2rem;
+}
+
+.block-desc {
+    font-size: 0.84rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Universal Form Controls in Custom Orders */
+.form-group {
+    margin-bottom: 1.15rem;
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.15rem;
+}
+
+@media (max-width: 640px) {
+    .form-row-2 {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--color-text-main);
+    margin-bottom: 0.4rem;
+}
+
+.form-label.sub-label {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.35rem;
+    font-weight: 500;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: inherit;
+    font-size: 0.94rem;
+    color: var(--color-text-main);
+    background-color: var(--color-surface);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+    box-sizing: border-box;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.7;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3.5px rgba(184, 93, 67, 0.15);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 96px;
+    line-height: 1.55;
+}
+
+.field-hint {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-top: 0.35rem;
+    line-height: 1.4;
 }
 
 /* Color Swatches Selector */
 .swatch-group {
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
 }
 
 .swatch-chips-wrap {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 0.5rem;
+    gap: 0.55rem;
+    margin-top: 0.45rem;
 }
 
 .swatch-chip {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.4rem 0.85rem;
+    padding: 0.42rem 0.85rem;
     border-radius: var(--radius-full);
     border: 1.5px solid var(--color-border);
-    background: var(--color-bg);
+    background: var(--color-surface);
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     font-weight: 500;
     color: var(--color-text-main);
     transition: all var(--transition-fast);
@@ -373,7 +391,8 @@
 
 .swatch-chip:hover {
     border-color: var(--color-primary);
-    background: var(--color-surface);
+    background: var(--color-primary-faint);
+    transform: translateY(-1px);
 }
 
 .swatch-chip.selected {
@@ -381,6 +400,7 @@
     background: var(--color-primary-light);
     color: var(--color-primary);
     font-weight: 600;
+    box-shadow: 0 2px 6px rgba(184, 93, 67, 0.15);
 }
 
 .swatch-color-dot {
@@ -391,47 +411,113 @@
     flex-shrink: 0;
 }
 
-/* Personalization Addons Checkboxes */
-.addons-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 0.75rem;
-    margin-top: 0.5rem;
+/* Special Addons & Expandable Dropdown Drawers */
+.addons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
 }
 
-.addon-pill-label {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.65rem 0.9rem;
-    background: var(--color-bg);
+.addon-card-item {
+    background: var(--color-surface);
     border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-size: 0.88rem;
-    color: var(--color-text-main);
+    border-radius: var(--radius-sm);
+    padding: 0.95rem 1.15rem;
     transition: all var(--transition-fast);
 }
 
-.addon-pill-label:hover {
-    border-color: var(--color-primary);
+.addon-card-item:hover {
+    border-color: rgba(184, 93, 67, 0.5);
 }
 
-.addon-pill-label input[type="checkbox"]:checked + span {
-    color: var(--color-primary);
+.addon-card-item.is-selected {
+    border-color: var(--color-primary);
+    background: var(--color-surface);
+    box-shadow: 0 2px 10px rgba(184, 93, 67, 0.08);
+}
+
+.addon-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    margin: 0;
+}
+
+.addon-check {
+    width: 19px;
+    height: 19px;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.addon-icon {
+    font-size: 1.35rem;
+    flex-shrink: 0;
+}
+
+.addon-info {
+    flex: 1;
+}
+
+.addon-title {
+    display: block;
+    font-size: 0.96rem;
+    color: var(--color-text-main);
     font-weight: 600;
 }
 
-.addon-pill-label:has(input:checked) {
-    border-color: var(--color-primary);
-    background: var(--color-primary-light);
+.addon-desc {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-top: 0.1rem;
+    line-height: 1.35;
+}
+
+.addon-toggle-indicator {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    transition: transform 0.25s ease, color 0.25s ease;
+    padding-left: 0.5rem;
+}
+
+.addon-card-item.is-selected .addon-toggle-indicator {
+    transform: rotate(180deg);
+    color: var(--color-primary);
+}
+
+.addon-dropdown-drawer {
+    display: none;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1.5px dashed var(--color-border);
+    animation: addonDrawerSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.addon-dropdown-drawer.open {
+    display: block;
+}
+
+@keyframes addonDrawerSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* FAQ Accordion Section */
 .custom-faq-section {
-    padding: 4rem 0 5rem;
+    padding: 4.5rem 0 5rem;
     background-color: var(--color-surface);
-    border-top: 1px solid var(--color-border-light);
+    border-top: 1.5px solid var(--color-border-light);
 }
 
 .faq-list {
@@ -444,7 +530,7 @@
 
 .faq-item {
     background: var(--color-bg);
-    border: 1px solid var(--color-border);
+    border: 1.5px solid var(--color-border);
     border-radius: var(--radius-md);
     overflow: hidden;
     transition: border-color var(--transition-fast);
@@ -490,4 +576,136 @@
 
 .faq-item.active .faq-answer {
     display: block;
+}
+
+/* Status Alert */
+.form-status-alert {
+    display: none;
+    margin-top: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.form-status-alert.alert-success {
+    display: block;
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1.5px solid #bbf7d0;
+}
+
+.form-status-alert.alert-error {
+    display: block;
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1.5px solid #fecaca;
+}
+
+/* ==========================================================================
+   Dark Theme Overrides for Custom Orders
+   ========================================================================== */
+[data-theme="dark"] .custom-hero {
+    background: linear-gradient(135deg, #141110 0%, #1e1917 50%, #181412 100%);
+    border-bottom-color: var(--color-border);
+}
+
+[data-theme="dark"] .custom-info-card,
+[data-theme="dark"] .custom-form-card {
+    background-color: #1a1615;
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="dark"] .custom-form-block {
+    background-color: #141110;
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="dark"] .custom-form-block:hover {
+    border-color: rgba(184, 93, 67, 0.6);
+}
+
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-textarea {
+    background-color: #201a18;
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #f7f3ee;
+}
+
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .form-textarea:focus {
+    border-color: var(--color-primary);
+    background-color: #251e1c;
+    box-shadow: 0 0 0 3.5px rgba(184, 93, 67, 0.25);
+}
+
+[data-theme="dark"] .swatch-chip {
+    background-color: #201a18;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #f7f3ee;
+}
+
+[data-theme="dark"] .swatch-chip:hover {
+    background-color: rgba(184, 93, 67, 0.2);
+    border-color: var(--color-primary);
+}
+
+[data-theme="dark"] .addon-card-item {
+    background-color: #1a1615;
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="dark"] .addon-card-item.is-selected {
+    background-color: #241e1c;
+    border-color: var(--color-primary);
+}
+
+[data-theme="dark"] .addon-dropdown-drawer {
+    border-top-color: rgba(255, 255, 255, 0.16);
+}
+
+[data-theme="dark"] .custom-direct-wa-box {
+    background: linear-gradient(135deg, rgba(21, 128, 61, 0.15) 0%, rgba(22, 101, 52, 0.25) 100%);
+    border-color: rgba(74, 222, 128, 0.35);
+}
+
+[data-theme="dark"] .custom-direct-wa-box h4 {
+    color: #4ade80;
+}
+
+[data-theme="dark"] .custom-direct-wa-box p {
+    color: #86efac;
+}
+
+[data-theme="dark"] .faq-item {
+    background-color: #161211;
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="dark"] .custom-faq-section {
+    background-color: #141110;
+    border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Quoted Product Banner & Reference Attachment Styles */
+#co-quoted-product-banner {
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.12);
+    transition: all 0.25s ease;
+}
+
+[data-theme="dark"] #co-quoted-product-banner {
+    background: rgba(16, 185, 129, 0.12) !important;
+    border-left-color: #10b981 !important;
+}
+
+#co-reference-preview-box {
+    transition: all 0.2s ease;
+}
+
+[data-theme="dark"] #co-reference-preview-box {
+    background: #201a18 !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
 }

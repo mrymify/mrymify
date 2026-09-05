@@ -40,44 +40,19 @@
                         </p>
                         <div class="hero-actions" style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
                             <a href="shop.html" class="btn btn-primary btn-lg" style="box-shadow: none;">Explore Collection &rarr;</a>
-                            <a href="#categories-section" style="font-family: var(--font-brand); font-weight: 600; color: var(--color-text-main); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='var(--color-text-main)'">Browse Categories</a>
+                            <a href="#categories-section" class="btn-browse-categories">Browse Categories</a>
                         </div>
                     </div>
 
                     <!-- Right: Showcase Product Spotlight -->
                     <div class="hero-showcase-container">
-                        <div class="hero-showcase-card" style="background-color: var(--color-surface-soft); border: none; box-shadow: none; padding: 2rem; border-radius: 28px;">
-                            
-                            <!-- Injected Product (Expanded to fill the container) -->
-                            <div style="background-color: var(--color-surface); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm); width: 100%;">
-                                <div class="showcase-image-frame" style="border-radius: var(--radius-md); margin-bottom: 1.25rem; height: 320px;">
-                                    <img 
-                                        src="images/products/09_Grand_Mixed_Rose_Tulip_Bouquet.png" 
-                                        alt="Grand Mixed Rose & Tulip Bouquet" 
-                                        class="showcase-image" 
-                                        width="378" 
-                                        height="332"
-                                    />
-                                    <div class="showcase-price-floating" style="bottom: 8px; right: 8px; font-size: 0.9rem;">Rs. 2,450</div>
-                                </div>
-                                <div class="showcase-content" style="padding: 0;">
-                                    <h3 class="showcase-title" style="font-size: 1.15rem; margin-bottom: 0.25rem;">Grand Mixed Rose & Tulip Bouquet</h3>
-                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
-                                        <span class="showcase-category" style="margin: 0;">Floral Masterpiece</span>
-                                        <span class="showcase-rating" style="font-size: 0.75rem;">★ 5.0</span>
-                                    </div>
-                                    <div class="showcase-actions">
-                                        <button class="btn btn-primary btn-sm" onclick="MrymifyProducts.handleAddToCart('prod-09')">
-                                            Add to Cart
-                                        </button>
-                                        <button class="btn btn-outline btn-sm btn-like" data-like-btn="prod-09" onclick="MrymifyProducts.handleLike('prod-09', event)" title="Like product" style="border-color: var(--color-border-light);">
-                                            <span class="heart-icon">🤍</span>
-                                            <span class="like-count">86</span>
-                                        </button>
-                                    </div>
-                                </div>
+                        <div class="hero-showcase-card" id="hero-showcase-card" style="background-color: var(--color-surface-soft); border: none; box-shadow: none; padding: 1.75rem; border-radius: 28px; position: relative;">
+                            <div id="hero-showcase-mount" class="showcase-carousel-mount" style="position: relative; overflow: hidden; border-radius: 20px; width: 100%;">
+                                <!-- Injected and dynamically shuffled via js/main.js -->
                             </div>
-
+                            <button type="button" class="showcase-nav-btn showcase-prev-btn" id="showcase-prev-btn" aria-label="Previous showcase piece" style="left: -8px;">‹</button>
+                            <button type="button" class="showcase-nav-btn showcase-next-btn" id="showcase-next-btn" aria-label="Next showcase piece" style="right: -8px;">›</button>
+                            <div class="showcase-dots" id="showcase-dots"></div>
                         </div>
                     </div>
                 </div>
@@ -301,58 +276,74 @@
                         
                         <!-- Col 1: Amigurumi -->
                         <div class="category-teaser-col">
-                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">Amigurumi & Plushies</h3>
-                            <article class="product-card">
-                                <div class="product-card-img-wrap">
-                                    <img src="images/products/01_Royal_Crown_Froggy.png" class="product-card-img" alt="Amigurumi" />
-                                </div>
-                                <div class="product-card-content" style="padding: 1.25rem;">
-                                    <h4 class="product-card-title">Royal Crown Froggy</h4>
-                                    <div class="product-card-pricing">Rs. 1,450</div>
-                                </div>
-                            </article>
+                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">
+                                <a href="shop.html?category=amigurumi" style="text-decoration: none; color: inherit;">Amigurumi & Plushies</a>
+                            </h3>
+                            <a href="shop.html?category=amigurumi" style="text-decoration: none; color: inherit; display: block;">
+                                <article class="product-card" style="cursor: pointer;">
+                                    <div class="product-card-img-wrap">
+                                        <img src="images/products/01_Royal_Crown_Froggy.png" class="product-card-img" alt="Amigurumi" />
+                                    </div>
+                                    <div class="product-card-content" style="padding: 1.25rem;">
+                                        <h4 class="product-card-title">Royal Crown Froggy</h4>
+                                        <div class="product-card-pricing">Rs. 1,450</div>
+                                    </div>
+                                </article>
+                            </a>
                         </div>
                         
                         <!-- Col 2: Floral -->
                         <div class="category-teaser-col">
-                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">Floral Stems & Bouquets</h3>
-                            <article class="product-card">
-                                <div class="product-card-img-wrap">
-                                    <img src="images/products/09_Grand_Mixed_Rose_Tulip_Bouquet.png" class="product-card-img" alt="Floral" />
-                                </div>
-                                <div class="product-card-content" style="padding: 1.25rem;">
-                                    <h4 class="product-card-title">Grand Mixed Bouquet</h4>
-                                    <div class="product-card-pricing">Rs. 2,450</div>
-                                </div>
-                            </article>
+                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">
+                                <a href="shop.html?category=floral" style="text-decoration: none; color: inherit;">Floral Stems & Bouquets</a>
+                            </h3>
+                            <a href="shop.html?category=floral" style="text-decoration: none; color: inherit; display: block;">
+                                <article class="product-card" style="cursor: pointer;">
+                                    <div class="product-card-img-wrap">
+                                        <img src="images/products/09_Grand_Mixed_Rose_Tulip_Bouquet.png" class="product-card-img" alt="Floral" />
+                                    </div>
+                                    <div class="product-card-content" style="padding: 1.25rem;">
+                                        <h4 class="product-card-title">Grand Mixed Bouquet</h4>
+                                        <div class="product-card-pricing">Rs. 2,450</div>
+                                    </div>
+                                </article>
+                            </a>
                         </div>
                         
                         <!-- Col 3: Wearables -->
                         <div class="category-teaser-col">
-                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">Bags & Wearables</h3>
-                            <article class="product-card">
-                                <div class="product-card-img-wrap">
-                                    <img src="images/products/15_Bobble_Stitch_Shoulder_Bag.png" class="product-card-img" alt="Wearables" />
-                                </div>
-                                <div class="product-card-content" style="padding: 1.25rem;">
-                                    <h4 class="product-card-title">Bobble Stitch Shoulder Bag</h4>
-                                    <div class="product-card-pricing">Rs. 2,850</div>
-                                </div>
-                            </article>
+                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">
+                                <a href="shop.html?category=wearables" style="text-decoration: none; color: inherit;">Bags & Wearables</a>
+                            </h3>
+                            <a href="shop.html?category=wearables" style="text-decoration: none; color: inherit; display: block;">
+                                <article class="product-card" style="cursor: pointer;">
+                                    <div class="product-card-img-wrap">
+                                        <img src="images/products/15_Bobble_Stitch_Shoulder_Bag.png" class="product-card-img" alt="Wearables" />
+                                    </div>
+                                    <div class="product-card-content" style="padding: 1.25rem;">
+                                        <h4 class="product-card-title">Bobble Stitch Shoulder Bag</h4>
+                                        <div class="product-card-pricing">Rs. 2,850</div>
+                                    </div>
+                                </article>
+                            </a>
                         </div>
                         
                         <!-- Col 4: Keychains -->
                         <div class="category-teaser-col">
-                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">Keychains & Accessories</h3>
-                            <article class="product-card">
-                                <div class="product-card-img-wrap">
-                                    <img src="images/products/20_Strawberry_Blossom_Keyring.png" class="product-card-img" alt="Keychains" />
-                                </div>
-                                <div class="product-card-content" style="padding: 1.25rem;">
-                                    <h4 class="product-card-title">Strawberry Blossom Keyring</h4>
-                                    <div class="product-card-pricing">Rs. 450</div>
-                                </div>
-                            </article>
+                            <h3 class="category-teaser-title" style="text-align: center; font-family: var(--font-heading); color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1.25rem;">
+                                <a href="shop.html?category=keychains" style="text-decoration: none; color: inherit;">Keychains & Accessories</a>
+                            </h3>
+                            <a href="shop.html?category=keychains" style="text-decoration: none; color: inherit; display: block;">
+                                <article class="product-card" style="cursor: pointer;">
+                                    <div class="product-card-img-wrap">
+                                        <img src="images/products/20_Strawberry_Blossom_Keyring.png" class="product-card-img" alt="Keychains" />
+                                    </div>
+                                    <div class="product-card-content" style="padding: 1.25rem;">
+                                        <h4 class="product-card-title">Strawberry Blossom Keyring</h4>
+                                        <div class="product-card-pricing">Rs. 450</div>
+                                    </div>
+                                </article>
+                            </a>
                         </div>
 
                     </div>
@@ -379,8 +370,8 @@
                         Looking for custom colors, initials, or bespoke character amigurumi? Let us handcraft something truly unique for you or your loved ones.
                     </p>
                     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="https://wa.me/923000896885?text=Hello%20Mariyam!%20I%20want%20to%20order%20a%20custom%20crochet%20item%20from%20Mrymify." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg" style="background-color: var(--color-accent); color: #27211e;">
-                            Request Custom Order on WhatsApp
+                        <a href="custom-orders.html" class="btn btn-primary btn-lg" style="background-color: var(--color-accent); color: #27211e;">
+                            Request Custom Order
                         </a>
                         <a href="shop.html" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.4); color: #ffffff;">
                             Explore Boutique Shop
@@ -485,6 +476,7 @@
     <div id="footer-container"></div>
 
     <!-- Scripts -->
+    <script src="js/analytics.js"></script>
     <script src="js/components/navbar.js"></script>
     <script src="js/components/footer.js"></script>
     <script src="js/products.js"></script>

@@ -45,20 +45,6 @@
         <section class="contact-section">
             <div class="container">
 
-                <!-- Custom Orders Studio Spotlight Banner -->
-                <div style="background: linear-gradient(135deg, #faede8 0%, #fdfbf7 100%); border: 1.5px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.25rem 1.75rem; margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; box-shadow: var(--shadow-sm);">
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <span style="font-size: 2rem;">🧶</span>
-                        <div>
-                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; margin: 0 0 0.2rem; color: var(--color-text-main);">Looking for Custom Crochet & Personalization?</h3>
-                            <p style="margin: 0; font-size: 0.92rem; color: var(--color-text-muted);">Choose custom color palettes, initials, pet amigurumi replicas, or event favors in our dedicated studio.</p>
-                        </div>
-                    </div>
-                    <a href="custom-orders.html" class="btn btn-primary btn-md">
-                        <span>Visit Custom Studio &rarr;</span>
-                    </a>
-                </div>
-
                 <div class="contact-grid-wrap">
 
                     <!-- Left Column: Direct Info Cards -->
@@ -75,39 +61,24 @@
                             </div>
                             <div class="contact-card-body">
                                 <p style="margin-bottom: 0.5rem;">
-                                    Chat directly with <strong>Mariyam</strong> on WhatsApp for real-time consultation, custom color matching, and order assistance.
+                                    Chat directly with <strong>Mariyam</strong> on WhatsApp for order tracking, product dimensions, and real-time customer assistance.
                                 </p>
                                 <p style="font-family: var(--font-brand); font-weight: 700; font-size: 1.15rem; color: var(--color-text-main); margin-bottom: 0.75rem;">
                                     +92 300 0896885
                                 </p>
 
-                                <!-- Context-Specific WhatsApp Action Buttons -->
+                                <!-- Support WhatsApp Action Button -->
                                 <div class="wa-actions-group">
-                                    <!-- Context 1: Custom Orders -->
-                                    <a href="https://wa.me/923000896885?text=Hello%20Mariyam!%20I%20want%20to%20order%20a%20custom%20handcrafted%20crochet%20item%20and%20would%20love%20to%20discuss%20the%20details." 
-                                       target="_blank" 
-                                       rel="noopener noreferrer" 
-                                       class="wa-btn wa-btn-custom" 
-                                       id="btn-wa-custom-order"
-                                       aria-label="Order a custom piece on WhatsApp">
-                                        <span class="wa-btn-icon">🧶</span>
-                                        <span class="wa-btn-text">
-                                            <span class="wa-btn-label">Order a Custom Piece</span>
-                                            <span class="wa-btn-sub">Auto message: "Hey, I want to order a..."</span>
-                                        </span>
-                                    </a>
-
-                                    <!-- Context 2: Customer Help & Inquiries -->
-                                    <a href="https://wa.me/923000896885?text=Hello%20Mariyam!%20I%20need%20help%20about%20a%20product%20or%20an%20inquiry." 
+                                    <a href="https://wa.me/923000896885?text=Hello%20Mariyam!%20I%20need%20help%20regarding%20a%20product%20or%20an%20order%20at%20Mrymify." 
                                        target="_blank" 
                                        rel="noopener noreferrer" 
                                        class="wa-btn wa-btn-support" 
                                        id="btn-wa-support"
                                        aria-label="Ask a question or get support on WhatsApp">
-                                        <span class="wa-btn-icon">💡</span>
+                                        <span class="wa-btn-icon">💬</span>
                                         <span class="wa-btn-text">
-                                            <span class="wa-btn-label">Need Help & Support?</span>
-                                            <span class="wa-btn-sub">Auto message: "Hey, I need help about..."</span>
+                                            <span class="wa-btn-label">Chat for Help & Support</span>
+                                            <span class="wa-btn-sub">Auto message: "Hey Mariyam, I need help regarding..."</span>
                                         </span>
                                     </a>
                                 </div>
@@ -155,12 +126,12 @@
 
                     </div>
 
-                    <!-- Right Column: Interactive Smart Form with Dynamic Inquiry Fields -->
+                    <!-- Right Column: Interactive Smart Form Purely for Help & Support -->
                     <div class="contact-form-card">
-                        <span class="form-header-badge" id="form-badge">🧶 Custom Commission</span>
-                        <h2 class="form-title" id="form-heading">Send a Custom Request</h2>
+                        <span class="form-header-badge" id="form-badge">💡 Help & Support Desk</span>
+                        <h2 class="form-title" id="form-heading">Customer Help & Inquiries</h2>
                         <p class="form-subtitle" id="form-subheading">
-                            Share your dream crochet ideas with <strong>Mariyam</strong>! We will craft it stitch-by-stitch with premium yarn.
+                            Have a question about your order, tracking, sizing, materials, or crochet care? Mariyam is here to assist you.
                         </p>
 
                         <form id="contact-custom-form">
@@ -176,37 +147,25 @@
                                 </div>
                             </div>
 
-                            <!-- Purpose of Inquiry Selector -->
+                            <!-- Purpose of Inquiry Selector (Support & Help Only) -->
                             <div class="form-group">
-                                <label for="contact-purpose" class="form-label">Purpose of Inquiry *</label>
+                                <label for="contact-purpose" class="form-label">Support Topic / Inquiry *</label>
                                 <select id="contact-purpose" class="form-select">
-                                    <option value="custom" selected>🧶 Custom Crochet Order</option>
-                                    <option value="tracking">📦 Order Status & Delivery Check</option>
-                                    <option value="support">💡 Customer Help & Product Inquiry</option>
-                                    <option value="bulk">🎉 Bulk Favors / Event Gifts</option>
+                                    <option value="tracking" selected>📦 Order Status & Delivery Tracking</option>
+                                    <option value="sizing">📏 Product Sizing, Materials & Dimensions</option>
+                                    <option value="care">🧶 Crochet Care & Washing Instructions</option>
+                                    <option value="delivery">🚚 Nationwide Delivery Rates & Timelines</option>
+                                    <option value="payment">💳 Payment Methods (COD / Bank / EasyPaisa)</option>
+                                    <option value="general">💬 General Question & Customer Assistance</option>
                                 </select>
                             </div>
 
-                            <!-- Dynamic Field: Item or Category (Shows for Custom & Bulk; Hidden for Tracking & Support) -->
-                            <div class="form-group dynamic-field" id="field-wrap-item">
-                                <label for="contact-item" class="form-label" id="label-contact-item">Item or Category *</label>
-                                <input type="text" id="contact-item" class="form-input" placeholder="e.g. Baby Panda Plushie, Tulip Bouquet, Cardigan" />
-                                <span class="field-hint" id="hint-contact-item">Specify what you'd like crafted or customized.</span>
-                            </div>
-
-                            <!-- Dynamic Field: Color Preferences (ONLY shows for Custom Order; Hidden for all others) -->
-                            <div class="form-group dynamic-field" id="field-wrap-colors">
-                                <label for="contact-colors" class="form-label">Color Preferences / Custom Notes (Optional)</label>
-                                <input type="text" id="contact-colors" class="form-input" placeholder="e.g. Pastel pink yarn, cream petals, initial 'M' on ribbon" />
-                                <span class="field-hint">Specify your preferred yarn shades, packaging tags, or personal touch.</span>
-                            </div>
-
-                            <!-- Dynamic Field: Order Reference & City (ONLY shows for Order Tracking; Hidden for all others) -->
-                            <div class="form-row-2 dynamic-field" id="field-wrap-tracking" style="display: none;">
+                            <!-- Order Reference & City (Active for Tracking or optional for other order queries) -->
+                            <div class="form-row-2 dynamic-field" id="field-wrap-tracking">
                                 <div class="form-group">
-                                    <label for="contact-order-ref" class="form-label">Order Reference / ID *</label>
+                                    <label for="contact-order-ref" class="form-label">Order Reference / ID</label>
                                     <input type="text" id="contact-order-ref" class="form-input" placeholder="e.g. MRY-10492 or Checkout Phone" />
-                                    <span class="field-hint">Found on your order confirmation screen.</span>
+                                    <span class="field-hint">Found on your order confirmation or checkout screen.</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="contact-delivery-city" class="form-label">Delivery City / Destination</label>
@@ -214,43 +173,19 @@
                                 </div>
                             </div>
 
-                            <!-- Dynamic Field: Support Topic (ONLY shows for Customer Help; Hidden for all others) -->
-                            <div class="form-group dynamic-field" id="field-wrap-support-topic" style="display: none;">
-                                <label for="contact-support-topic" class="form-label">Help / Inquiry Topic *</label>
-                                <select id="contact-support-topic" class="form-select">
-                                    <option value="Product Sizing & Materials">Product Sizing, Materials & Dimensions</option>
-                                    <option value="Crochet Care & Washing">Crochet Care & Washing Instructions</option>
-                                    <option value="Delivery Rates & Timelines">Nationwide Delivery Times & Courier Rates</option>
-                                    <option value="Payment Assistance">Payment Methods (Bank Transfer / EasyPaisa / COD)</option>
-                                    <option value="General Question">General Assistance / Other Question</option>
-                                </select>
-                            </div>
-
-                            <!-- Dynamic Field: Bulk Event Details (ONLY shows for Bulk Favors; Hidden for all others) -->
-                            <div class="form-row-2 dynamic-field" id="field-wrap-bulk-details" style="display: none;">
-                                <div class="form-group">
-                                    <label for="contact-bulk-qty" class="form-label">Estimated Quantity *</label>
-                                    <input type="text" id="contact-bulk-qty" class="form-input" placeholder="e.g. 30 pcs, 50 pcs, 100+ pcs" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="contact-event-type" class="form-label">Event Type & Needed-By Date</label>
-                                    <input type="text" id="contact-event-type" class="form-input" placeholder="e.g. Wedding Favors (Nov 15)" />
-                                </div>
-                            </div>
-
-                            <!-- Message / Details (Dynamically adjusts label & placeholder) -->
+                            <!-- Message / Details -->
                             <div class="form-group" id="field-wrap-message">
-                                <label for="contact-message" class="form-label" id="label-contact-message">Design Details & Requirements *</label>
-                                <textarea id="contact-message" class="form-textarea" placeholder="Tell us about size requirements, reference ideas, or your specific requests..." required></textarea>
+                                <label for="contact-message" class="form-label" id="label-contact-message">Question / Query Details *</label>
+                                <textarea id="contact-message" class="form-textarea" placeholder="Please describe your question or what you need assistance with..." required></textarea>
                             </div>
 
                             <!-- Actions -->
                             <div class="form-actions-row">
                                 <button type="submit" class="btn btn-primary btn-lg" id="btn-submit-wa" style="width: 100%; box-shadow: 0 4px 16px rgba(184, 93, 67, 0.35);">
-                                    <span id="btn-submit-text">Send Custom Request via WhatsApp 💬</span>
+                                    <span id="btn-submit-text">Send Support Inquiry via WhatsApp 💬</span>
                                 </button>
                                 <button type="button" class="btn btn-outline btn-md" id="btn-send-email" style="width: 100%;">
-                                    <span>Send via Email ✉️</span>
+                                    <span>Send Support Inquiry via Email ✉️</span>
                                 </button>
                             </div>
 
@@ -402,6 +337,7 @@
     <div id="footer-container"></div>
 
     <!-- Core Scripts -->
+    <script src="js/analytics.js"></script>
     <script src="js/components/navbar.js"></script>
     <script src="js/components/footer.js"></script>
     <script src="js/contact.js"></script>

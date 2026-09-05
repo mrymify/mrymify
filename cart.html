@@ -99,6 +99,10 @@
                                 <span>Items Subtotal</span>
                                 <span id="summary-subtotal" style="font-weight: 600;">Rs. 0</span>
                             </div>
+                            <div class="summary-row" id="summary-discount-row" style="display: none; color: #10b981;">
+                                <span>Promo / Referral Discount</span>
+                                <span id="summary-discount" style="font-weight: 600;">- Rs. 0</span>
+                            </div>
                             <div class="summary-row">
                                 <span>Estimated Courier Delivery</span>
                                 <span id="summary-shipping">Rs. 200</span>
@@ -107,6 +111,18 @@
                                 <span>Total Amount</span>
                                 <span id="summary-grand-total" class="total-amount">Rs. 0</span>
                             </div>
+                        </div>
+
+                        <!-- Referral / Promo Code Box -->
+                        <div class="referral-box" style="margin: 1.15rem 0; padding: 0.85rem 1rem; border: 1.5px dashed var(--color-border); border-radius: 12px; background: var(--color-bg);">
+                            <label for="cart-referral-code" style="display: block; font-size: 0.82rem; font-weight: 700; color: var(--color-text-main); margin-bottom: 0.4rem;">
+                                🎟️ Have a Referral or Promo Code?
+                            </label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="text" id="cart-referral-code" placeholder="e.g. MARIYAM10, FRIEND15" style="flex: 1; padding: 0.55rem 0.75rem; border: 1.5px solid var(--color-border); border-radius: 8px; font-size: 0.88rem; text-transform: uppercase;" />
+                                <button type="button" id="btn-apply-referral" class="btn btn-outline btn-sm" style="padding: 0.55rem 1rem; font-weight: 600;">Apply</button>
+                            </div>
+                            <div id="referral-feedback" style="font-size: 0.82rem; margin-top: 0.35rem; display: none;"></div>
                         </div>
 
                         <!-- Customer Shipping & Delivery Details -->
@@ -133,26 +149,47 @@
                                 <input type="text" id="checkout-notes" class="checkout-input" placeholder="Gift Note / Special Packaging Instructions (Optional)" />
                             </div>
 
-                            <!-- Payment Preference Selector -->
-                            <div style="margin-top: 1rem;">
-                                <label style="font-size: 0.8rem; font-weight: 700; color: var(--color-text-main); text-transform: uppercase; letter-spacing: 0.5px;">Payment Method</label>
-                                <div class="payment-methods-grid">
-                                    <label class="payment-pill-label">
-                                        <input type="radio" name="payment-method" value="Cash on Delivery (COD)" checked />
-                                        <span>Cash on Delivery</span>
+                            <!-- Advance Payment Policy Notice -->
+                            <div style="margin-top: 1rem; background: rgba(99, 102, 241, 0.08); border-left: 3.5px solid #6366f1; padding: 0.75rem 0.9rem; border-radius: 8px; font-size: 0.84rem; line-height: 1.5; color: var(--color-text-main);">
+                                <strong>💳 Advance Payment Only:</strong> Because each piece is bespoke and individually handcrafted stitch-by-stitch, we accept orders only with advance payment. Account numbers and payment instructions will be provided immediately upon placing the order.
+                            </div>
+
+                            <!-- Advance Payment Method Selector (Pakistan Channels) -->
+                            <div style="margin-top: 1.15rem;">
+                                <label for="checkout-payment-method" style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--color-text-main); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.45rem;">
+                                    💳 Payment Method (Pakistan) *
+                                </label>
+                                <select id="checkout-payment-method" class="checkout-select" onchange="MrymifyCart.onPaymentMethodChange()">
+                                    <option value="JazzCash">📱 JazzCash (0300-0896885 - Mariyam Tariq)</option>
+                                    <option value="EasyPaisa">📱 EasyPaisa (0300-0896885 - Mariyam Tariq)</option>
+                                    <option value="SadaPay">💳 SadaPay (0300-0896885 - Mariyam Tariq)</option>
+                                    <option value="NayaPay">💳 NayaPay (0300-0896885 - Mariyam Tariq)</option>
+                                    <option value="Bank Transfer (Meezan Bank)" selected>🏦 Bank Transfer / Raast (Meezan Bank)</option>
+                                    <option value="Bank Alfalah">🏦 Bank Alfalah (Account: 0289-1002893821)</option>
+                                    <option value="Cash on Delivery (COD)">📦 Cash on Delivery (COD - Standard Nationwide)</option>
+                                </select>
+
+                                <!-- Dynamic Payment Transfer Instructions Box -->
+                                <div id="checkout-payment-instructions" class="payment-instruction-box">
+                                    <!-- Injected dynamically by js/cart.js -->
+                                </div>
+
+                                <!-- Payment Proof Picture Upload Section -->
+                                <div id="checkout-payment-proof-wrap" class="payment-proof-box">
+                                    <label for="checkout-payment-proof" style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; font-weight: 700; color: var(--color-text-main); margin-bottom: 0.35rem;">
+                                        <span>📸 Upload Payment Screenshot / Receipt *</span>
+                                        <span style="font-size: 0.72rem; color: var(--color-primary); font-weight: 600;">JPG, PNG or WebP</span>
                                     </label>
-                                    <label class="payment-pill-label">
-                                        <input type="radio" name="payment-method" value="Bank Transfer / Wire" />
-                                        <span>Bank Transfer</span>
-                                    </label>
-                                    <label class="payment-pill-label">
-                                        <input type="radio" name="payment-method" value="JazzCash / EasyPaisa" />
-                                        <span>JazzCash / EasyPaisa</span>
-                                    </label>
-                                    <label class="payment-pill-label">
-                                        <input type="radio" name="payment-method" value="Online Payment" />
-                                        <span>Online Payment</span>
-                                    </label>
+                                    <input type="file" id="checkout-payment-proof" accept="image/*" style="font-size: 0.82rem; width: 100%; color: var(--color-text-main); cursor: pointer;" onchange="MrymifyCart.handleProofFileSelect(this)" />
+                                    
+                                    <div id="payment-proof-preview" class="payment-proof-preview">
+                                        <img id="payment-proof-img" src="" alt="Proof Preview" style="width: 48px; height: 48px; border-radius: 6px; object-fit: cover; border: 1px solid var(--color-border);" />
+                                        <div style="flex: 1; min-width: 0;">
+                                            <div id="payment-proof-name" style="font-size: 0.8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--color-text-main);"></div>
+                                            <div style="font-size: 0.72rem; color: #10b981; font-weight: 700;">✓ Screenshot attached for admin verification</div>
+                                        </div>
+                                        <button type="button" onclick="MrymifyCart.clearPaymentProof()" style="background: none; border: none; color: #ef4444; font-size: 1.1rem; cursor: pointer; padding: 0.25rem 0.5rem;" title="Remove proof image">✕</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -213,7 +250,22 @@
                         </div>
                         <div style="margin-top: 0.85rem; font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6;">
                             <strong>Delivery Address:</strong> <span id="success-delivery-address">Standard Delivery</span><br>
-                            <strong>Payment Method:</strong> <span id="success-payment-method">Cash on Delivery</span>
+                            <strong>Advance Payment Method:</strong> <span id="success-payment-method">Bank Transfer</span>
+                        </div>
+                    </div>
+
+                    <!-- Advance Payment Transfer Instructions Card -->
+                    <div style="background: var(--color-surface); border: 2px solid var(--color-primary); border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; text-align: left; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                        <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.75rem;">
+                            <span style="font-size: 1.4rem;">🧾</span>
+                            <div>
+                                <h3 style="font-size: 1.05rem; margin: 0; color: var(--color-text-main); font-weight: 700;">Order Booked & Payment Verification in Progress</h3>
+                                <p style="font-size: 0.82rem; color: var(--color-text-muted); margin: 0;">Our studio will inspect your uploaded payment proof and immediately advance your order to the crafting schedule.</p>
+                            </div>
+                        </div>
+
+                        <div style="font-size: 0.85rem; background: var(--color-bg); padding: 0.9rem 1.15rem; border-radius: 12px; border: 1px solid var(--color-border); line-height: 1.6;">
+                            <div>🛡️ <strong>Direct Verification:</strong> Your payment proof has been attached to Order <span id="success-proof-badge" style="font-weight: 700; color: var(--color-primary);"></span>. Once verified in our accounts, your pieces will begin handcrafting stitch-by-stitch!</div>
                         </div>
                     </div>
 
@@ -256,10 +308,30 @@
 
     </main>
 
+    <!-- Customer Order Detail Modal (Card Opening Visual) -->
+    <div id="customer-order-detail-modal" class="customer-modal-backdrop" onclick="if(event.target === this) MrymifyCart.closeCustomerOrderDetail();" role="dialog" aria-modal="true" aria-labelledby="customer-modal-order-title">
+        <div class="customer-modal-card">
+            <div class="customer-modal-header">
+                <div>
+                    <h3 class="customer-modal-title" id="customer-modal-order-title">Order Details</h3>
+                    <div id="customer-modal-order-sub" style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 0.2rem;">Live Handcrafted Status</div>
+                </div>
+                <button type="button" class="customer-modal-close" onclick="MrymifyCart.closeCustomerOrderDetail()" aria-label="Close order details">&times;</button>
+            </div>
+            <div class="customer-modal-body" id="customer-modal-order-body">
+                <!-- Injected dynamically by js/cart.js -->
+            </div>
+            <div class="customer-modal-footer" id="customer-modal-order-footer">
+                <!-- Injected dynamically by js/cart.js -->
+            </div>
+        </div>
+    </div>
+
     <!-- Shared Footer (Mounted via js/components/footer.js) -->
     <div id="footer-container"></div>
 
     <!-- Core Scripts -->
+    <script src="js/analytics.js"></script>
     <script src="js/products.js"></script>
     <script src="js/components/navbar.js"></script>
     <script src="js/components/footer.js"></script>

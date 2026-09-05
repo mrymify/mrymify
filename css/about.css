@@ -438,3 +438,17 @@
         padding: 1.25rem;
     }
 }
+
+/* ==========================================================================
+   Dark Theme Overrides for About Page
+   ========================================================================== */
+[data-theme="dark"] .founder-pill-craft {
+    background-color: rgba(224, 122, 95, 0.18);
+    color: #f0a88c;
+}
+
+[data-theme="dark"] .founder-pill-mgmt {
+    background-color: rgba(93, 160, 133, 0.18);
+    color: #72b299;
+}
+

@@ -18,7 +18,10 @@
                     <div class="footer-grid">
                         <!-- Brand Column -->
                         <div class="footer-col footer-col-brand">
-                            <div class="footer-logo">MRYM<span>IFY</span></div>
+                            <div class="footer-logo">
+                                <img src="images/logo.jpg" alt="Mrymify Bouquet Logo" class="footer-logo-img" />
+                                <span>MRYM<span>IFY</span></span>
+                            </div>
                             <p class="footer-about">
                                 A boutique showcase of handcrafted crochet plushies, floral bouquets, wearables, and charming gifts. Each piece is crafted by hand with patience and care.
                             </p>
