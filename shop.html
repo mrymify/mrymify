@@ -76,13 +76,24 @@
         <!-- Product Grid Section -->
         <section class="section">
             <div class="container">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.65rem;">
                     <span id="shop-count-display" style="font-family: var(--font-brand); font-size: 0.9rem; font-weight: 600; color: var(--color-text-muted);">
                         Loading products...
                     </span>
-                    <span style="font-size: 0.85rem; color: var(--color-primary); font-family: var(--font-brand); font-weight: 600;">
-                        🧶 100% Handcrafted
-                    </span>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <!-- Mobile 3 / 4 Column Grid Switcher (Inspired by Zara / ASOS / Shein) -->
+                        <div class="mobile-grid-switcher" id="mobile-grid-switcher" title="Toggle 3 or 4 products in a row on mobile">
+                            <button type="button" class="grid-switcher-btn active" id="btn-grid-3" onclick="MrymifyShop.setGridCols(3)" aria-label="3 items per row">
+                                <span>3 in row</span>
+                            </button>
+                            <button type="button" class="grid-switcher-btn" id="btn-grid-4" onclick="MrymifyShop.setGridCols(4)" aria-label="4 items per row">
+                                <span>4 in row</span>
+                            </button>
+                        </div>
+                        <span style="font-size: 0.85rem; color: var(--color-primary); font-family: var(--font-brand); font-weight: 600;">
+                            🧶 100% Handcrafted
+                        </span>
+                    </div>
                 </div>
 
                 <!-- Grid Container -->

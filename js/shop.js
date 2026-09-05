@@ -131,4 +131,43 @@ function initShopCatalog() {
 
     // Initial render
     renderFilteredProducts();
+
+    // Initialize Mobile Column Density Preference (Default 3, or user-selected 4)
+    const savedCols = localStorage.getItem('mrymify_mobile_grid_cols');
+    if (savedCols === '4') {
+        setGridCols(4);
+    } else {
+        setGridCols(3);
+    }
 }
+
+/**
+ * Toggles mobile product grid density between 3-in-a-row and 4-in-a-row
+ * (Styled after modern fashion platforms like Zara, ASOS, and Shein)
+ * @param {number} cols - 3 or 4
+ */
+function setGridCols(cols) {
+    const grid = document.getElementById('shop-products-grid');
+    const btn3 = document.getElementById('btn-grid-3');
+    const btn4 = document.getElementById('btn-grid-4');
+    if (!grid) return;
+
+    if (cols === 4) {
+        grid.classList.remove('grid-cols-3');
+        grid.classList.add('grid-cols-4');
+        if (btn4) btn4.classList.add('active');
+        if (btn3) btn3.classList.remove('active');
+        try { localStorage.setItem('mrymify_mobile_grid_cols', '4'); } catch(e) {}
+    } else {
+        grid.classList.remove('grid-cols-4');
+        grid.classList.add('grid-cols-3');
+        if (btn3) btn3.classList.add('active');
+        if (btn4) btn4.classList.remove('active');
+        try { localStorage.setItem('mrymify_mobile_grid_cols', '3'); } catch(e) {}
+    }
+}
+
+// Expose component API
+window.MrymifyShop = {
+    setGridCols: setGridCols
+};
